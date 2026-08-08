@@ -1,0 +1,42 @@
+# `docker compose up` → dev server at http://localhost:4321/EngineeringHandbook/
+#
+# Host port defaults to 4321 (the same port .claude/launch.json uses) rather
+# than Docusaurus's 3000, which tends to be occupied. Override with
+# HANDBOOK_PORT=8080 docker compose up.
+
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - '${HANDBOOK_PORT:-4321}:3000'
+    volumes:
+      # The working tree, so edits reload live.
+      - .:/app
+      # Named volumes keep container-generated files out of the bind mount:
+      # node_modules is Linux-built here and macOS-built on the host, and
+      # .docusaurus/build cache absolute paths that differ between the two.
+      - node_modules:/app/node_modules
+      - docusaurus_cache:/app/.docusaurus
+      - build_output:/app/build
+    # Bind mounts don't forward filesystem events on macOS or Windows, so the
+    # watcher has to poll for hot reload to work.
+    command: npm start -- --host 0.0.0.0 --poll 1000
+    stdin_open: true
+    tty: true
+
+  # Production build, served locally. Not started by default:
+  #   docker compose --profile prod up serve
+  serve:
+    profiles: [prod]
+    build:
+      context: .
+      target: serve
+    ports:
+      - '${HANDBOOK_SERVE_PORT:-4322}:3000'
+
+volumes:
+  node_modules:
+  docusaurus_cache:
+  build_output:

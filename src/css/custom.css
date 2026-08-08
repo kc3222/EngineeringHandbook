@@ -1,0 +1,125 @@
+/**
+ * Global tokens and the handful of Infima overrides the handbook shell needs.
+ * Component-level styling lives in CSS modules next to each component.
+ */
+
+:root {
+  --eh-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  --eh-gutter: clamp(1.5rem, 7vw, 7rem);
+
+  /* Light */
+  --eh-bg: #ffffff;
+  --eh-fg: #0a0a0a;
+  --eh-muted: #5c5c5c;
+  --eh-faint: #8a8a8a;
+  --eh-line: rgba(0, 0, 0, 0.12);
+  --eh-line-strong: rgba(0, 0, 0, 0.2);
+  --eh-surface: rgba(0, 0, 0, 0.025);
+  --eh-hover: rgba(0, 0, 0, 0.06);
+  --eh-elevated: #ffffff;
+  --eh-scrim: rgba(20, 20, 20, 0.35);
+  --eh-invert-bg: #0a0a0a;
+  --eh-invert-bg-hover: #262626;
+  --eh-invert-fg: #ffffff;
+
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --ifm-font-family-monospace: var(--eh-font-mono);
+  --ifm-color-primary: #0a0a0a;
+  --ifm-background-color: var(--eh-bg);
+  --ifm-font-color-base: var(--eh-fg);
+  --ifm-heading-color: var(--eh-fg);
+  --ifm-link-color: var(--eh-fg);
+  --ifm-navbar-height: 4rem;
+  --ifm-navbar-padding-horizontal: clamp(1rem, 2vw, 1.75rem);
+  --ifm-navbar-background-color: var(--eh-bg);
+  --ifm-navbar-shadow: none;
+  --ifm-navbar-link-color: var(--eh-muted);
+  --ifm-navbar-link-hover-color: var(--eh-fg);
+  --ifm-footer-background-color: transparent;
+  --ifm-global-radius: 12px;
+}
+
+[data-theme='dark'] {
+  --eh-bg: #0a0a0a;
+  --eh-fg: #f2f2f2;
+  --eh-muted: #9a9a9a;
+  --eh-faint: #757575;
+  --eh-line: rgba(255, 255, 255, 0.12);
+  --eh-line-strong: rgba(255, 255, 255, 0.22);
+  --eh-surface: rgba(255, 255, 255, 0.035);
+  --eh-hover: rgba(255, 255, 255, 0.09);
+  --eh-elevated: #141414;
+  --eh-scrim: rgba(0, 0, 0, 0.6);
+  --eh-invert-bg: #ffffff;
+  --eh-invert-bg-hover: #e2e2e2;
+  --eh-invert-fg: #0a0a0a;
+
+  --ifm-color-primary: #ffffff;
+}
+
+html,
+body {
+  background-color: var(--eh-bg);
+  color: var(--eh-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Navbar shell — three slots: brand, centred areas, tools. */
+
+.navbar {
+  border-bottom: 1px solid var(--eh-line);
+}
+
+.navbar__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar__brand {
+  margin-right: 0;
+}
+
+.navbar__title {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--eh-fg);
+}
+
+.navbar-sidebar {
+  background-color: var(--eh-bg);
+}
+
+@media (max-width: 996px) {
+  .navbar__inner {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --ifm-navbar-padding-horizontal: 0.75rem;
+  }
+
+  /* Keep the full wordmark rather than truncating it. */
+  .navbar__title {
+    font-size: 0.875rem;
+  }
+}
+
+/* Footer */
+
+.footer {
+  border-top: 1px solid var(--eh-line);
+  padding: 1.75rem var(--eh-gutter);
+  background-color: var(--eh-bg);
+}
+
+.footer__copyright {
+  color: var(--eh-faint);
+  font-size: 0.8125rem;
+}

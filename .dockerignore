@@ -1,0 +1,14 @@
+# Host-installed dependencies are platform-specific — the image builds its own.
+node_modules
+
+# Build artifacts and caches
+build
+.docusaurus
+.cache-loader
+
+# Not needed inside the image
+.git
+.github
+.claude
+*.log
+.DS_Store

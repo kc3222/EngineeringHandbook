@@ -1,0 +1,26 @@
+/* Slot layout lives on `.navbar__inner` in src/css/custom.css. */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.areas {
+  justify-self: center;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.625rem;
+}
+
+/* The centred area links collapse into the mobile sidebar. */
+@media (max-width: 996px) {
+  .areas {
+    display: none;
+  }
+}
