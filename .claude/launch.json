@@ -4,8 +4,8 @@
     {
       "name": "handbook",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start", "--", "--no-open", "--port", "4321"],
-      "port": 4321,
+      "runtimeArgs": ["run", "start", "--", "--no-open", "--port", "4323"],
+      "port": 4323,
       "autoPort": false
     }
   ]

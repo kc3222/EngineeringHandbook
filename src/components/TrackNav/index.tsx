@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import {useLocation} from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-import {tracks} from '@site/src/data/handbook';
+import {docsRouteBasePath, tracks, trackDir} from '@site/src/data/handbook';
 
 import styles from './styles.module.css';
 
@@ -13,7 +13,8 @@ const stripTrailingSlash = (path: string): string =>
 
 /**
  * The centred track switcher in the navbar. Every track has its own path, so the
- * root ("about this site") page correctly leaves all six links inactive.
+ * root ("about this site") page correctly leaves all six links inactive. Content
+ * pages count as part of their track too, so the link stays lit while reading.
  */
 export default function TrackNav({
   className,
@@ -33,7 +34,12 @@ export default function TrackNav({
           `${base}${track.permalink.replace(/^\//, '')}`,
         );
         // Prefix match on a path segment, so /ml never lights up for /mlops.
-        const isActive = current === href || current.startsWith(`${href}/`);
+        const isActive =
+          current === href ||
+          current.startsWith(`${href}/`) ||
+          current.startsWith(
+            `${base}${docsRouteBasePath}/${trackDir(track)}`,
+          );
 
         return (
           <Link

@@ -1,0 +1,14 @@
+{
+  "label": "Self-Supervised Learning",
+  "position": 18,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 18,
+    "pages": 5
+  }
+}

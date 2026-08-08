@@ -4,7 +4,7 @@ import {useHistory} from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 
-import {tracks} from '@site/src/data/handbook';
+import {chapterHref, tracks} from '@site/src/data/handbook';
 
 import styles from './styles.module.css';
 
@@ -53,9 +53,9 @@ function score(entry: Entry, terms: string[]): number {
 }
 
 /**
- * Search runs over the handbook index (tracks and chapters) — the only content
- * that exists today. Once `content/` holds real pages, swap this for a
- * page-level index; the palette UI can stay as-is.
+ * Search runs over the handbook index — tracks and chapters, not page bodies.
+ * Chapter hits open that chapter's first page. Swapping this for a real
+ * page-level index is still outstanding; the palette UI can stay as-is.
  */
 function buildIndex(): Entry[] {
   const entries: Entry[] = [];
@@ -80,7 +80,7 @@ function buildIndex(): Entry[] {
         title: chapter.title,
         description: chapter.blurb,
         meta: `${track.title} · ${chapter.pages} pages`,
-        to: `${track.permalink}#chapter-${String(chapter.number).padStart(2, '0')}`,
+        to: chapterHref(track, chapter),
         titleText: chapter.title.toLowerCase(),
         body: `${chapter.blurb} ${track.title}`.toLowerCase(),
       });
@@ -218,7 +218,7 @@ function SearchPalette({onClose}: {onClose: () => void}): React.ReactNode {
         )}
 
         <div className={styles.hint}>
-          Content pages are still being written — search covers the outline.
+          Search covers the outline — tracks and chapters, not page text yet.
         </div>
       </div>
     </div>
@@ -240,7 +240,11 @@ function SearchIcon() {
   );
 }
 
-export default function SearchButton(): React.ReactNode {
+export default function SearchButton({
+  className,
+}: {
+  className?: string;
+} = {}): React.ReactNode {
   const isBrowser = useIsBrowser();
   const [open, setOpen] = useState(false);
 
@@ -262,7 +266,7 @@ export default function SearchButton(): React.ReactNode {
     <>
       <button
         type="button"
-        className={styles.trigger}
+        className={clsx(styles.trigger, className)}
         onClick={() => setOpen(true)}
         aria-label="Search the handbook">
         <span className={styles.triggerIcon} aria-hidden="true">

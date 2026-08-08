@@ -1,0 +1,14 @@
+{
+  "label": "RAG Pipelines",
+  "position": 14,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 14,
+    "pages": 7
+  }
+}

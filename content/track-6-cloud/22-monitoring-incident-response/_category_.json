@@ -1,0 +1,14 @@
+{
+  "label": "Monitoring & Incident Response",
+  "position": 22,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 22,
+    "pages": 4
+  }
+}

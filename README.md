@@ -48,17 +48,21 @@ npm run typecheck
 - **`src/theme/Navbar/Content`** is a swizzled (ejected) copy of the Docusaurus
   navbar so the track links can sit centred between the wordmark and the
   search/theme controls.
-- **Search** (`⌘K` / `Ctrl+K`) currently indexes the outline — tracks and
-  chapters. It gets pointed at real page content once `content/` is populated.
+- **Content pages live in `content/`**, one markdown file per page, served by
+  the docs plugin under `/read/…`. Each track gets its own sidebar, so switching
+  track switches the whole chapter tree.
+- **Search** (`⌘K` / `Ctrl+K`) indexes the outline — tracks and chapters, not
+  page text. Chapter hits open that chapter's first page.
 - **`Dockerfile` + `compose.yaml`** cover local runs. The image is a dev
   convenience only — deploys build on the Actions runner, not from it. Only
   `node_modules` is masked by a volume; host and container share the
   `.docusaurus` cache, so run `npm run clear` if you switch between them and
   hit stale paths.
 
-Content pages don't exist yet, so the docs and blog plugins are switched off in
-`docusaurus.config.ts`. See `CLAUDE.md` for the content structure and page
-frontmatter schema they'll use.
+Most pages under `content/` are placeholders — every chapter has an overview
+page so the reading UI works end to end, and one chapter (AI → LLM Fundamentals)
+is written out in full. See `CLAUDE.md` for the content structure and page
+frontmatter schema.
 
 ## Deploying
 
