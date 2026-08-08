@@ -7,7 +7,7 @@
   min-width: 0;
 }
 
-.areas {
+.tracks {
   justify-self: center;
 }
 
@@ -18,9 +18,9 @@
   gap: 0.625rem;
 }
 
-/* The centred area links collapse into the mobile sidebar. */
+/* The centred track links collapse into the mobile sidebar. */
 @media (max-width: 996px) {
-  .areas {
+  .tracks {
     display: none;
   }
 }

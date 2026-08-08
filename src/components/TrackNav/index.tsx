@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import {useLocation} from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-import {areas} from '@site/src/data/handbook';
+import {tracks} from '@site/src/data/handbook';
 
 import styles from './styles.module.css';
 
@@ -12,10 +12,10 @@ const stripTrailingSlash = (path: string): string =>
   path.length > 1 ? path.replace(/\/$/, '') : path;
 
 /**
- * The centred area switcher in the navbar. Every area has its own path, so the
+ * The centred track switcher in the navbar. Every track has its own path, so the
  * root ("about this site") page correctly leaves all six links inactive.
  */
-export default function AreaNav({
+export default function TrackNav({
   className,
   onNavigate,
 }: {
@@ -27,22 +27,22 @@ export default function AreaNav({
   const base = useBaseUrl('/');
 
   return (
-    <nav className={clsx(styles.areaNav, className)} aria-label="Handbook areas">
-      {areas.map((area) => {
+    <nav className={clsx(styles.trackNav, className)} aria-label="Handbook tracks">
+      {tracks.map((track) => {
         const href = stripTrailingSlash(
-          `${base}${area.permalink.replace(/^\//, '')}`,
+          `${base}${track.permalink.replace(/^\//, '')}`,
         );
         // Prefix match on a path segment, so /ml never lights up for /mlops.
         const isActive = current === href || current.startsWith(`${href}/`);
 
         return (
           <Link
-            key={area.slug}
-            to={area.permalink}
+            key={track.slug}
+            to={track.permalink}
             className={clsx(styles.link, isActive && styles.active)}
             aria-current={isActive ? 'page' : undefined}
             onClick={onNavigate}>
-            {area.navLabel}
+            {track.navLabel}
           </Link>
         );
       })}

@@ -4,20 +4,20 @@ import {useHistory} from '@docusaurus/router';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 
-import {areas} from '@site/src/data/handbook';
+import {tracks} from '@site/src/data/handbook';
 
 import styles from './styles.module.css';
 
 type Entry = {
   id: string;
-  kind: 'Area' | 'Chapter';
+  kind: 'Track' | 'Chapter';
   title: string;
   description: string;
   meta: string;
   to: string;
   /** Lowercased title, matched with more weight than `body`. */
   titleText: string;
-  /** Lowercased description and area name. */
+  /** Lowercased description and track name. */
   body: string;
 };
 
@@ -53,36 +53,36 @@ function score(entry: Entry, terms: string[]): number {
 }
 
 /**
- * Search runs over the handbook index (areas and chapters) — the only content
+ * Search runs over the handbook index (tracks and chapters) — the only content
  * that exists today. Once `content/` holds real pages, swap this for a
  * page-level index; the palette UI can stay as-is.
  */
 function buildIndex(): Entry[] {
   const entries: Entry[] = [];
 
-  areas.forEach((area) => {
-    const pages = area.chapters.reduce((n, c) => n + c.pages, 0);
+  tracks.forEach((track) => {
+    const pages = track.chapters.reduce((n, c) => n + c.pages, 0);
     entries.push({
-      id: `area-${area.slug}`,
-      kind: 'Area',
-      title: area.title,
-      description: area.summary,
-      meta: `${area.chapters.length} chapters · ${pages} pages`,
-      to: area.permalink,
-      titleText: `${area.title} ${area.navLabel}`.toLowerCase(),
-      body: area.summary.toLowerCase(),
+      id: `track-${track.slug}`,
+      kind: 'Track',
+      title: track.title,
+      description: track.summary,
+      meta: `${track.chapters.length} chapters · ${pages} pages`,
+      to: track.permalink,
+      titleText: `${track.title} ${track.navLabel}`.toLowerCase(),
+      body: track.summary.toLowerCase(),
     });
 
-    area.chapters.forEach((chapter) => {
+    track.chapters.forEach((chapter) => {
       entries.push({
         id: `chapter-${chapter.number}`,
         kind: 'Chapter',
         title: chapter.title,
         description: chapter.blurb,
-        meta: `${area.title} · ${chapter.pages} pages`,
-        to: `${area.permalink}#chapter-${String(chapter.number).padStart(2, '0')}`,
+        meta: `${track.title} · ${chapter.pages} pages`,
+        to: `${track.permalink}#chapter-${String(chapter.number).padStart(2, '0')}`,
         titleText: chapter.title.toLowerCase(),
-        body: `${chapter.blurb} ${area.title}`.toLowerCase(),
+        body: `${chapter.blurb} ${track.title}`.toLowerCase(),
       });
     });
   });
@@ -102,7 +102,7 @@ function SearchPalette({onClose}: {onClose: () => void}): React.ReactNode {
   const results = useMemo(() => {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     if (terms.length === 0) {
-      return index.filter((entry) => entry.kind === 'Area');
+      return index.filter((entry) => entry.kind === 'Track');
     }
     return index
       .map((entry) => ({entry, rank: score(entry, terms)}))
@@ -183,10 +183,10 @@ function SearchPalette({onClose}: {onClose: () => void}): React.ReactNode {
             ref={inputRef}
             className={styles.input}
             type="text"
-            placeholder="Search areas and chapters…"
+            placeholder="Search tracks and chapters…"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            aria-label="Search areas and chapters"
+            aria-label="Search tracks and chapters"
           />
           <kbd className={styles.esc}>Esc</kbd>
         </div>

@@ -4,7 +4,7 @@ import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
 import {
-  areas,
+  tracks,
   pageCount,
   totalChapters,
   totalPages,
@@ -65,12 +65,12 @@ export default function About(): React.ReactNode {
           <p className={styles.summary}>
             Short reference pages across frontend, backend, data, AI
             engineering, applied ML, and the infrastructure underneath. Read one
-            in a few minutes, or work through an area end to end.
+            in a few minutes, or work through a track end to end.
           </p>
 
           <div className={styles.actions}>
-            <a className={styles.primaryAction} href="#areas">
-              Browse the areas <span aria-hidden="true">→</span>
+            <a className={styles.primaryAction} href="#tracks">
+              Browse the tracks <span aria-hidden="true">→</span>
             </a>
             <Link className={styles.secondaryAction} to="/frontend">
               Start with Frontend
@@ -80,7 +80,7 @@ export default function About(): React.ReactNode {
           <hr className={styles.rule} />
 
           <div className={styles.stats}>
-            <Stat value={String(areas.length)} label="areas" />
+            <Stat value={String(tracks.length)} label="tracks" />
             <Stat value={String(chapters)} label="chapters" />
             <Stat value={String(pages)} label="pages planned" />
             <Stat value="Draft" label="status" />
@@ -99,23 +99,23 @@ export default function About(): React.ReactNode {
           </div>
         </section>
 
-        <section className={styles.section} id="areas">
-          <h2 className={styles.sectionHeading}>Areas</h2>
+        <section className={styles.section} id="tracks">
+          <h2 className={styles.sectionHeading}>Tracks</h2>
           <p className={styles.sectionIntro}>
-            Six areas, each split into chapters, each chapter into pages.
+            Six tracks, each split into chapters, each chapter into pages.
           </p>
 
-          <ul className={styles.areaGrid}>
-            {areas.map((area) => (
-              <li key={area.slug}>
-                <Link className={styles.areaCard} to={area.permalink}>
-                  <span className={styles.areaNumber}>
-                    {String(area.number).padStart(2, '0')}
+          <ul className={styles.trackGrid}>
+            {tracks.map((track) => (
+              <li key={track.slug}>
+                <Link className={styles.trackCard} to={track.permalink}>
+                  <span className={styles.trackNumber}>
+                    {String(track.number).padStart(2, '0')}
                   </span>
-                  <span className={styles.areaTitle}>{area.title}</span>
-                  <span className={styles.areaSummary}>{area.summary}</span>
-                  <span className={styles.areaMeta}>
-                    {area.chapters.length} chapters · {pageCount(area)} pages
+                  <span className={styles.trackTitle}>{track.title}</span>
+                  <span className={styles.trackSummary}>{track.summary}</span>
+                  <span className={styles.trackMeta}>
+                    {track.chapters.length} chapters · {pageCount(track)} pages
                   </span>
                 </Link>
               </li>
@@ -126,7 +126,7 @@ export default function About(): React.ReactNode {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Status</h2>
           <p className={styles.statusBody}>
-            The outline is settled; the pages are still being written. Area and
+            The outline is settled; the pages are still being written. Track and
             chapter listings show what is planned, so the counts above describe
             the finished shape of the handbook rather than what is readable
             today.

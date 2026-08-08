@@ -1,6 +1,6 @@
 /**
  * The "about this site" front page. Shares the design tokens and hero
- * proportions of AreaLanding so the two read as the same system.
+ * proportions of TrackLanding so the two read as the same system.
  */
 
 /* Content column is exactly --eh-content-max; the gutter sits outside it. */
@@ -201,9 +201,9 @@
   line-height: 1.55;
 }
 
-/* Areas */
+/* Tracks */
 
-.areaGrid {
+.trackGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
@@ -212,7 +212,7 @@
   list-style: none;
 }
 
-.areaCard {
+.trackCard {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -224,28 +224,28 @@
   transition: border-color 120ms ease, background-color 120ms ease;
 }
 
-.areaCard:hover {
+.trackCard:hover {
   border-color: var(--eh-line-strong);
   background-color: var(--eh-hover);
   text-decoration: none;
   color: inherit;
 }
 
-.areaNumber {
+.trackNumber {
   color: var(--eh-faint);
   font-family: var(--eh-font-mono);
   font-size: 0.8125rem;
   font-weight: 700;
 }
 
-.areaTitle {
+.trackTitle {
   margin-top: 0.625rem;
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: -0.015em;
 }
 
-.areaSummary {
+.trackSummary {
   flex: 1;
   margin-top: 0.5rem;
   color: var(--eh-muted);
@@ -253,7 +253,7 @@
   line-height: 1.55;
 }
 
-.areaMeta {
+.trackMeta {
   margin-top: 1.25rem;
   color: var(--eh-faint);
   font-size: 0.8125rem;
@@ -270,7 +270,7 @@
 }
 
 @media (max-width: 1200px) {
-  .areaGrid {
+  .trackGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -281,7 +281,7 @@
     gap: 1.5rem 0;
   }
 
-  .areaGrid {
+  .trackGrid {
     grid-template-columns: 1fr;
   }
 }

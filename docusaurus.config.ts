@@ -1,7 +1,7 @@
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-import {areas} from './src/data/handbook';
+import {tracks} from './src/data/handbook';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -74,13 +74,13 @@ const config: Config = {
     },
     navbar: {
       title: 'Engineering Handbook',
-      // Rendered by src/theme/Navbar/Content — areas sit centred, with the
+      // Rendered by src/theme/Navbar/Content — tracks sit centred, with the
       // search button and theme toggle pinned right.
-      items: areas.map((area) => ({
-        to: area.permalink,
-        label: area.navLabel,
+      items: tracks.map((track) => ({
+        to: track.permalink,
+        label: track.navLabel,
         position: 'left' as const,
-        activeBasePath: area.permalink,
+        activeBasePath: track.permalink,
       })),
     },
     footer: {

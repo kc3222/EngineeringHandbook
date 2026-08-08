@@ -81,7 +81,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Navbar shell — three slots: brand, centred areas, tools. */
+/* Navbar shell — three slots: brand, centred tracks, tools. */
 
 .navbar {
   border-bottom: 1px solid var(--eh-line);

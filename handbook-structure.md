@@ -8,7 +8,7 @@
 
 ---
 
-## Area I — Frontend Engineering
+## Track I — Frontend Engineering
 
 **01 · React Fundamentals**
 Components, state, and the render cycle — the mental model everything else in the frontend chapters assumes you already have.
@@ -28,7 +28,7 @@ Unit and integration tests for UI — what's actually worth testing versus what'
 
 ---
 
-## Area II — Backend Engineering
+## Track II — Backend Engineering
 
 **05 · REST API Design**
 Resources, versioning, error contracts — the decisions that outlive the framework you build them in.
@@ -48,7 +48,7 @@ OAuth 2.0 flows and role-based access — who's allowed to do what, and how you 
 
 ---
 
-## Area III — Data & Storage
+## Track III — Data & Storage
 
 **09 · Relational Schema Design**
 PostgreSQL modeling, normalization, and the migrations that come back to bite you later.
@@ -64,7 +64,7 @@ Cloud storage integration patterns — object storage, upload pipelines, and dec
 
 ---
 
-## Area IV — AI Engineering
+## Track IV — AI Engineering
 
 **12 · LLM Fundamentals**
 What the model actually is, what it costs, and what it can't do.
@@ -84,7 +84,7 @@ Working with AI coding agents as engineering tools, not novelties.
 
 ---
 
-## Area V — ML / DL & Applied Research
+## Track V — ML / DL & Applied Research
 
 **16 · PyTorch & Model Training Basics**
 Tensors, autograd, training loops — the fundamentals under every deep learning project.
@@ -104,7 +104,7 @@ What actually moves you into the top ranks: validation discipline, ensembling, a
 
 ---
 
-## Area VI — Cloud, DevOps & Observability
+## Track VI — Cloud, DevOps & Observability
 
 **20 · Containers & Deployment**
 Docker, cloud compute, and getting from "works on my machine" to a repeatable environment.
@@ -123,6 +123,6 @@ Observability tooling, alerting, and what actually happens during on-call.
 ## Open Items
 
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
-- [ ] Decide whether a synthesis/system-design area gets added back later with generic (non-personal) examples
+- [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
 - [ ] Confirm final page counts once drafting begins (~99 pages total across current outline)

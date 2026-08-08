@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AreaLanding from '@site/src/components/AreaLanding';
-import {getArea} from '@site/src/data/handbook';
+import TrackLanding from '@site/src/components/TrackLanding';
+import {getTrack} from '@site/src/data/handbook';
 
-export default function BackendArea(): React.ReactNode {
-  return <AreaLanding area={getArea('backend')} />;
+export default function BackendTrack(): React.ReactNode {
+  return <TrackLanding track={getTrack('backend')} />;
 }

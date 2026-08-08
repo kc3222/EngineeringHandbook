@@ -8,16 +8,16 @@ import NavbarItem, {type Props as NavbarItemConfig} from '@theme/NavbarItem';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 
-import AreaNav from '@site/src/components/AreaNav';
+import TrackNav from '@site/src/components/TrackNav';
 import SearchButton from '@site/src/components/SearchButton';
 import ThemeToggle from '@site/src/components/ThemeToggle';
 
 import styles from './styles.module.css';
 
 /**
- * Swizzled (ejected) so the navbar can use three slots — brand, centred area
+ * Swizzled (ejected) so the navbar can use three slots — brand, centred track
  * links, and the search + theme controls — instead of the stock left/right
- * split. Area links come from `src/data/handbook.ts` via <AreaNav>; anything
+ * split. Track links come from `src/data/handbook.ts` via <TrackNav>; anything
  * added to `themeConfig.navbar.items` with `position: 'right'` still renders.
  */
 function useNavbarItems() {
@@ -57,7 +57,7 @@ export default function NavbarContent(): ReactNode {
         <NavbarLogo />
       </div>
 
-      <AreaNav className={styles.areas} />
+      <TrackNav className={styles.tracks} />
 
       <div className={styles.tools}>
         <NavbarItems items={rightItems} />

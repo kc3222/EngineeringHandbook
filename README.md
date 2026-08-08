@@ -37,18 +37,18 @@ npm run typecheck
 ## How it's put together
 
 - **Docusaurus 3 + TypeScript.** `docusaurus.config.ts` is the site config.
-- **`src/data/handbook.ts` is the index of record** for areas, chapters, and
+- **`src/data/handbook.ts` is the index of record** for tracks, chapters, and
   page counts — it mirrors `handbook-structure.md`. Every number the UI shows
   (chapter counts, page counts, read-time estimates) is derived from it, so
   update that file when the outline changes.
 - **`/` is an about page** (`src/pages/index.tsx`) covering what the handbook
-  is, how it's organised, and where each area lives.
-- **One page per area** under `src/pages/` (`frontend.tsx`, `backend.tsx`, …),
-  each rendering the shared `AreaLanding` component.
+  is, how it's organised, and where each track lives.
+- **One page per track** under `src/pages/` (`frontend.tsx`, `backend.tsx`, …),
+  each rendering the shared `TrackLanding` component.
 - **`src/theme/Navbar/Content`** is a swizzled (ejected) copy of the Docusaurus
-  navbar so the area links can sit centred between the wordmark and the
+  navbar so the track links can sit centred between the wordmark and the
   search/theme controls.
-- **Search** (`⌘K` / `Ctrl+K`) currently indexes the outline — areas and
+- **Search** (`⌘K` / `Ctrl+K`) currently indexes the outline — tracks and
   chapters. It gets pointed at real page content once `content/` is populated.
 - **`Dockerfile` + `compose.yaml`** cover local runs. The image is a dev
   convenience only — deploys build on the Actions runner, not from it. Only

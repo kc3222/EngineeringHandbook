@@ -1,10 +1,10 @@
 /**
- * The handbook index — the single source of truth for areas, chapters and
+ * The handbook index — the single source of truth for tracks, chapters and
  * page counts in the UI. Mirrors `handbook-structure.md` at the repo root.
  *
- * `handbook-structure.md` labels the top level "Part I–VI"; per CLAUDE.md the
- * code calls the same level an Area. Keep the two in sync: if a chapter is
- * added, renamed or re-counted there, update it here too.
+ * "Track" is the only name for the top level, here and in that file
+ * ("Track I–VI"). Keep the two in sync: if a chapter is added, renamed or
+ * re-counted there, update it here too.
  *
  * Chapter `slug` values are also the chapter folder names under `content/`
  * (prefixed with the zero-padded chapter number, e.g. `01-react-fundamentals`).
@@ -19,25 +19,25 @@ export type Chapter = {
   pages: number;
 };
 
-export type Area = {
-  /** Area number, 1–6. Matches the `area` field in page frontmatter. */
+export type Track = {
+  /** Track number, 1–6. Matches the `track` field in page frontmatter. */
   number: number;
   slug: string;
   /** Short label used in the navbar. */
   navLabel: string;
-  /** Full title used in the area hero. */
+  /** Full title used in the track hero. */
   title: string;
   /** Small line above the title. */
   eyebrow: string;
   /** One-sentence description under the title. */
   summary: string;
-  /** Where this area lives in the site. */
+  /** Where this track lives in the site. */
   permalink: string;
   status: 'Draft' | 'In progress' | 'Published';
   chapters: Chapter[];
 };
 
-export const areas: Area[] = [
+export const tracks: Track[] = [
   {
     number: 1,
     slug: 'frontend',
@@ -298,30 +298,30 @@ export const areas: Area[] = [
 const MIN_MINUTES_PER_PAGE = 1;
 const MAX_MINUTES_PER_PAGE = 5;
 
-export function getArea(slug: string): Area {
-  const area = areas.find((a) => a.slug === slug);
-  if (!area) {
-    throw new Error(`Unknown handbook area: ${slug}`);
+export function getTrack(slug: string): Track {
+  const track = tracks.find((a) => a.slug === slug);
+  if (!track) {
+    throw new Error(`Unknown handbook track: ${slug}`);
   }
-  return area;
+  return track;
 }
 
-export function pageCount(area: Area): number {
-  return area.chapters.reduce((total, chapter) => total + chapter.pages, 0);
+export function pageCount(track: Track): number {
+  return track.chapters.reduce((total, chapter) => total + chapter.pages, 0);
 }
 
-/** Estimated read time for a whole area, e.g. "20–100". */
-export function readMinutesRange(area: Area): string {
-  const pages = pageCount(area);
+/** Estimated read time for a whole track, e.g. "20–100". */
+export function readMinutesRange(track: Track): string {
+  const pages = pageCount(track);
   return `${pages * MIN_MINUTES_PER_PAGE}–${pages * MAX_MINUTES_PER_PAGE}`;
 }
 
 /** Chapters across the whole handbook. */
 export function totalChapters(): number {
-  return areas.reduce((total, area) => total + area.chapters.length, 0);
+  return tracks.reduce((total, track) => total + track.chapters.length, 0);
 }
 
 /** Pages across the whole handbook. */
 export function totalPages(): number {
-  return areas.reduce((total, area) => total + pageCount(area), 0);
+  return tracks.reduce((total, track) => total + pageCount(track), 0);
 }
