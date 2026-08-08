@@ -144,6 +144,22 @@ container's own. The dev command passes `--poll` because bind mounts don't
 forward filesystem events on macOS/Windows. Docker is local convenience only;
 CI builds on the runner and never uses these files.
 
+## Layout width
+
+One token governs it: `--eh-content-max` (75rem / 1200px) in
+`src/css/custom.css`. Page containers set
+`max-width: calc(var(--eh-content-max) + var(--eh-gutter) * 2)`, so the content
+column is fluid below 1200px and pinned to exactly 1200px above it. Infima's
+`--ifm-container-width{,-xl}` are aliased to the same token so future doc pages
+line up with the custom pages.
+
+Deliberately a constant, not a fluid width: this is a prose site, and past
+~1200px any extra width has to be handed back as a measure cap anyway. Running
+text carries its own narrower caps (`46rem` lead, `38rem` body) — keep those
+when adding sections, and let the *container* be the thing that fills the
+width. Change the width in the token only; don't reintroduce per-component
+`max-width` values on sections.
+
 ## Site shell notes
 
 - `src/theme/Navbar/Content` is a **swizzled eject** of the Docusaurus navbar,

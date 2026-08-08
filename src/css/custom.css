@@ -6,6 +6,17 @@
 :root {
   --eh-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
     monospace;
+
+  /*
+   * The one width the layout is designed against. Content is fluid below this
+   * and pinned to it above; page containers add the gutter on top (see
+   * `.page` in the page/component modules). Change it here only.
+   *
+   * Constant rather than fluid because this is a prose site: past ~1200px,
+   * extra width has to be given back as a measure cap anyway. Running text
+   * carries its own narrower caps (46rem lead, 38rem body).
+   */
+  --eh-content-max: 75rem; /* 1200px */
   --eh-gutter: clamp(1.5rem, 7vw, 7rem);
 
   /* Light */
@@ -31,6 +42,10 @@
   --ifm-font-color-base: var(--eh-fg);
   --ifm-heading-color: var(--eh-fg);
   --ifm-link-color: var(--eh-fg);
+  /* Keep Docusaurus's own containers (footer, future doc pages) on the same
+     width as our custom pages instead of Infima's 1140/1320 defaults. */
+  --ifm-container-width: var(--eh-content-max);
+  --ifm-container-width-xl: var(--eh-content-max);
   --ifm-navbar-height: 4rem;
   --ifm-navbar-padding-horizontal: clamp(1rem, 2vw, 1.75rem);
   --ifm-navbar-background-color: var(--eh-bg);

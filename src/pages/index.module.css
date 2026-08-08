@@ -3,17 +3,21 @@
  * proportions of AreaLanding so the two read as the same system.
  */
 
+/* Content column is exactly --eh-content-max; the gutter sits outside it. */
 .page {
   width: 100%;
-  max-width: 90rem;
+  max-width: calc(var(--eh-content-max) + var(--eh-gutter) * 2);
   margin: 0 auto;
   padding: 0 var(--eh-gutter);
 }
 
 /* Hero */
 
+/*
+ * Sections span the full container; only running prose is capped, so wide
+ * viewports get used without stretching text past a readable measure.
+ */
 .hero {
-  max-width: 56rem;
   padding: clamp(3rem, 7vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
 }
 
@@ -39,14 +43,14 @@
 
 .title {
   margin: 0;
-  font-size: clamp(2.75rem, 6.5vw, 4.25rem);
+  font-size: clamp(2.75rem, 6vw, 5rem);
   font-weight: 900;
   letter-spacing: -0.035em;
   line-height: 1.02;
 }
 
 .summary {
-  max-width: 42rem;
+  max-width: 46rem;
   margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
   color: var(--eh-muted);
   font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
@@ -109,8 +113,8 @@
 /* Stats */
 
 .stats {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
@@ -146,7 +150,6 @@
 /* Sections */
 
 .section {
-  max-width: 56rem;
   padding-bottom: clamp(3rem, 6vw, 5rem);
 }
 
@@ -202,7 +205,7 @@
 
 .areaGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin: 0;
   padding: 0;
@@ -264,6 +267,12 @@
   color: var(--eh-muted);
   font-size: 0.9375rem;
   line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .areaGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 996px) {
