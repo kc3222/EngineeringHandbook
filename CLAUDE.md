@@ -149,10 +149,14 @@ CI builds on the runner and never uses these files.
 - `src/theme/Navbar/Content` is a **swizzled eject** of the Docusaurus navbar,
   needed for the three-slot layout (wordmark / centred areas / search +
   theme). It may need reconciling on a Docusaurus major upgrade.
-- Area I lives at `/`; the other five are `/backend`, `/data`, `/ai`, `/ml`,
-  `/cloud`. Active nav state is computed in `src/components/AreaNav` rather
-  than via `activeBasePath`, because the root path would otherwise match every
-  route.
+- `/` is the "about this site" page (`src/pages/index.tsx`) — what the
+  handbook is, how it's organised, and a directory of the six areas. It is
+  **not** an area page; every area has its own route (`/frontend`, `/backend`,
+  `/data`, `/ai`, `/ml`, `/cloud`), so no nav item is active on `/`.
+- Aggregate figures on the about page come from `totalChapters()` /
+  `totalPages()` in `src/data/handbook.ts`. Don't hardcode them — they're
+  currently 22 and 111, which already disagrees with the "~99 pages" estimate
+  in `handbook-structure.md`.
 - The search palette indexes the outline only. Point it at real page content
   once `content/` exists — the palette UI itself can stay.
 

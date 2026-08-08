@@ -1,0 +1,296 @@
+/**
+ * The "about this site" front page. Shares the design tokens and hero
+ * proportions of AreaLanding so the two read as the same system.
+ */
+
+.page {
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 var(--eh-gutter);
+}
+
+/* Hero */
+
+.hero {
+  max-width: 56rem;
+  padding: clamp(3rem, 7vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+  padding: 0.4375rem 0.875rem;
+  border: 1px solid var(--eh-line);
+  border-radius: 999px;
+  background-color: var(--eh-surface);
+  color: var(--eh-muted);
+  font-size: 0.8125rem;
+}
+
+.dot {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 50%;
+  background-color: var(--eh-muted);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.75rem, 6.5vw, 4.25rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.summary {
+  max-width: 42rem;
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 0;
+  color: var(--eh-muted);
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  line-height: 1.55;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.primaryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background-color: var(--eh-invert-bg);
+  color: var(--eh-invert-fg);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.primaryAction:hover {
+  background-color: var(--eh-invert-bg-hover);
+  color: var(--eh-invert-fg);
+  text-decoration: none;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--eh-line);
+  border-radius: 12px;
+  color: var(--eh-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.secondaryAction:hover {
+  border-color: var(--eh-line-strong);
+  color: var(--eh-fg);
+  text-decoration: none;
+}
+
+.rule {
+  height: 1px;
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  border: 0;
+  background-color: var(--eh-line);
+}
+
+/* Stats */
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.stat {
+  padding: 0 clamp(1.25rem, 3vw, 2.25rem);
+  border-left: 1px solid var(--eh-line);
+}
+
+.stat:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.statValue {
+  font-size: clamp(1.875rem, 3.2vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.statValueMono {
+  font-family: var(--eh-font-mono);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.statLabel {
+  margin-top: 0.5rem;
+  color: var(--eh-faint);
+  font-size: 0.8125rem;
+}
+
+/* Sections */
+
+.section {
+  max-width: 56rem;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.section:last-of-type {
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.sectionHeading {
+  margin: 0 0 1.5rem;
+  color: var(--eh-faint);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sectionIntro {
+  max-width: 38rem;
+  margin: -0.75rem 0 1.75rem;
+  color: var(--eh-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* What this is */
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 2rem;
+}
+
+.principle {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--eh-line);
+}
+
+.principleTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.principleBody {
+  margin: 0.5rem 0 0;
+  color: var(--eh-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* Areas */
+
+.areaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.areaCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  border: 1px solid var(--eh-line);
+  border-radius: 14px;
+  background-color: var(--eh-surface);
+  color: inherit;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.areaCard:hover {
+  border-color: var(--eh-line-strong);
+  background-color: var(--eh-hover);
+  text-decoration: none;
+  color: inherit;
+}
+
+.areaNumber {
+  color: var(--eh-faint);
+  font-family: var(--eh-font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.areaTitle {
+  margin-top: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.areaSummary {
+  flex: 1;
+  margin-top: 0.5rem;
+  color: var(--eh-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.areaMeta {
+  margin-top: 1.25rem;
+  color: var(--eh-faint);
+  font-size: 0.8125rem;
+}
+
+/* Status */
+
+.statusBody {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--eh-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 996px) {
+  .principles {
+    grid-template-columns: 1fr;
+    gap: 1.5rem 0;
+  }
+
+  .areaGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Four stats in a row would wrap unevenly — pair them off instead. */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 0;
+  }
+
+  .stat {
+    padding: 0 1rem;
+  }
+
+  .stat:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

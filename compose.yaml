@@ -14,12 +14,16 @@ services:
     volumes:
       # The working tree, so edits reload live.
       - .:/app
-      # Named volumes keep container-generated files out of the bind mount:
-      # node_modules is Linux-built here and macOS-built on the host, and
-      # .docusaurus/build cache absolute paths that differ between the two.
+      # Two things must not be shared with the host:
+      #   node_modules  - Linux-built in here, macOS-built out there.
+      #   .docusaurus   - generated modules embed absolute paths, so a host
+      #                   build writes /Users/... into files the container
+      #                   resolves at /app/... and compilation fails.
+      # build/ is deliberately NOT masked: the dev server never writes it, and
+      # mounting a volume there makes the directory un-removable from the
+      # host, which breaks `npm run build` while the container is up.
       - node_modules:/app/node_modules
       - docusaurus_cache:/app/.docusaurus
-      - build_output:/app/build
     # Bind mounts don't forward filesystem events on macOS or Windows, so the
     # watcher has to poll for hot reload to work.
     command: npm start -- --host 0.0.0.0 --poll 1000
@@ -39,4 +43,3 @@ services:
 volumes:
   node_modules:
   docusaurus_cache:
-  build_output:

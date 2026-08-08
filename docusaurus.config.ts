@@ -80,11 +80,7 @@ const config: Config = {
         to: area.permalink,
         label: area.navLabel,
         position: 'left' as const,
-        // The first area lives at the site root, which `activeBasePath` would
-        // match on every route — pin it to the root path instead.
-        ...(area.permalink === '/'
-          ? {activeBaseRegex: `^${baseUrl}?$`}
-          : {activeBasePath: area.permalink}),
+        activeBasePath: area.permalink,
       })),
     },
     footer: {

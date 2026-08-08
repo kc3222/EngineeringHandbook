@@ -136,6 +136,8 @@ function SearchPalette({onClose}: {onClose: () => void}): React.ReactNode {
       if (!entry) {
         return;
       }
+      // Docusaurus's router scrolls to the #chapter-NN anchor itself; the
+      // chapters carry a scroll-margin-top so the sticky navbar clears them.
       history.push(`${baseUrl}${entry.to.replace(/^\//, '')}`);
       onClose();
     },

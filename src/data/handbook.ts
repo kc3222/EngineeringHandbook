@@ -46,7 +46,7 @@ export const areas: Area[] = [
     eyebrow: 'Where the interface takes shape',
     summary:
       'Components, rendering strategy, styling systems, and the tests that keep them honest.',
-    permalink: '/',
+    permalink: '/frontend',
     status: 'Draft',
     chapters: [
       {
@@ -314,4 +314,14 @@ export function pageCount(area: Area): number {
 export function readMinutesRange(area: Area): string {
   const pages = pageCount(area);
   return `${pages * MIN_MINUTES_PER_PAGE}–${pages * MAX_MINUTES_PER_PAGE}`;
+}
+
+/** Chapters across the whole handbook. */
+export function totalChapters(): number {
+  return areas.reduce((total, area) => total + area.chapters.length, 0);
+}
+
+/** Pages across the whole handbook. */
+export function totalPages(): number {
+  return areas.reduce((total, area) => total + pageCount(area), 0);
 }

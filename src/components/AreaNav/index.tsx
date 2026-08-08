@@ -12,9 +12,8 @@ const stripTrailingSlash = (path: string): string =>
   path.length > 1 ? path.replace(/\/$/, '') : path;
 
 /**
- * The centred area switcher in the navbar. Active state is computed here
- * rather than via `activeBasePath` because the first area lives at the site
- * root, which would otherwise match every route.
+ * The centred area switcher in the navbar. Every area has its own path, so the
+ * root ("about this site") page correctly leaves all six links inactive.
  */
 export default function AreaNav({
   className,
@@ -26,7 +25,6 @@ export default function AreaNav({
   const current = stripTrailingSlash(useLocation().pathname);
   // Always ends in a slash, e.g. "/EngineeringHandbook/".
   const base = useBaseUrl('/');
-  const root = stripTrailingSlash(base);
 
   return (
     <nav className={clsx(styles.areaNav, className)} aria-label="Handbook areas">
@@ -34,8 +32,8 @@ export default function AreaNav({
         const href = stripTrailingSlash(
           `${base}${area.permalink.replace(/^\//, '')}`,
         );
-        const isActive =
-          href === root ? current === root : current.startsWith(href);
+        // Prefix match on a path segment, so /ml never lights up for /mlops.
+        const isActive = current === href || current.startsWith(`${href}/`);
 
         return (
           <Link
