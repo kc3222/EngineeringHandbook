@@ -1,10 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
 
 import {
+  chapterHref,
   pageCount,
   readMinutesRange,
+  trackStartHref,
   type Track,
 } from '@site/src/data/handbook';
 
@@ -51,9 +54,11 @@ export default function TrackLanding({track}: {track: Track}): React.ReactNode {
           <p className={styles.summary}>{track.summary}</p>
 
           <div className={styles.actions}>
-            <a className={styles.primaryAction} href="#chapters">
-              Browse chapters <span aria-hidden="true">→</span>
-            </a>
+            <Link
+              className={styles.primaryAction}
+              to={trackStartHref(track)}>
+              Start reading <span aria-hidden="true">→</span>
+            </Link>
             <p className={styles.count}>
               {chapters} chapters · {pages} pages
             </p>
@@ -80,21 +85,26 @@ export default function TrackLanding({track}: {track: Track}): React.ReactNode {
                   key={chapter.slug}
                   id={`chapter-${number}`}
                   className={styles.chapter}>
-                  <span className={styles.chapterNumber}>{number}</span>
-                  <div className={styles.chapterBody}>
-                    <h3 className={styles.chapterTitle}>{chapter.title}</h3>
-                    <p className={styles.chapterBlurb}>{chapter.blurb}</p>
-                  </div>
-                  <span className={styles.chapterPages}>
-                    {chapter.pages} pages
-                  </span>
+                  <Link
+                    className={styles.chapterLink}
+                    to={chapterHref(track, chapter)}>
+                    <span className={styles.chapterNumber}>{number}</span>
+                    <div className={styles.chapterBody}>
+                      <h3 className={styles.chapterTitle}>{chapter.title}</h3>
+                      <p className={styles.chapterBlurb}>{chapter.blurb}</p>
+                    </div>
+                    <span className={styles.chapterPages}>
+                      {chapter.pages} pages
+                    </span>
+                  </Link>
                 </li>
               );
             })}
           </ol>
 
           <p className={styles.note}>
-            Pages for this track are still being written.
+            Each chapter opens on its overview page. Most pages are still
+            placeholders while the handbook is being drafted.
           </p>
         </section>
       </main>

@@ -19,6 +19,20 @@ export type Chapter = {
   pages: number;
 };
 
+/**
+ * The frontmatter every page file under `content/` carries. Mirrors the schema
+ * documented in CLAUDE.md — a future migration script reads these fields, so
+ * add to both places or neither.
+ */
+export type PageFrontMatter = {
+  title: string;
+  description?: string;
+  track: number;
+  chapter: number;
+  page: number;
+  readMinutes: number;
+};
+
 export type Track = {
   /** Track number, 1–6. Matches the `track` field in page frontmatter. */
   number: number;
@@ -298,12 +312,69 @@ export const tracks: Track[] = [
 const MIN_MINUTES_PER_PAGE = 1;
 const MAX_MINUTES_PER_PAGE = 5;
 
+/**
+ * Where the docs plugin mounts `content/`. Doc URLs are
+ * `/{docsRouteBasePath}/{trackDir}/{chapter-slug}/{page-slug}` — Docusaurus
+ * strips the `NN-` number prefixes from directory and file names when it builds
+ * the route, so only the slugs survive.
+ *
+ * It is not `/` because the about page owns that route.
+ */
+export const docsRouteBasePath = 'read';
+
+/** The `content/` sub-directory holding a track, e.g. `track-4-ai`. */
+export function trackDir(track: Track): string {
+  return `track-${track.number}-${track.slug}`;
+}
+
+/** The chapter sub-directory, e.g. `12-llm-fundamentals`. */
+export function chapterDir(chapter: Chapter): string {
+  return `${String(chapter.number).padStart(2, '0')}-${chapter.slug}`;
+}
+
+/**
+ * Every chapter's first page is `01-overview.md`, so a chapter's entry point is
+ * derivable from the outline alone — nothing has to be registered by hand.
+ */
+export function chapterHref(track: Track, chapter: Chapter): string {
+  return `/${docsRouteBasePath}/${trackDir(track)}/${chapter.slug}/overview`;
+}
+
+/** Where "start reading this track" goes: its first chapter. */
+export function trackStartHref(track: Track): string {
+  return chapterHref(track, track.chapters[0]!);
+}
+
 export function getTrack(slug: string): Track {
   const track = tracks.find((a) => a.slug === slug);
   if (!track) {
     throw new Error(`Unknown handbook track: ${slug}`);
   }
   return track;
+}
+
+/** The track a doc route belongs to, or undefined off the doc routes. */
+export function trackForPath(pathname: string): Track | undefined {
+  return tracks.find((track) =>
+    pathname.includes(`/${docsRouteBasePath}/${trackDir(track)}`),
+  );
+}
+
+/**
+ * Resolves a doc's `sourceDirName` (`track-4-ai/12-llm-fundamentals`) back to
+ * the outline, so a page can label itself with its track and chapter without
+ * repeating either in frontmatter.
+ */
+export function locate(sourceDirName: string): {
+  track?: Track;
+  chapter?: Chapter;
+} {
+  const [trackSegment, chapterSegment] = sourceDirName.split('/');
+  const track = tracks.find((t) => trackDir(t) === trackSegment);
+  const chapter = track?.chapters.find(
+    (c) => chapterDir(c) === chapterSegment,
+  );
+  return {track, chapter};
 }
 
 export function pageCount(track: Track): number {

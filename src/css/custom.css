@@ -54,6 +54,26 @@
   --ifm-navbar-link-hover-color: var(--eh-fg);
   --ifm-footer-background-color: transparent;
   --ifm-global-radius: 12px;
+
+  /* Reading surface (docs). The sidebar is tinted a step off the page so the
+     chapter tree reads as chrome rather than content. */
+  --eh-sidebar-bg: #fbfbfb;
+  --eh-prose: #1f1f1f;
+  --doc-sidebar-width: 19rem;
+  /* Wide enough for the collapsed rail's pill, which stacks its controls in a
+     column — the sidebar container clips overflow, so nothing can spill past. */
+  --doc-sidebar-hidden-width: 3rem;
+  --ifm-menu-color: var(--eh-muted);
+  --ifm-menu-color-active: var(--eh-fg);
+  --ifm-menu-color-background-active: var(--eh-hover);
+  --ifm-menu-color-background-hover: var(--eh-hover);
+  --ifm-toc-border-color: var(--eh-line);
+  --ifm-code-background: var(--eh-surface);
+  --ifm-code-font-size: 0.875em;
+  --ifm-table-border-color: var(--eh-line);
+  --ifm-table-stripe-background-color: transparent;
+  --ifm-blockquote-color: var(--eh-muted);
+  --ifm-blockquote-border-color: var(--eh-line-strong);
 }
 
 [data-theme='dark'] {
@@ -72,6 +92,8 @@
   --eh-invert-fg: #0a0a0a;
 
   --ifm-color-primary: #ffffff;
+  --eh-sidebar-bg: #0f0f0f;
+  --eh-prose: #d8d8d8;
 }
 
 html,
@@ -124,6 +146,218 @@ body {
   .navbar__title {
     font-size: 0.875rem;
   }
+}
+
+/*
+ * Reading surface
+ *
+ * Content pages use the stock Docusaurus doc shell (sidebar + article + TOC),
+ * restyled here rather than rebuilt. Layout lives in the swizzled
+ * `src/theme/DocItem/Layout`; this section is the theming Infima exposes only
+ * through global classes.
+ */
+
+/*
+ * On a content page the sidebar header carries everything the navbar did —
+ * home, tracks, search, theme — so the navbar is dropped and its height token
+ * zeroed (the theme offsets the sidebar and TOC by that token).
+ *
+ * Matched with `:has()` on the sidebar container, which only content pages
+ * render, and scoped to desktop so the mobile navbar keeps its drawer — that
+ * drawer is the only way to reach the chapter tree on a small screen. In a
+ * browser without `:has()` both rules simply don't apply and the navbar stays,
+ * which is the layout this replaces rather than a broken one.
+ */
+@media (min-width: 997px) {
+  html:has(.theme-doc-sidebar-container) {
+    --ifm-navbar-height: 0px;
+  }
+
+  html:has(.theme-doc-sidebar-container) .navbar {
+    display: none;
+  }
+}
+
+/* Sidebar — chapter tree */
+
+.theme-doc-sidebar-container {
+  background-color: var(--eh-sidebar-bg);
+  border-right: 1px solid var(--eh-line) !important;
+}
+
+.theme-doc-sidebar-container .menu {
+  padding: 0.25rem 0.75rem 2.5rem;
+}
+
+.menu__list .menu__list {
+  margin-left: 0.9rem;
+  padding-left: 0.4rem;
+  border-left: 1px solid var(--eh-line);
+}
+
+.menu__link,
+.menu__caret {
+  border-radius: 8px;
+}
+
+.menu__link {
+  padding: 0.375rem 0.625rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/* Chapter rows sit a step above their pages in the hierarchy. */
+.menu__link--sublist {
+  font-weight: 600;
+  color: var(--eh-fg);
+}
+
+.menu__link--active:not(.menu__link--sublist) {
+  font-weight: 600;
+}
+
+.menu__list-item-collapsible:hover,
+.menu__list-item-collapsible--active {
+  background-color: transparent;
+}
+
+/* Table of contents */
+
+.table-of-contents {
+  font-size: 0.8125rem;
+  padding-left: 0.75rem;
+}
+
+.table-of-contents__link {
+  color: var(--eh-muted);
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
+  color: var(--eh-fg);
+}
+
+/* Article */
+
+.markdown {
+  color: var(--eh-prose);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.markdown h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 0.875rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.markdown h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.markdown > p,
+.markdown li {
+  max-width: 42rem;
+}
+
+.markdown a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--eh-line-strong);
+}
+
+.markdown strong {
+  color: var(--eh-fg);
+  font-weight: 600;
+}
+
+.markdown table {
+  display: table;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+
+.markdown th {
+  color: var(--eh-fg);
+  font-weight: 600;
+  text-align: left;
+}
+
+.markdown pre {
+  border: 1px solid var(--eh-line);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+}
+
+/* CodeBlock paints its background inline from the Prism theme, which is the one
+   coloured surface on an otherwise neutral page — hence the !important. Token
+   colours still come from Prism. */
+.theme-code-block,
+.theme-code-block pre {
+  background-color: var(--eh-surface) !important;
+}
+
+.markdown blockquote {
+  border-left-width: 2px;
+}
+
+/*
+ * Admonitions carry hashed CSS-module class names, so the heading row can only
+ * be reached by attribute match. Restyled to the flat callout the rest of the
+ * page uses instead of Infima's coloured alert.
+ */
+.theme-admonition {
+  /* Infima tints the text per admonition type; the handbook keeps prose colour
+     and lets the callout read through its border and surface instead. */
+  --ifm-alert-foreground-color: var(--eh-prose);
+  border: 1px solid var(--eh-line);
+  border-left: 2px solid var(--eh-line-strong);
+  border-radius: 10px;
+  background-color: var(--eh-surface);
+  box-shadow: none;
+  font-size: 0.9375rem;
+}
+
+.theme-admonition [class*='admonitionHeading'] {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--eh-fg);
+}
+
+.theme-admonition [class*='admonitionIcon'] svg {
+  fill: var(--eh-muted);
+}
+
+.theme-admonition [class*='admonitionContent'] > :last-child {
+  margin-bottom: 0;
+}
+
+/* Prev / next */
+
+.pagination-nav__link {
+  border-color: var(--eh-line);
+  border-radius: 12px;
+}
+
+.pagination-nav__link:hover {
+  background-color: var(--eh-surface);
+}
+
+.pagination-nav__sublabel {
+  color: var(--eh-faint);
+  font-size: 0.75rem;
+}
+
+.pagination-nav__label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* Footer */

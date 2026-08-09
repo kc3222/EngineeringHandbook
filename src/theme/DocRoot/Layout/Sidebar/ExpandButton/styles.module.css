@@ -1,0 +1,50 @@
+@media (min-width: 997px) {
+  /* Covers the collapsed rail so the container's `cursor: pointer` doesn't
+     suggest the empty strip is clickable — only the pill is. */
+  .rail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* The sidebar container is pulled up under the fixed navbar
+       (`margin-top: -navbar-height`), so the rail has to give it back or the
+       pill sits behind the navbar. */
+    padding-top: calc(var(--ifm-navbar-height) + 0.75rem);
+    cursor: default;
+  }
+
+  /* Stacked rather than side by side: the rail only has to be one control wide,
+     which is the point of collapsing in the first place. */
+  .pill {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0.1875rem;
+    background-color: var(--eh-surface);
+    border: 1px solid var(--eh-line);
+    border-radius: 10px;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    color: var(--eh-muted);
+    background: none;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+
+  .button:hover {
+    background-color: var(--eh-hover);
+    color: var(--eh-fg);
+  }
+}

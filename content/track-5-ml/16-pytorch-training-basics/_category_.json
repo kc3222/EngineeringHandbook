@@ -1,0 +1,14 @@
+{
+  "label": "PyTorch & Model Training Basics",
+  "position": 16,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 16,
+    "pages": 6
+  }
+}

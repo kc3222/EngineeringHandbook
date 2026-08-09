@@ -1,0 +1,14 @@
+{
+  "label": "FastAPI & Python Services",
+  "position": 7,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 7,
+    "pages": 5
+  }
+}

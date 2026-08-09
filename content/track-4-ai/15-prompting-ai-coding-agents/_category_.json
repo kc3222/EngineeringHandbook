@@ -1,0 +1,14 @@
+{
+  "label": "Prompting & AI Coding Agents",
+  "position": 15,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 15,
+    "pages": 5
+  }
+}

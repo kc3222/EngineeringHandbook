@@ -1,0 +1,43 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
+  padding: 2rem clamp(0.25rem, 2vw, 2rem) 4rem;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* The article is the measure-capped column; the grid track around it can be
+   wider without the prose getting hard to read. */
+.article {
+  max-width: 46rem;
+}
+
+.toc {
+  display: none;
+}
+
+.tocLabel {
+  margin: 0 0 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--eh-faint);
+}
+
+@media (min-width: 1200px) {
+  .withToc {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+
+  .withToc .toc {
+    display: block;
+    position: sticky;
+    top: calc(var(--ifm-navbar-height) + 1.5rem);
+    align-self: start;
+  }
+}

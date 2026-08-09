@@ -1,0 +1,14 @@
+{
+  "label": "Authentication & Authorization",
+  "position": 8,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 8,
+    "pages": 5
+  }
+}

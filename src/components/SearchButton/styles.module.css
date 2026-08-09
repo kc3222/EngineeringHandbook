@@ -8,6 +8,7 @@
   border-radius: 12px;
   background-color: var(--eh-surface);
   color: var(--eh-faint);
+  font-family: inherit;
   font-size: 0.9375rem;
   cursor: pointer;
   transition: border-color 120ms ease, color 120ms ease;
@@ -18,7 +19,7 @@
   color: var(--eh-fg);
 }
 
-.triggerLabel {
+.label {
   padding-right: 1.5rem;
 }
 
@@ -44,170 +45,46 @@
   line-height: 1;
 }
 
-/* Palette */
+/* Navbar look: icon only until there's room for the label and keys. */
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  display: flex;
-  justify-content: center;
-  padding: 12vh 1rem 1rem;
-  background-color: var(--eh-scrim);
-  backdrop-filter: blur(3px);
-}
-
-.palette {
-  display: flex;
-  flex-direction: column;
-  width: min(38rem, 100%);
-  max-height: 70vh;
-  overflow: hidden;
-  border: 1px solid var(--eh-line-strong);
-  border-radius: 16px;
-  background-color: var(--eh-elevated);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-}
-
-.field {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.9375rem 1rem;
-  border-bottom: 1px solid var(--eh-line);
-  color: var(--eh-faint);
-}
-
-.input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  background: transparent;
-  color: var(--eh-fg);
-  font-family: inherit;
-  font-size: 1rem;
-  outline: none;
-}
-
-.input::placeholder {
-  color: var(--eh-faint);
-}
-
-.esc {
-  padding: 0.1875rem 0.4375rem;
-  border: 1px solid var(--eh-line);
-  border-radius: 6px;
-  background-color: var(--eh-hover);
-  box-shadow: none;
-  color: var(--eh-muted);
-  font-family: var(--ifm-font-family-base);
-  font-size: 0.6875rem;
-  line-height: 1;
-}
-
-.results {
-  flex: 1;
-  overflow-y: auto;
-  margin: 0;
-  padding: 0.375rem;
-  list-style: none;
-}
-
-.result {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.625rem 0.75rem;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.hit {
-  background-color: var(--eh-hover);
-}
-
-.kind {
-  flex: none;
-  width: 4.25rem;
-  color: var(--eh-faint);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.resultBody {
-  flex: 1;
-  min-width: 0;
-}
-
-.resultTitle {
-  display: block;
-  color: var(--eh-fg);
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-.resultDesc {
-  display: -webkit-box;
-  overflow: hidden;
-  margin-top: 0.125rem;
-  color: var(--eh-muted);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.resultMeta {
-  flex: none;
-  color: var(--eh-faint);
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
-.empty {
-  margin: 0;
-  padding: 1.75rem 1rem;
-  color: var(--eh-muted);
-  font-size: 0.9375rem;
-  text-align: center;
-}
-
-.hint {
-  padding: 0.625rem 1rem;
-  border-top: 1px solid var(--eh-line);
-  color: var(--eh-faint);
-  font-size: 0.75rem;
-}
-
-.triggerIcon {
+.icon {
   display: none;
 }
 
-/* Narrow navbars show a plain search icon — the keyboard hint is desktop-only. */
 @media (max-width: 996px) {
-  .trigger {
+  .trigger:not(.field) {
     width: 2.375rem;
     padding: 0;
     justify-content: center;
   }
 
-  .triggerIcon {
+  .trigger:not(.field) .icon {
     display: inline-flex;
   }
 
-  .triggerLabel,
-  .keys {
+  .trigger:not(.field) .label,
+  .trigger:not(.field) .keys {
     display: none;
   }
+}
 
-  .resultMeta {
-    display: none;
-  }
+/* Sidebar look: a full-width field with the icon leading. */
+
+.field {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.5rem 0 0.75rem;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.field .icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.field .label {
+  flex: 1;
+  padding-right: 0;
+  text-align: left;
 }
