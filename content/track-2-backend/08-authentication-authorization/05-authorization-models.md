@@ -13,22 +13,11 @@ readMinutes: 5
 
 ## Three models, increasing in power and cost
 
-```mermaid
-flowchart TB
-  subgraph R["RBAC — role-based"]
-    R1["subject → role → permission"]
-    R2["<i>editors may publish articles</i>"]
-  end
-  subgraph A["ABAC — attribute-based"]
-    A1["policy over attributes of<br/>subject, resource, action, context"]
-    A2["<i>a manager may approve an expense<br/>under €5,000 in their own region</i>"]
-  end
-  subgraph B["ReBAC — relationship-based"]
-    B1["a graph of relationships between<br/>subjects and objects"]
-    B2["<i>you may edit this document because<br/>you are an editor of a folder<br/>it lives in</i>"]
-  end
-  R --> A --> B
-```
+| Model | Decides on | Example |
+| --- | --- | --- |
+| **RBAC** — role-based | subject → role → permission | Editors may publish articles |
+| **ABAC** — attribute-based | attributes of subject, resource, action, context | A manager may approve an expense under €5,000 in their own region |
+| **ReBAC** — relationship-based | a graph of relationships between subjects and objects | You may edit this document because you're an editor of a folder it lives in |
 
 **RBAC** is the default and covers most applications. Roles are coarse and readable,
 and "who can do what" is a table someone non-technical can review. It degrades when
@@ -52,16 +41,14 @@ permissions, contextual limits — can't be expressed, not in anticipation of on
 More consequential than which model you pick. Enforcement happens at one or more
 layers, and the depth determines what a bug can cost.
 
-```mermaid
-flowchart TB
-  G["API gateway — coarse<br/><i>is this token valid? does it have this scope?</i>"] --> C["Controller / route — coarse<br/><i>does this user have the admin role?</i>"]
-  C --> S["Service — object-level<br/><i>does THIS user own THIS order?</i>"]
-  S --> D["Database RLS — the backstop<br/><i>rows are filtered no matter who asks</i>"]
-  style S fill:#9a3412,color:#fff
-  style D fill:#166534,color:#fff
-```
+| Layer | Question it can answer |
+| --- | --- |
+| API gateway | Is this token valid? Does it carry this scope? |
+| Controller / route | Does this user have the admin role? |
+| **Service** | **Does *this* user own *this* order?** |
+| Database RLS | The backstop — rows are filtered no matter who asks |
 
-The highlighted layer is where the vulnerabilities are. Route-level checks answer "may
+The service layer is where the vulnerabilities are. Route-level checks answer "may
 this *kind* of user call this endpoint" — they cannot answer "may this *particular*
 user touch this *particular* record", because the record id only exists at request
 time.
@@ -143,6 +130,6 @@ catastrophic.
 
 - [OWASP API Security Top 10 — Broken Object Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/) and [Broken Function Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/)
 - [OWASP — Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+- [OpenFGA](https://openfga.dev/docs) and [SpiceDB](https://authzed.com/docs) — actively developed ReBAC engines, and the practical way in; both derive from [Google's Zanzibar paper](https://research.google/pubs/pub48190/).
 - [NIST — Attribute Based Access Control (SP 800-162)](https://csrc.nist.gov/pubs/sp/800/162/upd2/final)
-- [Google — Zanzibar: a global authorization system](https://research.google/pubs/pub48190/) and [OpenFGA](https://openfga.dev/)
 - [Spring Security — Authorization](https://docs.spring.io/spring-security/reference/servlet/authorization/index.html) · [FastAPI — Security](https://fastapi.tiangolo.com/tutorial/security/)

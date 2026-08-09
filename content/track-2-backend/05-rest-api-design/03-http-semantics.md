@@ -53,16 +53,13 @@ sequenceDiagram
   participant C as Client
   participant S as Service
   participant D as Store
-  C->>S: POST /payments<br/>Idempotency-Key: 7f3c…
-  S->>D: claim key 7f3c…
-  D-->>S: claimed — new
-  S->>D: create payment
+  C->>S: POST /payments<br/>key 7f3c
+  S->>D: store key + charge<br/>in one transaction
   S-->>C: 201 Created
-  Note over C,S: response lost —<br/>client retries
-  C->>S: POST /payments<br/>same key, same body
-  S->>D: claim key 7f3c…
-  D-->>S: already used →<br/>stored response
-  S-->>C: 201 Created — replayed,<br/>no second charge
+  Note over C,S: response lost
+  C->>S: POST /payments<br/>key 7f3c (retry)
+  S->>D: key already used
+  S-->>C: 201 Created (replayed)<br/>no second charge
 ```
 
 Details that matter: the key must be stored **in the same transaction** as the
@@ -111,14 +108,13 @@ sequenceDiagram
   participant B as Client B
   participant S as Service
   A->>S: GET /orders/1a2b
-  S-->>A: 200, ETag "v7"
+  S-->>A: ETag "v7"
   B->>S: GET /orders/1a2b
-  S-->>B: 200, ETag "v7"
-  A->>S: PUT /orders/1a2b<br/>If-Match: "v7"
-  S-->>A: 200, ETag "v8"
-  B->>S: PUT /orders/1a2b<br/>If-Match: "v7"
-  S-->>B: 412 Precondition Failed
-  Note over B: re-read, merge, retry — no silent loss
+  S-->>B: ETag "v7"
+  A->>S: PUT, If-Match: "v7"
+  S-->>A: 200, now "v8"
+  B->>S: PUT, If-Match: "v7"
+  S-->>B: 412 — stale, re-read first
 ```
 
 The same validator serves caching in the read direction: a client sends

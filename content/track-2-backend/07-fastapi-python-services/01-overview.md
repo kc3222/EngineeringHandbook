@@ -16,13 +16,9 @@ readMinutes: 3
 FastAPI took a Python feature that was mostly documentation — type hints — and made
 it load-bearing. One annotation drives four things at once:
 
-```mermaid
-flowchart LR
-  T["def create(order: CreateOrder)"] --> P["Parse &amp; coerce the request body"]
-  T --> V["Validate it, and 422 on failure"]
-  T --> D["Generate the OpenAPI schema"]
-  T --> E["Editor completion &amp; type checking"]
-```
+A single annotation — `def create(order: CreateOrder)` — parses and coerces the
+request body, validates it and returns `422` on failure, generates the OpenAPI
+schema, and gives your editor and type checker something real to work with.
 
 That's the whole design idea. The signature *is* the contract, so the schema can't
 drift from the implementation — the drift that makes hand-written OpenAPI documents

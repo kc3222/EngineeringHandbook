@@ -16,23 +16,6 @@ readMinutes: 4
 The layering everyone draws is only useful if the *constraints* come with it. The
 value isn't in having three boxes; it's in what each box refuses to know.
 
-```mermaid
-flowchart TB
-  HTTP["HTTP request"] --> C
-  subgraph L1["@RestController — the web layer"]
-    C["Parse, validate shape, map DTO ↔ domain,<br/>choose status code"]
-  end
-  subgraph L2["@Service — the domain layer"]
-    S["Business rules, orchestration,<br/>transaction boundary"]
-  end
-  subgraph L3["@Repository — the persistence layer"]
-    R["Queries, entity mapping"]
-  end
-  C --> S --> R --> DB[("PostgreSQL")]
-  C -. "must not know about" .-> DB
-  S -. "must not know about" .-> HTTP
-```
-
 | Layer | Owns | Must not contain |
 | --- | --- | --- |
 | Controller | HTTP concerns: routing, status codes, headers, DTO mapping | Business rules, database access |

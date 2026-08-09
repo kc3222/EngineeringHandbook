@@ -45,17 +45,14 @@ sequenceDiagram
   participant C as Client
   participant A as Auth server
   participant R as API
-  C->>C: generate code_verifier<br/>challenge = S256(verifier)
-  C->>U: redirect to /authorize<br/>+ state, code_challenge
+  C->>U: redirect to /authorize<br/>+ code_challenge
   U->>A: authenticate and consent
-  A->>U: redirect back<br/>with ?code and state
+  A->>U: redirect back with ?code
   U->>C: deliver code
-  C->>C: verify state matches
   C->>A: POST /token<br/>code + code_verifier
-  A->>A: check S256(verifier)<br/>== stored challenge
-  A-->>C: access_token<br/>+ refresh_token, id_token
-  C->>R: GET /orders<br/>Bearer …
-  R-->>C: 200
+  A->>A: verifier matches challenge?
+  A-->>C: access_token
+  C->>R: Authorization: Bearer …
 ```
 
 Why each part exists:
@@ -89,6 +86,13 @@ RFC 9700 formally deprecates two grants you will still find in older tutorials:
 
 RFC 9700 also rules out **bearer tokens in query strings**: they leak through logs,
 proxies and `Referer`. The `Authorization` header is the only correct place.
+
+These aren't just recommendations any more. **OAuth 2.1**
+([draft-ietf-oauth-v2-1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1),
+still an IETF draft as of 2026) consolidates RFC 6749, RFC 6750 and the security BCP
+into one document — making PKCE mandatory, removing the implicit and password grants
+outright, and requiring exact-match redirect URIs. It isn't final, but major identity
+providers already build to it, so writing to OAuth 2.1's rules today is the safe bet.
 
 ## What OpenID Connect adds
 
@@ -129,8 +133,8 @@ Scopes narrow a grant. They never widen a user's rights.
 
 ## References
 
-- [RFC 6749 — The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749.html) and [RFC 6750 — Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750.html)
-- [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html) (BCP 240)
+- [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html) (BCP 240, January 2025) — read this before RFC 6749; it's what changed.
+- [OAuth 2.1 — draft-ietf-oauth-v2-1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1) and [oauth.net/2.1](https://oauth.net/2.1/) — the consolidation in progress.
+- [RFC 6749 — The OAuth 2.0 Authorization Framework](https://www.rfc-editor.org/rfc/rfc6749.html) and [RFC 6750 — Bearer Token Usage](https://www.rfc-editor.org/rfc/rfc6750.html) — the base specs, still normative but incomplete on their own.
 - [RFC 7636 — PKCE](https://www.rfc-editor.org/rfc/rfc7636.html)
-- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html) and [Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)
-- [oauth.net — OAuth 2.0 Security Best Current Practice](https://oauth.net/2/oauth-best-practice/)
+- [OpenID Connect Core 1.0](https://openid.net/specs/openid-connect-core-1_0.html) (incorporating errata set 2) and [Discovery 1.0](https://openid.net/specs/openid-connect-discovery-1_0.html)

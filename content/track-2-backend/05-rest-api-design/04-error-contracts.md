@@ -92,20 +92,16 @@ error at a time.
 
 The point of an error taxonomy is that the client can act without reading prose:
 
-```mermaid
-flowchart LR
-  C{"Error occurs —<br/>whose fault?"}
-  C -->|"Caller — 4xx"| A{"Which<br/>kind?"}
-  A -->|"Unparseable"| B400["400 — fix<br/>the request"]
-  A -->|"Valid shape,<br/>bad values"| B422["422 — fix<br/>the fields"]
-  A -->|"No credentials"| B401["401 — authenticate,<br/>then retry"]
-  A -->|"Credentials,<br/>no rights"| B403["403 — do<br/>not retry"]
-  A -->|"State conflict"| B409["409 — re-read,<br/>then retry"]
-  A -->|"Too fast"| B429["429 — back off<br/>per Retry-After"]
-  C -->|"Ours — 5xx"| R{"Transient?"}
-  R -->|"Yes"| B503["503 — retry<br/>with backoff"]
-  R -->|"No"| B500["500 — page<br/>someone"]
-```
+| Condition | Status | What the client should do |
+| --- | --- | --- |
+| Unparseable request | `400` | Fix the request; don't retry |
+| Valid shape, bad values | `422` | Fix the fields; don't retry |
+| No credentials | `401` | Authenticate, then retry |
+| Credentials, no rights | `403` | Don't retry |
+| State conflict | `409` | Re-read, then retry |
+| Rate limited | `429` | Back off per `Retry-After` |
+| Transient server fault | `503` | Retry with backoff |
+| Server bug | `500` | Don't retry; page someone |
 
 Retryability is the axis clients care about most. Say it explicitly: document which
 `type` values are safe to retry, and pair `429` and `503` with `Retry-After` so the

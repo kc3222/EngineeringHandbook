@@ -38,12 +38,11 @@ a change tracker.
 
 ```mermaid
 flowchart TB
-  B["@Transactional method begins"] --> PC["Persistence context opens"]
-  PC --> L["repo.findById → entity loaded &amp; managed"]
-  L --> M["order.status = SHIPPED<br/><i>no save() call needed</i>"]
-  M --> F["Flush at commit:<br/>Hibernate diffs managed entities<br/>and issues UPDATE"]
-  F --> X["Commit — context closes,<br/>entities become detached"]
-  X --> LZ["Touching a lazy field now →<br/>LazyInitializationException"]
+  L["findById → entity is now managed"]
+  M["order.status = SHIPPED<br/>no save() needed"]
+  F["Commit: Hibernate diffs and<br/>issues the UPDATE itself"]
+  X["Context closes —<br/>entities are detached"]
+  L --> M --> F --> X
 ```
 
 Two consequences:

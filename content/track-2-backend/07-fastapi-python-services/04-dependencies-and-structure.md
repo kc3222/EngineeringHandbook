@@ -75,14 +75,6 @@ being added without the check.
 Connection pools, HTTP clients and ML models are startup concerns. Creating them
 inside a handler destroys pooling and, for a model, re-reads gigabytes per request.
 
-```mermaid
-flowchart TB
-  S["Process starts"] --> L1["lifespan: open pool,<br/>create AsyncClient, load model"]
-  L1 --> R["Serving — handlers borrow<br/>from state, never construct"]
-  R --> L2["lifespan teardown:<br/>close client, drain pool"]
-  L2 --> X["Process exits"]
-```
-
 ```python
 @asynccontextmanager
 async def lifespan(app: FastAPI):

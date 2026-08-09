@@ -16,25 +16,14 @@ readMinutes: 4
 Spring was built for Java, and it assumes three things Kotlin deliberately doesn't
 provide by default:
 
-```mermaid
-flowchart LR
-  subgraph K["Kotlin defaults"]
-    K1["Classes are final"]
-    K2["Types are non-null"]
-    K3["No no-arg constructor"]
-  end
-  subgraph S["Spring / JPA assume"]
-    S1["Classes can be subclassed<br/>for CGLIB proxies"]
-    S2["Fields may be null<br/>before injection"]
-    S3["A no-arg constructor exists<br/>for reflection"]
-  end
-  K1 -->|"kotlin-spring<br/>allopen"| S1
-  K2 -->|"constructor injection"| S2
-  K3 -->|"kotlin-jpa<br/>noarg"| S3
-```
+| Kotlin's default | What Spring/JPA assumes | What closes the gap |
+| --- | --- | --- |
+| Classes are final | Subclassable, for CGLIB proxies | `kotlin-spring` (all-open) |
+| Types are non-null | Fields may be null before injection | Constructor injection |
+| No no-arg constructor | One exists, for reflection | `kotlin-jpa` (no-arg) |
 
-Two compiler plugins close the gap, and Spring Initializr adds them for you — which
-is why most people never learn what they do until something breaks:
+The two compiler plugins are added by Spring Initializr for you — which is why most
+people never learn what they do until something breaks:
 
 ```kotlin
 plugins {

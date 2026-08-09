@@ -8,7 +8,7 @@ readMinutes: 4
 ---
 
 :::info[Prerequisites]
-**Spring Boot & Kotlin** — the overview's diagram of what `@SpringBootApplication` sets in motion.
+**Spring Boot & Kotlin** — what `@SpringBootApplication` sets in motion.
 :::
 
 ## The problem DI solves
@@ -41,19 +41,11 @@ Spring's container is the **application context**: a registry of objects (*beans
 and the graph of who needs whom. At startup it scans for bean definitions, resolves
 the graph, and instantiates in dependency order.
 
-```mermaid
-flowchart TB
-  subgraph Ctx["Application context"]
-    direction TB
-    C["OrderController"] --> S["OrderService"]
-    S --> R["OrderRepository<br/><i>proxy over your interface</i>"]
-    S --> P["PaymentClient"]
-    R --> DS["DataSource<br/><i>auto-configured</i>"]
-    P --> RC["RestClient"]
-  end
-  Boot["Startup: scan → resolve → instantiate"] --> Ctx
-  Ctx --> Req["HTTP request → controller → …"]
-```
+At startup Spring scans for bean definitions, resolves the graph, and instantiates in
+dependency order — so `OrderController` gets an `OrderService`, which gets an
+`OrderRepository` and a `PaymentClient`, which in turn get an auto-configured
+`DataSource` and HTTP client. By the time the first request arrives, the graph is
+fully built or the application failed to start.
 
 Beans arrive in the context three ways, and knowing which is which is most of
 debugging a wiring problem:

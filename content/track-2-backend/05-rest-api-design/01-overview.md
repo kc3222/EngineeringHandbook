@@ -22,36 +22,21 @@ That asymmetry is the whole reason to design deliberately. Internal code can be
 refactored on a Tuesday afternoon. A published response body cannot, because you
 don't control the clients and you often can't even enumerate them.
 
-```mermaid
-flowchart LR
-  subgraph Contract["The contract — hard to change"]
-    direction TB
-    U["URLs &amp; resources"]
-    M["Methods &amp; status codes"]
-    B["Request / response bodies"]
-    E["Error format"]
-    U ~~~ M ~~~ B ~~~ E
-  end
-  subgraph Impl["The implementation — cheap to change"]
-    direction TB
-    F["Framework"]
-    S["Service layout"]
-    D["Database schema"]
-    F ~~~ S ~~~ D
-  end
-  Contract -.->|"must not leak"| Impl
-```
+| Hard to change — the contract | Cheap to change — the implementation |
+| --- | --- |
+| URLs and resources | Framework |
+| Methods and status codes | Service layout |
+| Request / response bodies | Database schema |
+| Error format | Deployment topology |
 
-The single most common design failure is letting the right-hand box leak into the
+The single most common design failure is letting the right column leak into the
 left: an endpoint named after the table it queries, an error body that's a stack
 trace, a response that changes shape because someone added a JOIN.
 
 ## What "REST" is being used to mean here
 
-Strictly, REST is Roy Fielding's architectural style, and most APIs called RESTful
-don't satisfy all of it — in particular they skip
-[hypermedia controls](https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven),
-which Fielding considers non-negotiable.
+Strictly, REST is an architectural style whose constraints include hypermedia
+controls, and most APIs called RESTful don't implement those at all.
 
 This chapter uses the industry meaning: **resource-oriented HTTP with JSON**, using
 the methods and status codes as the specs define them. That's a lower bar than REST
@@ -79,5 +64,5 @@ taste" is just knowing what the methods and status codes already mean.
 
 ## References
 
-- [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html) — the current, consolidated HTTP spec; supersedes the RFC 723x series.
-- [Fielding, "REST APIs must be hypertext-driven"](https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven) — the author's own objection to how the term gets used.
+- [RFC 9110 — HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html) (2022) — the current consolidated HTTP spec; supersedes the RFC 723x series.
+- [Google Cloud API Design Guide](https://cloud.google.com/apis/design) — continuously updated, and specific about resource naming and compatibility.

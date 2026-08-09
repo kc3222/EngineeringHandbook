@@ -43,15 +43,8 @@ by getting rejected.
 
 ## The request lifecycle
 
-```mermaid
-flowchart TB
-  R["Raw HTTP request"] --> P["Parse path, query, headers, body"]
-  P --> V{"Pydantic validation"}
-  V -->|"fails"| E["422 Unprocessable Content<br/>per-field error list, no handler call"]
-  V -->|"passes"| H["Handler runs with typed objects"]
-  H --> S["response_model filters &amp; serialises"]
-  S --> O["JSON response"]
-```
+FastAPI parses the request, validates it against your model, and only then calls your
+function; on the way out, `response_model` filters what gets serialised.
 
 The important property is that **the handler never runs on invalid input**. There's no
 defensive checking at the top of the function, because nothing that failed validation

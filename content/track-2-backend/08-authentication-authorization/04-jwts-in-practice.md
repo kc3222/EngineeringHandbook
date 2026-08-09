@@ -37,21 +37,15 @@ JWT you wouldn't put in a URL.
 Libraries do this, but they do it *according to how you configure them*, and the
 common vulnerabilities are all skipped steps.
 
-```mermaid
-flowchart TB
-  T["Bearer token arrives"] --> A{"alg is in our<br/>allowlist?"}
-  A -->|"no"| X["401 — reject"]
-  A -->|"yes"| K["Fetch key by kid from JWKS<br/><i>cached, refreshed on miss</i>"]
-  K --> S{"Signature verifies?"}
-  S -->|"no"| X
-  S -->|"yes"| I{"iss == our issuer?"}
-  I -->|"no"| X
-  I -->|"yes"| AU{"aud names this API?"}
-  AU -->|"no"| X
-  AU -->|"yes"| E{"now within<br/>exp / nbf, small leeway?"}
-  E -->|"no"| X
-  E -->|"yes"| OK["Authenticated —<br/>authorization still to do"]
-```
+Every one of these must pass, and any failure is a `401`:
+
+1. The `alg` is in **our** allowlist — not whatever the token asked for.
+2. The signature verifies against the key named by `kid`, fetched from JWKS.
+3. `iss` is our issuer.
+4. `aud` names **this** API.
+5. The current time is within `exp` / `nbf`, allowing small clock skew.
+
+Passing all five means authenticated — authorization is still ahead of you.
 
 Where each step earns its place:
 
@@ -92,16 +86,6 @@ requires it. What to weigh:
 
 The core tension: a self-contained token can't be un-issued, so its lifetime *is* your
 worst-case exposure window.
-
-```mermaid
-flowchart TB
-  L["Login"] --> AT["Access token<br/>5–15 min<br/><i>sent to the API</i>"]
-  L --> RT["Refresh token<br/>days–weeks<br/><i>sent only to /token</i>"]
-  AT -->|"expires"| RF["POST /token<br/>grant_type=refresh_token"]
-  RT --> RF
-  RF --> AT2["New access token<br/>+ rotated refresh token"]
-  RF -.->|"reused old refresh token"| BR["Reuse detected →<br/>revoke the whole family"]
-```
 
 Short-lived access tokens with a long-lived refresh token is the standard shape. It
 works because the two travel differently: the access token goes to every API on every
@@ -156,8 +140,7 @@ JWT and then bolt state onto it.
 
 ## References
 
-- [RFC 7519 — JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html)
-- [RFC 8725 — JSON Web Token Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html) (BCP 225)
-- [RFC 7517 — JSON Web Key](https://www.rfc-editor.org/rfc/rfc7517.html) and [RFC 7662 — Token Introspection](https://www.rfc-editor.org/rfc/rfc7662.html)
-- [RFC 9700 §4.14 — Refresh token protection](https://www.rfc-editor.org/rfc/rfc9700.html)
-- [OWASP — JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html)
+- [RFC 8725 — JSON Web Token Best Current Practices](https://www.rfc-editor.org/rfc/rfc8725.html) (BCP 225) — the validation rules above, normatively.
+- [RFC 9700 §4.14 — Refresh token protection](https://www.rfc-editor.org/rfc/rfc9700.html) (2025)
+- [RFC 7519 — JSON Web Token](https://www.rfc-editor.org/rfc/rfc7519.html), [RFC 7517 — JSON Web Key](https://www.rfc-editor.org/rfc/rfc7517.html), [RFC 7662 — Token Introspection](https://www.rfc-editor.org/rfc/rfc7662.html) — the base specs.
+- [OWASP — JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html) — continuously updated.

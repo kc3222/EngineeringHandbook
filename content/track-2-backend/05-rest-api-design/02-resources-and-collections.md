@@ -77,20 +77,6 @@ GET /orders?status=shipped&created_after=2026-01-01   filtering
 
 ### Offset vs cursor pagination
 
-```mermaid
-flowchart LR
-  subgraph Offset["Offset — ?offset=200&amp;limit=50"]
-    direction LR
-    O1["Ask for<br/>rows 200–250"] --> O2["DB scans and drops<br/>the first 200"]
-    O2 --> O3["An insert shifts rows;<br/>page 5 repeats page 4's"]
-  end
-  subgraph Cursor["Cursor — ?cursor=last_seen_key&amp;limit=50"]
-    direction LR
-    C1["Send the key of<br/>the last row seen"] --> C2["DB seeks straight<br/>to it via the index"]
-    C2 --> C3["Inserts do not<br/>shift the window"]
-  end
-```
-
 Offset pagination is easier to build, supports jumping to page N, and degrades in
 two ways: the database scans and throws away everything before the offset, and
 concurrent writes shift rows across page boundaries so items get skipped or
@@ -132,5 +118,5 @@ are the ones clients write two parsers for.
 
 - [RFC 9110 §9 — HTTP method definitions](https://www.rfc-editor.org/rfc/rfc9110.html#name-methods)
 - [Google Cloud API Design Guide — Resource names](https://cloud.google.com/apis/design/resource_names) and [Custom methods](https://cloud.google.com/apis/design/custom_methods)
-- [Stripe API reference — pagination](https://docs.stripe.com/api/pagination) — a widely-copied cursor scheme in production.
+- [Stripe API reference — pagination](https://docs.stripe.com/api/pagination) — a widely-copied cursor scheme, kept current with the API.
 - [Use the Index, Luke — "Paging Through Results"](https://use-the-index-luke.com/no-offset) — why offset degrades, with the query plans.

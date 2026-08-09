@@ -41,12 +41,9 @@ should be deploy-time failures, and typed binding is what converts them.
 
 Spring Boot layers property sources, later ones overriding earlier:
 
-```mermaid
-flowchart TB
-  A["application.yml<br/><i>defaults, committed</i>"] --> B["application-{profile}.yml<br/><i>per-environment</i>"]
-  B --> C["OS environment variables<br/><i>PAYMENTS_BASE_URL</i>"]
-  C --> D["Command-line args<br/><i>--payments.timeout=10s</i>"]
-  D --> E["Effective configuration"]
+```text
+application.yml  →  application-{profile}.yml  →  env vars  →  command-line args
+   defaults              per-environment           secrets       last word
 ```
 
 The layering is what lets you commit sensible defaults and override the few things
@@ -60,16 +57,11 @@ that differ per environment. Two rules that follow:
 Spring gives you three tiers, and the cost difference between them is roughly an
 order of magnitude each. Most slow test suites are one tier too high, everywhere.
 
-```mermaid
-flowchart TB
-  U["Plain unit tests — no Spring at all<br/>Construct the class, pass fakes. Milliseconds."]
-  S["Slice tests — @WebMvcTest, @DataJpaTest<br/>A fragment of the context. Hundreds of ms."]
-  I["@SpringBootTest — full context + real dependencies<br/>Seconds each."]
-  U --> S --> I
-  style U fill:#2d6a4f,color:#fff
-  style S fill:#40916c,color:#fff
-  style I fill:#95d5b2,color:#000
-```
+| Tier | What starts | Cost each |
+| --- | --- | --- |
+| Plain unit test | No Spring at all | Milliseconds |
+| Slice — `@WebMvcTest`, `@DataJpaTest` | A fragment of the context | Hundreds of ms |
+| `@SpringBootTest` | Full context + real dependencies | Seconds |
 
 **Unit.** A service with constructor injection needs no framework — that was the
 point of constructor injection. `OrderService(FakeRepo(), FakePayments())` and call

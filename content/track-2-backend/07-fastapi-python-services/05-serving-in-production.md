@@ -16,17 +16,6 @@ readMinutes: 4
 FastAPI is a framework, not a server. Three pieces, and confusing them makes the
 performance conversation impossible:
 
-```mermaid
-flowchart TB
-  N["Reverse proxy<br/><i>nginx / ALB / Cloud Run</i>"] --> P["Process manager<br/><i>Gunicorn, or the platform</i>"]
-  P --> W1["Uvicorn worker 1<br/>event loop + your app"]
-  P --> W2["Uvicorn worker 2"]
-  P --> W3["Uvicorn worker N"]
-  W1 --> A["FastAPI app<br/><i>ASGI</i>"]
-  W2 --> A
-  W3 --> A
-```
-
 - **FastAPI/Starlette** — your app, speaking [ASGI](https://asgi.readthedocs.io/en/latest/specs/main.html).
 - **Uvicorn** — the ASGI server: sockets, HTTP parsing, the event loop.
 - **A process manager** — Gunicorn with `UvicornWorker`, or `uvicorn --workers`, or your platform's scheduler if it runs one container per process.

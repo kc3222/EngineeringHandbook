@@ -17,21 +17,11 @@ HTTP is stateless: each request arrives with no knowledge of the last. Every aut
 design is an answer to "how does request #2 know it's the same person as request #1",
 and there are exactly two shapes of answer.
 
-```mermaid
-flowchart LR
-  subgraph S["Session — the server remembers"]
-    direction TB
-    S1["Login → server creates<br/>a session record"] --> S2["Cookie carries<br/>an opaque id"]
-    S2 --> S3["Each request: look the<br/>id up in a store"]
-    S3 --> S4["Logout = delete the record<br/><b>revocation is instant</b>"]
-  end
-  subgraph T["Token — the token carries the claims"]
-    direction TB
-    T1["Login → server<br/>signs a token"] --> T2["Client sends it<br/>in Authorization"]
-    T2 --> T3["Each request: verify<br/>the signature — <b>no lookup</b>"]
-    T3 --> T4["Logout = …still valid<br/>until it expires"]
-  end
-```
+With a **session**, the server keeps a record and the cookie carries only an opaque
+id, so every request costs a lookup — and deleting the record logs the user out
+instantly. With a **token**, the claims travel inside the token itself, so a request
+costs a signature check and nothing else — but logging out doesn't invalidate
+anything, and the token stays good until it expires.
 
 Everything else is a consequence of that one difference: **stateful lookup vs
 self-contained claims.**
@@ -108,7 +98,7 @@ to an identity provider:
 - **Argon2id** is the current first recommendation; **bcrypt** remains acceptable for existing systems. Never a bare SHA/MD5 hash, with or without salt: those are designed to be fast, which is exactly the wrong property.
 - Salt per password (every modern library does this for you), and store the algorithm parameters with the hash so they can be raised later.
 - Compare in constant time, and return the same response for "no such user" and "wrong password" — the difference is a user-enumeration oracle.
-- Follow [NIST SP 800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html) on policy: check candidate passwords against known-breached lists, allow long passphrases, and drop mandatory periodic rotation, which measurably makes passwords worse.
+- Follow [NIST SP 800-63B-4](https://pages.nist.gov/800-63-4/sp800-63b.html) on policy: check candidate passwords against known-breached lists, allow long passphrases, and drop mandatory periodic rotation, which measurably makes passwords worse.
 
 ## What to take away
 
@@ -122,4 +112,4 @@ to an identity provider:
 - [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) and [CSRF Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
 - [OWASP — Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 - [MDN — `Set-Cookie` and `SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
-- [NIST SP 800-63B — Digital Identity Guidelines: Authentication](https://pages.nist.gov/800-63-3/sp800-63b.html)
+- [NIST SP 800-63B-4 — Digital Identity Guidelines: Authentication and Authenticator Management](https://pages.nist.gov/800-63-4/sp800-63b.html) — revision 4, finalised July 2025; the 2017 revision was withdrawn that August.

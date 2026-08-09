@@ -17,27 +17,14 @@ Versioning is the fallback. The first question is whether the change needs a ver
 at all, and the answer follows from one asymmetry: **clients ignore what they don't
 recognise, and crash on what disappears.**
 
-```mermaid
-flowchart LR
-  subgraph Safe["Additive — no version needed"]
-    direction TB
-    S1["New optional response field"]
-    S2["New optional request field<br/>with a default"]
-    S3["New endpoint"]
-    S4["New enum value in a field<br/>clients only echo"]
-    S1 ~~~ S2 ~~~ S3 ~~~ S4
-  end
-  subgraph Break["Breaking — needs a version"]
-    direction TB
-    B1["Remove or rename a field"]
-    B2["Change a type: string → number,<br/>scalar → array"]
-    B3["Make an optional request<br/>field required"]
-    B4["Tighten validation on existing input"]
-    B5["Change a status code<br/>or error type URI"]
-    B6["Change default sort, page size, or units"]
-    B1 ~~~ B2 ~~~ B3 ~~~ B4 ~~~ B5 ~~~ B6
-  end
-```
+| Additive — no version needed | Breaking — needs a version |
+| --- | --- |
+| New optional response field | Remove or rename a field |
+| New optional request field with a default | Change a type: string → number, scalar → array |
+| New endpoint | Make an optional request field required |
+| New enum value in a field clients only echo | Tighten validation on existing input |
+| | Change a status code or error `type` URI |
+| | Change a default sort, page size, or unit |
 
 Three that get misfiled as safe:
 
@@ -67,11 +54,13 @@ Path versioning dominates in practice for one non-technical reason: everybody ca
 see it. It's in the URL, in the logs, in the support ticket, in the curl command
 someone pasted into chat.
 
-Stripe's approach is worth knowing as the sophisticated end: each account is pinned
-to a dated version, and the backend keeps
-[per-change compatibility shims](https://stripe.com/blog/api-versioning) that
-transform current-shape responses back into older shapes on the way out. Clients
-never migrate under duress, at the cost of a shim layer that only grows.
+Stripe's approach is worth knowing as the sophisticated end: each account is pinned to
+a dated version, and the backend transforms current-shape responses back into older
+shapes on the way out, so clients never migrate under duress. Since 2024 they've
+formalised it into
+[release trains](https://docs.stripe.com/api/versioning) — monthly releases that are
+guaranteed backward-compatible, and two named releases a year that may break. The
+cost is a compatibility layer that only ever grows.
 
 ## Whatever you choose, `v2` is a promise to run two APIs
 
@@ -102,7 +91,7 @@ Reduce that by making versions cheap:
 
 ## References
 
-- [RFC 9745 — The Deprecation HTTP Header Field](https://www.rfc-editor.org/rfc/rfc9745.html)
+- [RFC 9745 — The Deprecation HTTP Header Field](https://www.rfc-editor.org/rfc/rfc9745.html) (2025)
 - [RFC 8594 — The Sunset HTTP Header Field](https://www.rfc-editor.org/rfc/rfc8594.html)
-- [Stripe — APIs as infrastructure: future-proofing with versioning](https://stripe.com/blog/api-versioning)
+- [Stripe — API versioning](https://docs.stripe.com/api/versioning) and [API upgrades](https://docs.stripe.com/upgrades) — the current release-train model, kept in step with the API.
 - [Google Cloud API Design Guide — Compatibility](https://cloud.google.com/apis/design/compatibility) — an explicit list of what counts as breaking.

@@ -19,10 +19,9 @@ number of vulnerabilities begin.
 
 ```mermaid
 flowchart TB
-  R["Request"] --> A{"Authentication<br/><i>who is this?</i>"}
-  A -->|"no proof / bad proof"| E1["401 Unauthorized"]
-  A -->|"identity established"| Z{"Authorization<br/><i>may they do this,<br/>to this object?</i>"}
-  Z -->|"no"| E2["403 Forbidden"]
+  A{"Who is this?"} -->|"no proof"| E1["401"]
+  A -->|"identified"| Z{"May they do this,<br/>to this object?"}
+  Z -->|"no"| E2["403"]
   Z -->|"yes"| H["Handler runs"]
 ```
 

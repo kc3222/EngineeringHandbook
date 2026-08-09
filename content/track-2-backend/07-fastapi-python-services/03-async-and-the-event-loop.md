@@ -17,23 +17,11 @@ An ASGI application runs handlers on a single **event loop** in a single thread.
 achieves concurrency by switching between tasks at `await` points — not by running
 them in parallel.
 
-```mermaid
-flowchart LR
-  subgraph Good["async def + await — the loop stays free"]
-    direction TB
-    G1["Req A: await db.fetch()"] --> G2["Loop switches to Req B"]
-    G2 --> G3["Req B: await http.get()"]
-    G3 --> G4["A's I/O completes<br/>→ resume A"]
-  end
-  subgraph Bad["async def + blocking call — the loop is captured"]
-    direction TB
-    B1["Req A: requests.get()<br/>— no await"] --> B2["Loop is stuck inside A"]
-    B2 --> B3["Reqs B, C, D… wait,<br/>doing nothing"]
-    B3 --> B4["A finishes →<br/>the queue drains"]
-  end
-```
+When request A hits an `await`, the loop is free to serve B and C, resuming A when
+its I/O completes. When A instead makes a *blocking* call, the loop is stuck inside
+it: B, C and D sit doing nothing until A returns.
 
-Everything about async in FastAPI follows from that picture. Concurrency comes from
+Everything about async in FastAPI follows from that. Concurrency comes from
 yielding at `await`. Code that doesn't yield doesn't just slow itself down — it stops
 *every other request in the process*, including the health check.
 

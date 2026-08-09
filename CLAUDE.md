@@ -131,12 +131,22 @@ body — a `#` would put a second `<h1>` on the page.
   "in my experience at X" framing, no company-specific examples.
 - Each page should be readable in 1–5 minutes. If a page is running long,
   that's a signal to split it, not to shorten by cutting substance.
-- Diagrams and code snippets are encouraged where they clarify a concept.
-  Diagrams are authored as ```` ```mermaid ```` fences (see "Diagrams" below), so
-  the copied markdown stays readable rather than pointing at an image.
-- Cite official sources — specs/RFCs, vendor docs, engineering blogs — inline
-  where a claim needs backing, plus a short `## References` section at the end
-  of the page. Prefer primary sources over tutorials.
+- Code snippets are encouraged where they clarify a concept.
+- **Diagrams are rare and have to earn it.** A diagram is worth drawing only when
+  it shows something prose genuinely handles badly — interleaving over time, a
+  protocol exchange, a branch whose ordering matters. A comparison of two options
+  is a **table**. A set of items is a **list**. A linear A → B → C pipeline is a
+  **sentence**. Boxes containing prose are just prose that has been made smaller
+  and harder to read; Track 2 went from 25 diagrams to 5 for exactly this reason.
+  See "Diagrams" below for the mechanics.
+- Cite official sources — specs/RFCs, vendor docs — inline where a claim needs
+  backing, plus a short `## References` section at the end of the page. Prefer
+  primary sources over tutorials, and **cite the current edition**: check for a
+  newer revision before citing anything (RFC 9110 not 7231, SP 800-63B-4 not
+  800-63B, live vendor docs over a dated engineering-blog post). Where a base
+  spec is still normative but has been amended, cite the update alongside it and
+  say which to read first. A publication date is not by itself a reason to
+  replace a citation — some specs are simply stable.
 - Exercises/quizzes are explicitly **out of scope for now** (planned for a
   later phase per Open Items) — don't add them speculatively.
 - Prefer explaining tradeoffs over prescribing one "correct" approach,
@@ -204,11 +214,19 @@ apply" rather than an error:
 
 ## Diagrams
 
+Read the diagram bullet under "Writing conventions" first — most diagrams should
+not exist. This section is for the ones that survive that test.
+
 Mermaid is enabled via `@docusaurus/theme-mermaid` — `markdown.mermaid: true` plus
 the theme entry in `docusaurus.config.ts`. Author diagrams as ```` ```mermaid ````
 fences in the page markdown; never commit a rendered image, because the "Copy
 markdown" action hands the reader the raw file and an image reference is useless
 there.
+
+In practice the ones that earn their place are nearly all `sequenceDiagram` —
+retry-with-idempotency-key, a lost update caught by `If-Match`, an OAuth exchange.
+Keep their labels to a few words: a sequence diagram's width is driven by its
+longest message, and the page has only ~750px (see below).
 
 `themeConfig.mermaid.theme` maps the site's colour mode onto mermaid's `neutral`
 (light) and `dark` built-ins, so diagrams follow the theme toggle. Only reach for

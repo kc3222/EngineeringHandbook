@@ -24,18 +24,14 @@ frames of Spring internals. The engineers who are productive in Spring aren't th
 ones who memorised more annotations; they're the ones who know **what mechanism each
 annotation triggers**.
 
-```mermaid
-flowchart TB
-  A["@SpringBootApplication"] --> B["Component scan<br/>finds your beans"]
-  A --> C["Auto-configuration<br/>configures what's on the classpath"]
-  B --> D["Application context<br/>the object graph"]
-  C --> D
-  D --> E["Embedded server started<br/>requests dispatched to @RestController"]
-```
+`@SpringBootApplication` sets three things in motion: a **component scan** that finds
+your beans, **auto-configuration** that configures whatever it finds on the classpath,
+and the **application context** those two populate — the object graph the running
+server dispatches requests into.
 
-Every chapter of confusion about Spring is a question about one of those boxes: *why
-does it think this is a bean*, *why did it configure that*, *why is this instance not
-the one I expected*.
+Nearly every hour lost to Spring is a question about one of those three: *why does it
+think this is a bean*, *why did it configure that*, *why is this instance not the one
+I expected*.
 
 ## Why Kotlin
 
