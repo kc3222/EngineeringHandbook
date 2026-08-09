@@ -4,33 +4,64 @@ description: "OAuth 2.0 flows and role-based access — who's allowed to do what
 track: 2
 chapter: 8
 page: 1
-readMinutes: 2
+readMinutes: 3
 ---
 
 :::info[Prerequisites]
-Comfortable with the ideas in **FastAPI & Python Services**. If a term here is unfamiliar, that chapter is the place it gets defined.
+**REST API Design** for status codes, and either framework chapter for where this code sits in a service.
 :::
 
 ## Why this chapter exists
 
-OAuth 2.0 flows and role-based access — who's allowed to do what, and how you prove it.
+Authentication and authorization are the two questions every request carries, and
+they are routinely collapsed into one word — "auth" — which is where a surprising
+number of vulnerabilities begin.
 
-Placeholder text. This chapter's overview has not been written yet — it exists so
-the reading layout, sidebar and track switcher have something to render while the
-handbook is being drafted.
+```mermaid
+flowchart TB
+  R["Request"] --> A{"Authentication<br/><i>who is this?</i>"}
+  A -->|"no proof / bad proof"| E1["401 Unauthorized"]
+  A -->|"identity established"| Z{"Authorization<br/><i>may they do this,<br/>to this object?</i>"}
+  Z -->|"no"| E2["403 Forbidden"]
+  Z -->|"yes"| H["Handler runs"]
+```
+
+Getting the first one right is mostly a matter of adopting a standard and not
+deviating from it. The second is where the genuinely hard, application-specific work
+lives — and where the most common serious API vulnerability sits: **broken object-level
+authorization**, an endpoint that verifies who you are, then hands you a record
+belonging to someone else because the id was in the URL. It has led the
+[OWASP API Security Top 10](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
+since the list began.
+
+## What this chapter assumes you won't build
+
+Rolling your own identity provider, password hashing scheme, or token format is not
+a reasonable default. The standards are old, attacked, and well specified; the
+libraries implementing them have had years of scrutiny that your afternoon won't
+reproduce.
+
+This chapter therefore covers what you need to **integrate correctly** and **verify
+rigorously** — the parts that stay your responsibility no matter which provider you
+use.
 
 ## What's in here
 
-4 more pages sit under this chapter once
-drafting starts. Each one is a 1–5 minute read that stands on its own, so the
-chapter can be read straight through or dipped into from search.
-
-- One idea per page, with the tradeoffs stated rather than a single "correct" answer.
-- Diagrams and code where they carry more than prose would.
-- No exercises yet — that's a later phase.
+| Page | What it covers |
+| --- | --- |
+| Sessions & Tokens | The two models for carrying identity, and what each costs |
+| OAuth 2.0 & OIDC | The flows worth knowing, the ones that are deprecated, and what OIDC adds |
+| JWTs in Practice | Validation you must not skip, claims, lifetimes and revocation |
+| Authorization Models | RBAC, ABAC and ReBAC, and where enforcement actually belongs |
 
 ## Where this connects
 
-This chapter is part of **Backend Engineering** (Track 2). The track landing
-page lists every chapter in reading order; the sidebar on the left is scoped to this
-track, and the switcher above it moves between all six.
+**Row-Level Security & Access Control** in Track 3 is the same authorization question
+pushed down into the database, which is the strongest available answer to the
+object-level problem above — the two chapters describe two halves of one mechanism:
+token auth at the edge, row scoping in Postgres.
+
+## References
+
+- [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/editions/2023/en/0x11-t10/)
+- [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html)

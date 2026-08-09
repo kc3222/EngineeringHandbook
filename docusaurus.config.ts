@@ -32,6 +32,18 @@ const config: Config = {
    */
   staticDirectories: ['static', 'content'],
 
+  /*
+   * Diagrams are authored as ```mermaid fences inside the page markdown, so the
+   * source a reader copies from the page header stays readable text rather than
+   * a reference to an image they can't see. Requires the `@docusaurus/theme-mermaid`
+   * theme registered below.
+   */
+  markdown: {
+    mermaid: true,
+  },
+
+  themes: ['@docusaurus/theme-mermaid'],
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -93,6 +105,12 @@ const config: Config = {
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: true,
+    },
+    // Diagrams follow the site's colour mode. `neutral`/`dark` are the two
+    // mermaid built-ins that don't fight the reading surface; per-diagram
+    // colour overrides belong in the page, not here.
+    mermaid: {
+      theme: {light: 'neutral', dark: 'dark'},
     },
     navbar: {
       title: 'Engineering Handbook',

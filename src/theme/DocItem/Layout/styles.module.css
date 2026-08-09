@@ -14,8 +14,11 @@
   padding: 2rem clamp(0.25rem, 2vw, 2rem) 4rem;
 }
 
+/* Container context for diagrams: they're sized against this track rather than
+   the measure-capped article inside it. See "Diagrams" in `custom.css`. */
 .main {
   min-width: 0;
+  container-type: inline-size;
 }
 
 /* The article is the measure-capped column; the grid track around it can be
