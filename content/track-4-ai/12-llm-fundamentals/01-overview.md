@@ -50,3 +50,9 @@ tools.
 
 If you only read one page in this chapter, read *Tokens & Context Windows* — it is
 the constraint that shapes every design decision downstream.
+
+## References
+
+- Vaswani et al., [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) (2017) — the transformer architecture underneath all of this
+- Brown et al., [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165) (2020) — the paper that established in-context learning as the interface
+- [Anthropic — Claude API documentation](https://platform.claude.com/docs/en/api/overview) · [OpenAI — API documentation](https://platform.openai.com/docs/) · [Google — Gemini API documentation](https://ai.google.dev/gemini-api/docs)
