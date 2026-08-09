@@ -11,4 +11,14 @@
     opacity: 0;
     visibility: hidden;
   }
+
+  /* Last row of the app shell, pinned under the chapter tree — the tree is the
+     only flexible track, so this never scrolls away. */
+  .footer {
+    display: flex;
+    align-items: center;
+    flex: none;
+    padding: 0.625rem 0.75rem;
+    border-top: 1px solid var(--eh-line);
+  }
 }

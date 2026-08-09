@@ -12,15 +12,16 @@ import {
   type Track,
 } from '@site/src/data/handbook';
 import SearchButton from '@site/src/components/SearchButton';
-import ThemeToggle from '@site/src/components/ThemeToggle';
 
 import styles from './styles.module.css';
 
 /**
  * The header above the chapter tree. Content pages hide the navbar on desktop
- * (see "Reading surface" in `src/css/custom.css`), so this is the whole app
- * shell for them: home, the track you're reading — which doubles as the
- * switcher for the other five — collapse, search, and the theme control.
+ * (see "Reading surface" in `src/css/custom.css`), so this and the sidebar
+ * footer are the whole app shell for them. Here: home, the track you're
+ * reading — which doubles as the switcher for the other five — collapse and
+ * search. The theme control sits in the footer, pinned below the chapter tree
+ * (`src/theme/DocSidebar/Desktop`).
  *
  * The current track comes from the sidebar id — `sidebars.ts` names each
  * sidebar after its track slug, and Docusaurus picks the sidebar containing the
@@ -133,10 +134,7 @@ export default function TrackSwitcher({
         )}
       </div>
 
-      <div className={styles.toolRow}>
-        <SearchButton variant="field" />
-        <ThemeToggle />
-      </div>
+      <SearchButton variant="field" />
 
       <Link className={styles.overview} to={current.permalink}>
         Track overview
