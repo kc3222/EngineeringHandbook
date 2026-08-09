@@ -1,7 +1,16 @@
+/*
+ * Capped and centred here rather than left to the wrapping Infima container:
+ * when the sidebar is collapsed Docusaurus swaps that container for a wider
+ * "enhanced" one, which would stretch the grid and strand the measure-capped
+ * article against the left edge with the TOC rail far off to the right. Owning
+ * the cap keeps the reading column in the same place in both sidebar states.
+ */
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 3rem;
+  max-width: var(--eh-content-max);
+  margin-inline: auto;
   padding: 2rem clamp(0.25rem, 2vw, 2rem) 4rem;
 }
 
