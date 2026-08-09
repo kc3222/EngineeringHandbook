@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 3rem;
-  padding: 1.5rem clamp(0.25rem, 2vw, 2rem) 4rem;
+  padding: 2rem clamp(0.25rem, 2vw, 2rem) 4rem;
 }
 
 .main {

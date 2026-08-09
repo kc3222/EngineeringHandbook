@@ -60,6 +60,9 @@
   --eh-sidebar-bg: #fbfbfb;
   --eh-prose: #1f1f1f;
   --doc-sidebar-width: 19rem;
+  /* Wide enough for the collapsed rail's pill, which stacks its controls in a
+     column — the sidebar container clips overflow, so nothing can spill past. */
+  --doc-sidebar-hidden-width: 3rem;
   --ifm-menu-color: var(--eh-muted);
   --ifm-menu-color-active: var(--eh-fg);
   --ifm-menu-color-background-active: var(--eh-hover);
@@ -154,6 +157,27 @@ body {
  * through global classes.
  */
 
+/*
+ * On a content page the sidebar header carries everything the navbar did —
+ * home, tracks, search, theme — so the navbar is dropped and its height token
+ * zeroed (the theme offsets the sidebar and TOC by that token).
+ *
+ * Matched with `:has()` on the sidebar container, which only content pages
+ * render, and scoped to desktop so the mobile navbar keeps its drawer — that
+ * drawer is the only way to reach the chapter tree on a small screen. In a
+ * browser without `:has()` both rules simply don't apply and the navbar stays,
+ * which is the layout this replaces rather than a broken one.
+ */
+@media (min-width: 997px) {
+  html:has(.theme-doc-sidebar-container) {
+    --ifm-navbar-height: 0px;
+  }
+
+  html:has(.theme-doc-sidebar-container) .navbar {
+    display: none;
+  }
+}
+
 /* Sidebar — chapter tree */
 
 .theme-doc-sidebar-container {
@@ -162,7 +186,7 @@ body {
 }
 
 .theme-doc-sidebar-container .menu {
-  padding: 0.75rem 0.5rem 2.5rem;
+  padding: 0.25rem 0.75rem 2.5rem;
 }
 
 .menu__list .menu__list {

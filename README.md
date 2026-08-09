@@ -50,9 +50,11 @@ npm run typecheck
   search/theme controls.
 - **Content pages live in `content/`**, one markdown file per page, served by
   the docs plugin under `/read/…`. Each track gets its own sidebar, so switching
-  track switches the whole chapter tree.
-- **Search** (`⌘K` / `Ctrl+K`) indexes the outline — tracks and chapters, not
-  page text. Chapter hits open that chapter's first page.
+  track switches the whole chapter tree. On desktop those pages drop the navbar
+  — the sidebar header carries home, track switching, search and theme.
+- **Search** (`⌘K` / `Ctrl+K`, or the navbar and sidebar buttons) indexes the
+  outline — tracks and chapters, not page text. Chapter hits open that
+  chapter's first page.
 - **`Dockerfile` + `compose.yaml`** cover local runs. The image is a dev
   convenience only — deploys build on the Actions runner, not from it. Only
   `node_modules` is masked by a volume; host and container share the

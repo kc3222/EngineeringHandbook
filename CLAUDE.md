@@ -208,23 +208,46 @@ width. Change the width in the token only; don't reintroduce per-component
 
 ## Site shell notes
 
-- Four **swizzled ejects** of Docusaurus theme components; all four may need
+- Six **swizzled ejects** of Docusaurus theme components; all of them may need
   reconciling on a Docusaurus major upgrade:
+  - `src/theme/Root` — wraps the app in `<SearchProvider>`. Root survives
+    navigation, so it's where the palette and its ⌘K listener are mounted once.
   - `src/theme/Navbar/Content` — three-slot navbar (wordmark / centred tracks /
     search + theme).
   - `src/theme/DocSidebar/Desktop` — puts `<TrackSwitcher>` above the chapter
-    tree, outside the scrolling region so it stays pinned.
+    tree, outside the scrolling region so it stays pinned. Also drops the stock
+    `<CollapseButton>`: collapsing is a control in that header now, not a bar
+    pinned to the bottom of the sidebar. Re-expanding still uses the theme's own
+    expand button on the collapsed rail.
   - `src/theme/DocItem/Layout` — the reading layout. Drops the stock
     breadcrumbs, version banner/badge and `DocItemFooter`.
   - `src/theme/DocItem/Content` — drops the theme's synthetic `<h1>`, which
     `DocHeader` renders instead.
+  - `src/theme/DocRoot/Layout/Sidebar/ExpandButton` — the collapsed rail. A
+    floating pill (expand + search) in place of the theme's full-height hit
+    target. `--doc-sidebar-hidden-width` in `custom.css` widens the rail to fit
+    it — the sidebar container clips overflow, so the pill can't spill out.
 - Doc-page theming that Infima only exposes through global classes (sidebar
   menu, TOC, markdown, admonitions, pagination) lives in the "Reading surface"
   section of `src/css/custom.css`. Component-level styling stays in the CSS
   module next to its component.
-- The track switcher exists in two places by design: the navbar (everywhere)
-  and the doc sidebar header (content pages). On mobile the sidebar header isn't
-  rendered — the navbar drawer carries the track links instead.
+- **Content pages have no navbar on desktop.** The sidebar header is the app
+  shell there: home, the track title (which *is* the switcher), collapse,
+  search, theme. The rule lives in "Reading surface" in `src/css/custom.css` —
+  `html:has(.theme-doc-sidebar-container)` hides `.navbar` and zeroes
+  `--ifm-navbar-height`, which the theme uses to offset the sidebar and TOC.
+  Both must move together: hiding the navbar without zeroing the token leaves
+  the sidebar pulled 4rem up under nothing.
+- That rule is **desktop-only on purpose**. Below 997px the doc sidebar is
+  hidden and the navbar's drawer is the only way to reach the chapter tree, so
+  mobile keeps the navbar and the sidebar header isn't rendered at all.
+- Landing pages (`/`, `/frontend`, …) keep the navbar — they have no sidebar to
+  put navigation in.
+- Search has three entry points — the navbar button, the sidebar field, and the
+  icon on the collapsed rail — but **one** palette. `src/components/Search`
+  owns the state, the ⌘K listener and the palette UI; triggers only call
+  `useSearch().open()`. Don't give a new trigger its own state or its own
+  hotkey listener, or ⌘K starts opening several palettes at once.
 - `/` is the "about this site" page (`src/pages/index.tsx`) — what the
   handbook is, how it's organised, and a directory of the six tracks. It is
   **not** a track page; every track has its own route (`/frontend`, `/backend`,
