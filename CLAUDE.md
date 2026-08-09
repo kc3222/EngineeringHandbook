@@ -22,9 +22,10 @@ per-track sidebar, page header with copy/open actions, and an "on this page"
 rail.
 
 **Content is mostly placeholder.** Every chapter has an `01-overview.md` so the
-reading UI has something to render in all six tracks; only Track 4 chapter 12
-(LLM Fundamentals) is written out to its full page count. Writing real pages is
-the outstanding work — replacing a placeholder overview needs no code changes.
+reading UI has something to render in all six tracks. Written out to full page
+count so far: **Track 2 (Backend Engineering), all four chapters — 21 pages**,
+and Track 4 chapter 12 (LLM Fundamentals). Writing the remaining pages is the
+outstanding work — replacing a placeholder overview needs no code changes.
 
 The blog plugin stays **off**; there's no blog in scope.
 
@@ -130,7 +131,22 @@ body — a `#` would put a second `<h1>` on the page.
   "in my experience at X" framing, no company-specific examples.
 - Each page should be readable in 1–5 minutes. If a page is running long,
   that's a signal to split it, not to shorten by cutting substance.
-- Diagrams and code snippets are encouraged where they clarify a concept.
+- Code snippets are encouraged where they clarify a concept.
+- **Diagrams are rare and have to earn it.** A diagram is worth drawing only when
+  it shows something prose genuinely handles badly — interleaving over time, a
+  protocol exchange, a branch whose ordering matters. A comparison of two options
+  is a **table**. A set of items is a **list**. A linear A → B → C pipeline is a
+  **sentence**. Boxes containing prose are just prose that has been made smaller
+  and harder to read; Track 2 went from 25 diagrams to 5 for exactly this reason.
+  See "Diagrams" below for the mechanics.
+- Cite official sources — specs/RFCs, vendor docs — inline where a claim needs
+  backing, plus a short `## References` section at the end of the page. Prefer
+  primary sources over tutorials, and **cite the current edition**: check for a
+  newer revision before citing anything (RFC 9110 not 7231, SP 800-63B-4 not
+  800-63B, live vendor docs over a dated engineering-blog post). Where a base
+  spec is still normative but has been amended, cite the update alongside it and
+  say which to read first. A publication date is not by itself a reason to
+  replace a citation — some specs are simply stable.
 - Exercises/quizzes are explicitly **out of scope for now** (planned for a
   later phase per Open Items) — don't add them speculatively.
 - Prefer explaining tradeoffs over prescribing one "correct" approach,
@@ -184,6 +200,80 @@ the directory un-removable from the host, which breaks `npm run build` while
 the container is up. The dev command passes `--poll` because bind mounts don't
 forward filesystem events on macOS/Windows. Docker is local convenience only;
 CI builds on the runner and never uses these files.
+
+Two consequences of that named volume, both of which look like "my change didn't
+apply" rather than an error:
+
+- **Adding a dependency needs `docker compose exec dev npm install`.** An
+  `npm install` on the host writes to the host's `node_modules`; the container
+  never sees it, and a restart alone will fail to resolve the new package.
+- **`docusaurus.config.ts` is not hot-reloaded.** Config changes — plugins,
+  themes, `markdown` options — need a container restart. Until then the dev
+  server keeps serving the old config, so e.g. a `mermaid` fence renders as a
+  plain code block instead of a diagram.
+
+## Diagrams
+
+Read the diagram bullet under "Writing conventions" first — most diagrams should
+not exist. This section is for the ones that survive that test.
+
+Mermaid is enabled via `@docusaurus/theme-mermaid` — `markdown.mermaid: true` plus
+the theme entry in `docusaurus.config.ts`. Author diagrams as ```` ```mermaid ````
+fences in the page markdown; never commit a rendered image, because the "Copy
+markdown" action hands the reader the raw file and an image reference is useless
+there.
+
+In practice the ones that earn their place are nearly all `sequenceDiagram` —
+retry-with-idempotency-key, a lost update caught by `If-Match`, an OAuth exchange.
+Keep their labels to a few words: a sequence diagram's width is driven by its
+longest message, and the page has only ~750px (see below).
+
+`themeConfig.mermaid.theme` maps the site's colour mode onto mermaid's `neutral`
+(light) and `dark` built-ins, so diagrams follow the theme toggle. Only reach for
+a per-node `style` override when a diagram needs to mark one box as the important
+one — and set an explicit `color:` alongside `fill:`, since the inherited label
+colour flips with the theme and the fill doesn't.
+
+Two syntax traps, both of which fail as a **silently missing diagram** (an error
+boundary swallows the render; the console shows a mermaid parse error):
+
+- In `flowchart` labels, write `&amp;` rather than a bare `&` — MDX would otherwise
+  eat the entity. In `sequenceDiagram` **messages** the same `&amp;` is a parse
+  error, because mermaid reads `&` as the actor-list separator. Write "and" there.
+- Quote any node label containing punctuation: `A["POST /orders"]`.
+
+Because the failure is silent, check diagrams in a browser rather than trusting
+`npm run build` — the build succeeds either way.
+
+### Keep diagrams inside ~750px
+
+A mermaid SVG is `width: 100%` capped at its natural width, so a diagram wider
+than its column is scaled down and its **labels shrink with it** — a 2,500px
+flowchart lands at 28% and is unreadable. The column is only ~758px (1200px
+content, less the doc sidebar, the TOC rail and gutters), and widening it is not
+available: that space is already spoken for. So the diagram has to be authored
+narrow. Rules that follow, all of them about the *cross-flow* axis:
+
+- **Four or more nodes in a row will not fit.** Three nodes with two-line labels
+  is roughly the limit at ~750px. Split, merge steps, or go vertical.
+- **A fan-out belongs on the long axis.** In `flowchart TB` a six-way branch
+  fans horizontally and blows the width; the same graph as `flowchart LR` fans
+  downward and fits. Decision trees are almost always `LR`.
+- **Disconnected subgraphs are placed across the flow axis** — side by side in
+  `TB`, stacked in `LR`. That, not `direction`, is what controls whether a
+  two-way comparison reads as columns or as rows.
+- **`direction TB` does not stack unconnected nodes.** A subgraph used as a
+  labelled list needs an invisible chain (`A ~~~ B ~~~ C`) to lay out vertically.
+
+Measure rather than eyeball — `viewBox` width vs the rendered width gives the
+scale factor:
+
+```js
+[...document.querySelectorAll('.docusaurus-mermaid-container svg')].map(s =>
+  +(s.getBoundingClientRect().width / +s.getAttribute('viewBox').split(/\s+/)[2]).toFixed(2))
+```
+
+Anything below ~0.9 should be restructured.
 
 ## Layout width
 

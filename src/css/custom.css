@@ -295,6 +295,35 @@ body {
   font-size: 0.8125rem;
 }
 
+/*
+ * Diagrams
+ *
+ * A mermaid SVG is `width: 100%` capped at its natural width, so inside the
+ * article's 46rem measure any diagram wider than that gets scaled down and its
+ * labels shrink with it. Diagrams read as figures rather than prose, so they're
+ * sized against the grid *track* instead — `container-type: inline-size` on
+ * `.main` in the DocItem/Layout module is what `cqi` resolves against.
+ *
+ * The article is left-aligned in that track, so the extra width is taken on the
+ * right; a symmetric breakout would push the diagram off the track's left edge.
+ * Diagrams narrower than the measure are unaffected — mermaid's own max-width
+ * still caps each SVG at its natural size, so nothing gets upscaled and blurry.
+ */
+@media (min-width: 997px) {
+  .markdown .docusaurus-mermaid-container {
+    width: 100cqi;
+    max-width: none; /* the theme caps it at 100% of the measure-capped article */
+  }
+}
+
+/* Below the sidebar breakpoint there is no wider track to borrow from, so a
+   wide diagram scrolls rather than shrinking to illegibility. */
+@media (max-width: 996px) {
+  .markdown .docusaurus-mermaid-container {
+    overflow-x: auto;
+  }
+}
+
 /* CodeBlock paints its background inline from the Prism theme, which is the one
    coloured surface on an otherwise neutral page — hence the !important. Token
    colours still come from Prism. */

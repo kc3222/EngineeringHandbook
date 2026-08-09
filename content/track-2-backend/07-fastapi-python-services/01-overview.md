@@ -4,33 +4,65 @@ description: "Fast, typed, async — building inference and CRUD endpoints in Py
 track: 2
 chapter: 7
 page: 1
-readMinutes: 2
+readMinutes: 3
 ---
 
 :::info[Prerequisites]
-Comfortable with the ideas in **Spring Boot & Kotlin**. If a term here is unfamiliar, that chapter is the place it gets defined.
+**REST API Design**. Reading **Spring Boot & Kotlin** first is optional but makes the contrasts here land harder.
 :::
 
 ## Why this chapter exists
 
-Fast, typed, async — building inference and CRUD endpoints in Python without the ceremony.
+FastAPI took a Python feature that was mostly documentation — type hints — and made
+it load-bearing. One annotation drives four things at once:
 
-Placeholder text. This chapter's overview has not been written yet — it exists so
-the reading layout, sidebar and track switcher have something to render while the
-handbook is being drafted.
+A single annotation — `def create(order: CreateOrder)` — parses and coerces the
+request body, validates it and returns `422` on failure, generates the OpenAPI
+schema, and gives your editor and type checker something real to work with.
+
+That's the whole design idea. The signature *is* the contract, so the schema can't
+drift from the implementation — the drift that makes hand-written OpenAPI documents
+untrustworthy within a month.
+
+The framework then gets out of the way. Where Spring auto-configures a database pool,
+a serialiser and a web server on your behalf, FastAPI configures a router and leaves
+the rest to you. Fewer surprises, more assembly.
+
+## Where it fits
+
+Python is the language the model lives in. When a service has to load a PyTorch
+model, call a tokenizer, or run a scikit-learn pipeline, rewriting that in another
+language is not a real option — so the API goes where the model already is.
+
+That makes FastAPI the default choice for two distinct jobs, and they have different
+constraints:
+
+| Job | Dominant constraint |
+| --- | --- |
+| CRUD / gateway services | Concurrent I/O — database and upstream HTTP calls |
+| Model inference services | CPU or GPU time inside a single request, which blocks everything else |
+
+The async page in this chapter is about the second one, because that's where a Python
+service most often falls over in a way that looks inexplicable.
 
 ## What's in here
 
-4 more pages sit under this chapter once
-drafting starts. Each one is a 1–5 minute read that stands on its own, so the
-chapter can be read straight through or dipped into from search.
-
-- One idea per page, with the tradeoffs stated rather than a single "correct" answer.
-- Diagrams and code where they carry more than prose would.
-- No exercises yet — that's a later phase.
+| Page | What it covers |
+| --- | --- |
+| Pydantic & Typed Models | Validation, coercion, and separating request from response models |
+| Async & the Event Loop | `def` vs `async def`, and the blocking call that stalls the whole process |
+| Dependencies & Structure | `Depends`, lifespan resources, routers, and settings |
+| Serving in Production | ASGI servers, workers, timeouts, and shipping a model behind an endpoint |
 
 ## Where this connects
 
-This chapter is part of **Backend Engineering** (Track 2). The track landing
-page lists every chapter in reading order; the sidebar on the left is scoped to this
-track, and the switcher above it moves between all six.
+**Authentication & Authorization** is next and uses FastAPI's security utilities for
+its examples. In Track 4, **RAG Pipelines** and **Embeddings & Vector Search** are
+built as exactly the kind of service this chapter describes — which is where the
+inference-specific advice here starts to matter.
+
+## References
+
+- [FastAPI documentation](https://fastapi.tiangolo.com/)
+- [Pydantic documentation](https://docs.pydantic.dev/latest/)
+- [ASGI specification](https://asgi.readthedocs.io/en/latest/specs/main.html)
