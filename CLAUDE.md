@@ -24,9 +24,10 @@ rail.
 **Content is partly placeholder.** Every chapter has an `01-overview.md` so the
 reading UI has something to render in all six tracks. Written out to full page
 count so far: **Track 1 (Frontend Engineering), all four chapters — 20 pages**,
-**Track 2 (Backend Engineering), all four chapters — 21 pages**, and Track 4
-chapter 12 (LLM Fundamentals). Writing the remaining pages is the outstanding
-work — replacing a placeholder overview needs no code changes.
+**Track 2 (Backend Engineering), all four chapters — 21 pages**, **Track 3 (Data
+& Storage), all three chapters — 12 pages**, and Track 4 chapter 12 (LLM
+Fundamentals). Writing the remaining pages is the outstanding work — replacing a
+placeholder overview needs no code changes.
 
 The blog plugin stays **off**; there's no blog in scope.
 

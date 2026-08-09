@@ -4,33 +4,70 @@ description: "Enforcing \"who sees what\" at the database layer instead of hopin
 track: 3
 chapter: 10
 page: 1
-readMinutes: 2
+readMinutes: 3
 ---
 
 :::info[Prerequisites]
-Comfortable with the ideas in **Relational Schema Design**. If a term here is unfamiliar, that chapter is the place it gets defined.
+**Relational Schema Design** — policies are written against columns, and a tenant
+column that isn't constrained or indexed makes for slow, unreliable rules.
 :::
 
 ## Why this chapter exists
 
-Enforcing "who sees what" at the database layer instead of hoping the app layer remembers to.
+Application-layer authorization is a promise that every query, everywhere, remembers
+to filter. It holds until someone adds an endpoint, a background job, an admin
+script, or a report — and one of them writes a query without the `WHERE` clause.
 
-Placeholder text. This chapter's overview has not been written yet — it exists so
-the reading layout, sidebar and track switcher have something to render while the
-handbook is being drafted.
+The consequence is the top entry on the
+[OWASP API Security list](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/):
+broken object-level authorization, where changing one id in a URL returns someone
+else's data. It's endemic because the code works perfectly when you test it as
+yourself.
+
+Row-level security moves the filter from the query to the table. Once a policy is
+attached, every statement against that table — from any code path, any ORM, any
+`psql` session — is silently rewritten to include it. The filter can no longer be
+forgotten, because nobody is writing it.
+
+| Filter lives in | Fails when |
+| --- | --- |
+| Each query | Any one query omits it |
+| A shared helper / repository | Someone bypasses the helper |
+| **A database policy** | The policy itself is wrong, or the connection carries the wrong identity |
+
+That third row is the honest version: RLS doesn't remove the possibility of a
+mistake, it reduces the number of places a mistake can be made from *every query*
+to *one policy*. That's the whole value proposition, and it's a large one.
+
+## What this is not
+
+RLS is not a replacement for authorization in the application. The application
+still decides what a request is allowed to *do* — which endpoints, which actions,
+which roles — and still produces the useful `403`. What RLS changes is the
+consequence of getting it wrong: a missing check returns zero rows instead of
+everyone's.
+
+Nor is it free. Every query against a protected table carries the policy expression
+as an extra predicate, which has to be indexable, and getting the connection to
+carry the right identity is a real piece of plumbing — particularly behind a
+connection pooler. Both are covered here.
 
 ## What's in here
 
-2 more pages sit under this chapter once
-drafting starts. Each one is a 1–5 minute read that stands on its own, so the
-chapter can be read straight through or dipped into from search.
-
-- One idea per page, with the tradeoffs stated rather than a single "correct" answer.
-- Diagrams and code where they carry more than prose would.
-- No exercises yet — that's a later phase.
+| Page | What it covers |
+| --- | --- |
+| Policies & Roles | How PostgreSQL RLS works — enabling it, `USING` versus `WITH CHECK`, permissive versus restrictive, and how identity reaches the session |
+| Multi-Tenant Patterns | Isolation strategies, connection pooling, policy performance, and how to test that isolation actually holds |
 
 ## Where this connects
 
-This chapter is part of **Data & Storage** (Track 3). The track landing
-page lists every chapter in reading order; the sidebar on the left is scoped to this
-track, and the switcher above it moves between all six.
+Track 2's **Authorization Models** ends by naming the database as the backstop for
+when the application layer is wrong; this chapter is that backstop in detail. The
+next chapter, **Object Storage & Microservices**, deals with the data RLS can't
+protect — the bytes sitting in a bucket, where access control is a completely
+different mechanism.
+
+## References
+
+- [PostgreSQL — Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [OWASP API Security Top 10 — Broken Object Level Authorization](https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/)
