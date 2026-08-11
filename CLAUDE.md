@@ -21,15 +21,16 @@ palette over the outline, light/dark theming, and the page reading layout —
 per-track sidebar, page header with copy/open actions, and an "on this page"
 rail.
 
-**Content is partly placeholder.** Every chapter has an `01-overview.md` so the
-reading UI has something to render in all six tracks. Written out to full page
-count so far: **Track 1 (Frontend Engineering), all four chapters — 20 pages**,
-**Track 2 (Backend Engineering), all four chapters — 21 pages**, **Track 3 (Data
-& Storage), all three chapters — 12 pages**, **Track 4 (AI Engineering), all
-four chapters — 25 pages**, and **Track 5 (ML / DL & Applied Research), all four
-chapters — 21 pages**. Only **Track 6 (Cloud, DevOps & Observability)** is still
-placeholder overviews. Writing those remaining pages is the outstanding work —
-replacing a placeholder overview needs no code changes.
+**Content is written out.** All six tracks are drafted to their full page count
+from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
+**Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
+12 pages**, **Track 4 (AI Engineering) — 25 pages**, **Track 5 (ML / DL &
+Applied Research) — 21 pages**, and **Track 6 (Cloud, DevOps & Observability) —
+12 pages**. 111 pages across 22 chapters, matching `totalPages()`.
+
+No placeholder overviews remain. Outstanding content work is revision and
+citation upkeep rather than first drafts; the outstanding *code* work is
+pointing the search palette at page bodies (see "Site shell notes").
 
 The blog plugin stays **off**; there's no blog in scope.
 
