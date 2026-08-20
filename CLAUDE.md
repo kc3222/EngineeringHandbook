@@ -24,9 +24,9 @@ rail.
 **Content is written out.** All six tracks are drafted to their full page count
 from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
-12 pages**, **Track 4 (AI Engineering) — 25 pages**, **Track 5 (ML / DL &
+12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
 Applied Research) — 21 pages**, and **Track 6 (Cloud, DevOps & Observability) —
-12 pages**. 111 pages across 22 chapters, matching `totalPages()`.
+13 pages**. 115 pages across 22 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
 citation upkeep rather than first drafts; the outstanding *code* work is
@@ -350,7 +350,7 @@ width. Change the width in the token only; don't reintroduce per-component
   nav item stays active while reading that track's pages under `/read/…`.
 - Aggregate figures on the about page come from `totalChapters()` /
   `totalPages()` in `src/data/handbook.ts`. Don't hardcode them — they're
-  currently 22 and 111, which already disagrees with the "~99 pages" estimate
+  currently 22 and 115, which already disagrees with the "~99 pages" estimate
   in `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at

@@ -3,7 +3,7 @@ title: "Deploying Safely"
 description: "Build once and promote by digest, infrastructure as code, release strategies, schema migrations, and why rollback is the first move."
 track: 6
 chapter: 20
-page: 4
+page: 5
 readMinutes: 5
 ---
 

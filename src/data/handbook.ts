@@ -196,7 +196,7 @@ export const tracks: Track[] = [
         title: 'LLM Fundamentals',
         blurb:
           "What the model actually is, what it costs, and what it can't do.",
-        pages: 7,
+        pages: 8,
       },
       {
         number: 13,
@@ -212,7 +212,7 @@ export const tracks: Track[] = [
         title: 'RAG Pipelines',
         blurb:
           'Retrieval-augmented generation end to end — the system most people build and most people undersell.',
-        pages: 7,
+        pages: 9,
       },
       {
         number: 15,
@@ -286,7 +286,7 @@ export const tracks: Track[] = [
         title: 'Containers & Deployment',
         blurb:
           'Docker, cloud compute, and getting from "works on my machine" to a repeatable environment.',
-        pages: 4,
+        pages: 5,
       },
       {
         number: 21,

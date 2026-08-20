@@ -68,7 +68,7 @@ Cloud storage integration patterns — object storage, upload pipelines, and dec
 
 **12 · LLM Fundamentals**
 What the model actually is, what it costs, and what it can't do.
-*7 pages*
+*8 pages*
 
 **13 · Embeddings & Vector Search**
 Turning meaning into geometry, then searching that geometry fast enough to matter.
@@ -76,7 +76,7 @@ Turning meaning into geometry, then searching that geometry fast enough to matte
 
 **14 · RAG Pipelines**
 Retrieval-augmented generation end to end — the system most people build and most people undersell.
-*7 pages*
+*9 pages*
 
 **15 · Prompting & AI Coding Agents**
 Working with AI coding agents as engineering tools, not novelties.
@@ -108,7 +108,7 @@ What actually moves you into the top ranks: validation discipline, ensembling, a
 
 **20 · Containers & Deployment**
 Docker, cloud compute, and getting from "works on my machine" to a repeatable environment.
-*4 pages*
+*5 pages*
 
 **21 · Event-Driven Systems (Kafka)**
 Producers, consumers, and triggering async workflows like notifications and background jobs.
@@ -125,4 +125,4 @@ Observability tooling, alerting, and what actually happens during on-call.
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
-- [ ] Confirm final page counts once drafting begins (~99 pages total across current outline)
+- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 115)

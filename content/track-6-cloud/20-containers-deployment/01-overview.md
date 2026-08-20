@@ -56,6 +56,7 @@ image built on an Apple Silicon laptop is `arm64` unless you asked otherwise.
 | Page | What it covers |
 | --- | --- |
 | Building Images | Layers, digests, the build cache, multi-stage builds, base image choice, and what not to bake in |
+| Composing a Local Stack | Multi-service development environments, startup ordering that waits for readiness, seeding, and volumes |
 | Where Containers Run | The runtime contract, health probes, graceful shutdown, resource limits, and the compute spectrum from VM to serverless |
 | Deploying Safely | Build-once-promote-everywhere, infrastructure as code, release strategies, schema migrations, and rollback |
 
