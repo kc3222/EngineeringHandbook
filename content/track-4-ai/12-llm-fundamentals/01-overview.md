@@ -39,6 +39,7 @@ and the resulting bugs are the confusing kind.
 | Prompt Engineering | The parts that are durable technique rather than folklore |
 | LLM APIs | Messages, roles, streaming, and the shape of a production call |
 | Hallucination | Why it happens, and the four mitigations that actually move the number |
+| Running Open-Weight Models | VRAM arithmetic, quantization tradeoffs, serving runtimes, and when self-hosting pays |
 
 ## Where this connects
 

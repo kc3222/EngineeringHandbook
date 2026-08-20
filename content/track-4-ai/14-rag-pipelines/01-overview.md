@@ -52,10 +52,11 @@ into a model:
 - **Small, stable corpus** — if everything fits in the context window and stays put, put it in the context window. Retrieval adds failure modes and buys nothing.
 - **The answer requires aggregation** — "how many contracts expire this quarter" is a database query. Retrieval returns *some* contracts; it will not count them. Give the model a query tool instead.
 - **You need style or format, not facts** — that's prompting, examples, or fine-tuning. Retrieval doesn't change how a model writes.
-- **The data has a schema** — structured data belongs behind a structured query. Retrieving rows as prose is a lossy detour.
+- **The data has a schema** — structured data belongs behind a structured query. Retrieving rows as prose is a lossy detour. That path is still a retrieval system, and **Retrieval over Structured Data** covers it.
 
 RAG earns its complexity when the corpus is large, changes, and the answers live in
-unstructured text.
+unstructured text. The last two pages cover the case where it doesn't, because that
+system is built out of the same parts.
 
 ## What's in here
 
@@ -67,6 +68,8 @@ unstructured text.
 | Context Assembly & Generation | Packing the window, forcing citations, and refusing when retrieval comes back empty |
 | Evaluating a RAG System | Separating retrieval quality from generation quality, and using a model as a judge without fooling yourself |
 | Production Concerns | Latency budgets, caching, freshness, access control, and the failure modes worth alerting on |
+| Retrieval over Structured Data | When the corpus is a database — retrieving schema, generating SQL, and the failure modes that produce a wrong number |
+| Executing Generated Queries Safely | Treating model output as untrusted input, and the independent layers that contain it |
 
 ## Where this connects
 
