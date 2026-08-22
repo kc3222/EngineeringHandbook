@@ -5,8 +5,8 @@ Guidance for Claude Code when working in this repository.
 ## Project
 
 An engineering handbook: short reference pages (1–5 min read each) covering
-frontend, backend, data/storage, AI engineering, ML/applied research, and
-cloud/DevOps. Public reference material — **not** a personal blog or case
+frontend, backend, data/storage, AI engineering, ML/applied research,
+cloud/DevOps, and data structures & algorithms. Public reference material — **not** a personal blog or case
 study collection. The full outline lives in `handbook-structure.md` at the
 repo root; treat it as the source of truth for scope, track/chapter naming,
 and page counts. If a request conflicts with that outline, flag the
@@ -21,12 +21,13 @@ palette over the outline, light/dark theming, and the page reading layout —
 per-track sidebar, page header with copy/open actions, and an "on this page"
 rail.
 
-**Content is written out.** All six tracks are drafted to their full page count
+**Content is written out.** All seven tracks are drafted to their full page count
 from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
 12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
-Applied Research) — 21 pages**, and **Track 6 (Cloud, DevOps & Observability) —
-13 pages**. 115 pages across 22 chapters, matching `totalPages()`.
+Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 160 pages
+across 29 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
 citation upkeep rather than first drafts; the outstanding *code* work is
@@ -76,12 +77,12 @@ content/
 ```
 
 **Track** is the only word for this level — in `handbook-structure.md`
-("Track I–VI"), in code, in frontmatter, and in UI copy. Don't introduce a
+("Track I–VII"), in code, in frontmatter, and in UI copy. Don't introduce a
 synonym ("area", "part", "section"); if one appears, it's a leftover and
 should be renamed rather than reconciled.
 
 Directory numbering matches `handbook-structure.md`. Chapters are numbered
-01–22 within their tracks. Keep chapter folder names slug-matched to the
+01–29 within their tracks. Keep chapter folder names slug-matched to the
 chapter titles in that file.
 
 Two conventions the code depends on — breaking either breaks links silently:
@@ -133,7 +134,12 @@ body — a `#` would put a second `<h1>` on the page.
 ## Writing conventions
 
 - Audience is general/public reference — no personal anecdotes, no
-  "in my experience at X" framing, no company-specific examples.
+  "in my experience at X" framing, no company-specific examples. **One
+  deliberate exception:** chapter 29 (`Interview Patterns: Amazon`) is
+  company-specific by design, names the company, and carries a dated
+  "reported as of" admonition on its overview page so staleness is visible.
+  Don't generalise that exception to other chapters, and don't quietly
+  de-brand chapter 29 either — it's a decision, not a leftover.
 - Each page should be readable in 1–5 minutes. If a page is running long,
   that's a signal to split it, not to shorten by cutting substance.
 - Code snippets are encouraged where they clarify a concept.
@@ -153,7 +159,32 @@ body — a `#` would put a second `<h1>` on the page.
   say which to read first. A publication date is not by itself a reason to
   replace a citation — some specs are simply stable.
 - Exercises/quizzes are explicitly **out of scope for now** (planned for a
-  later phase per Open Items) — don't add them speculatively.
+  later phase per Open Items) — don't add them speculatively. **Worked-example
+  pages are not exercises** and are a separate, established thing; see below.
+- **Worked examples** (Track 7 only, so far). Each chapter's last page is a
+  `Worked Examples` page holding two to five problems. Every problem is three
+  parts in this order, and the shape is fixed:
+
+  1. An `##` heading naming the problem — this is what the "on this page" rail shows.
+  2. A **`:::problem` block** (see "Problem blocks" below) holding the description,
+     a worked input/output example, and a `**Constraints.**` line.
+  3. A `<details>` / `<summary>Show solution</summary>` disclosure.
+
+  Use a plain `<details>` pair — Docusaurus maps it onto its own themed disclosure
+  with no import and no client JS, so it survives SSG. **Blank lines around the
+  inner markdown are load-bearing**: a fenced code block flush against
+  `<summary>` or `</details>` will not parse, because `.md` is compiled as MDX
+  here. Solution block order is fixed: approach in prose → code → complexity →
+  one follow-up. The follow-up is the part most resources omit and is where the
+  learning is. Problem descriptions must be written fresh in the handbook's own
+  voice — never paste a problem statement from elsewhere. No difficulty labels.
+- **Chapter-level failure modes**, where a chapter has them, live in a
+  `## Failure modes` section at the end of that chapter's worked-examples page —
+  framed around what breaks in production (memory growth, silent overflow,
+  quadratic behaviour under load), not around wrong answers.
+- **Verify code snippets before publishing.** Every Python snippet in Track 7 was
+  run against a brute-force reference; several bugs only surfaced that way. Keep
+  doing this rather than trusting that a short function is obviously right.
 - Prefer explaining tradeoffs over prescribing one "correct" approach,
   especially in the framework-comparison chapters (e.g. Next.js rendering
   strategies, REST vs RPC-ish patterns).
@@ -280,6 +311,62 @@ scale factor:
 
 Anything below ~0.9 should be restructured.
 
+## Problem blocks
+
+`:::problem` is a **custom admonition type**, not one Docusaurus ships. It needs
+all three of these, and it fails differently depending on which is missing:
+
+- the `problem` keyword in `docs.admonitions` in `docusaurus.config.ts` — without
+  it, remark never builds the node and the page shows a literal `:::problem` line;
+- `src/theme/Admonition/Types.tsx`, a wrapper swizzle adding the type to the
+  theme's registry — without it, Docusaurus logs "no admonition component found"
+  and silently falls back to `info` styling;
+- the `.theme-admonition-problem` rules in "Reading surface" in
+  `src/css/custom.css` — without them it renders, just not distinctly.
+
+The content format is deliberately the one every competitive-programming site
+uses, because it's the one readers already know how to skim:
+
+```markdown
+:::problem
+One or two sentences stating the problem. Say what is returned, including
+what happens in the empty or not-found case.
+
+```text
+Input:  nums = [5, 3, 7, 3, 5]
+Output: 7
+Explanation: 5 and 3 each appear twice; 7 is unpaired. Note the
+             pairs are not adjacent, so the solution cannot rely
+             on order.
+```
+
+**Constraints.** `1 <= len(nums)`; length is odd.
+:::
+```
+
+**The order of the three parts is load-bearing.** The CSS joins the description
+paragraphs and the example fence into one panel — so the question reads as a
+single marked unit rather than prose that happens to precede a snippet — and it
+selects them by position: every paragraph in the block gets the panel, and
+`:last-child` takes it back off for `**Constraints.**`. So description first,
+fence next, constraints last and last only. A stray trailing paragraph after the
+constraints line loses the reset and renders as a floating panel fragment.
+
+Rules for the fence, all of which have bitten already:
+
+- **Keep lines to ~62 characters.** Roughly 68 fit the article column at desktop
+  width and fewer once the viewport narrows. The CSS sets `white-space: pre-wrap`
+  so nothing is ever clipped, but a wrapped line breaks the hanging indent under
+  `Explanation:` and looks scruffy.
+- Use ```` ```text ````, not a language — this is a spec, not code.
+- **Every example must be computed, not written from memory.** Run the page's own
+  solution against the stated input and paste what it returns. Two of the examples
+  in this track were wrong on the first pass and only the run caught them.
+- Prefer an example that shows *why* the obvious answer is wrong (a tie, an
+  off-by-one, a case the greedy approach misses) over one that merely type-checks.
+- For design problems, the example is a sequence of operations with their return
+  values and the resulting state, not a single input.
+
 ## Layout width
 
 One token governs it: `--eh-content-max` (75rem / 1200px) in
@@ -303,8 +390,9 @@ width. Change the width in the token only; don't reintroduce per-component
 
 ## Site shell notes
 
-- Six **swizzled ejects** of Docusaurus theme components; all of them may need
-  reconciling on a Docusaurus major upgrade:
+- Seven **swizzled** theme components; all of them may need reconciling on a
+  Docusaurus major upgrade. `Admonition/Types` is a *wrapper* swizzle (it
+  re-exports `@theme-original`'s map with one entry added); the rest are ejects:
   - `src/theme/Root` — wraps the app in `<SearchProvider>`. Root survives
     navigation, so it's where the palette and its ⌘K listener are mounted once.
   - `src/theme/Navbar/Content` — three-slot navbar (wordmark / centred tracks /
@@ -318,10 +406,18 @@ width. Change the width in the token only; don't reintroduce per-component
     breadcrumbs, version banner/badge and `DocItemFooter`.
   - `src/theme/DocItem/Content` — drops the theme's synthetic `<h1>`, which
     `DocHeader` renders instead.
+  - `src/theme/Admonition/Types` — adds the `problem` type. See "Problem blocks".
   - `src/theme/DocRoot/Layout/Sidebar/ExpandButton` — the collapsed rail. A
     floating pill (expand + search) in place of the theme's full-height hit
     target. `--doc-sidebar-hidden-width` in `custom.css` widens the rail to fit
     it — the sidebar container clips overflow, so the pill can't spill out.
+- **Syntax highlighting is configured per colour mode** in `themeConfig.prism`
+  (`github` light / `palenight` dark). Docusaurus's default is palenight for
+  *both*, which is a dark theme — and because "Reading surface" repaints the code
+  block with a light background in light mode, that default left every snippet on
+  the site at roughly 2.6:1 contrast. Three github token colours (comment, number,
+  boolean) are darkened in `custom.css` for the same reason. Prism paints token
+  colours as inline styles, so those overrides need `!important`.
 - Doc-page theming that Infima only exposes through global classes (sidebar
   menu, TOC, markdown, admonitions, pagination) lives in the "Reading surface"
   section of `src/css/custom.css`. Component-level styling stays in the CSS
@@ -349,9 +445,10 @@ width. Change the width in the token only; don't reintroduce per-component
   `/data`, `/ai`, `/ml`, `/cloud`), so no nav item is active on `/`. A track's
   nav item stays active while reading that track's pages under `/read/…`.
 - Aggregate figures on the about page come from `totalChapters()` /
-  `totalPages()` in `src/data/handbook.ts`. Don't hardcode them — they're
-  currently 22 and 115, which already disagrees with the "~99 pages" estimate
-  in `handbook-structure.md`.
+  `totalPages()` in `src/data/handbook.ts`, and the track count from
+  `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
+  and 160 pages, which disagrees with the "~99 pages" estimate still recorded in
+  `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at
   real page bodies is outstanding; the palette UI itself can stay.

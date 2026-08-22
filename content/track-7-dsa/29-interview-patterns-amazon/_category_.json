@@ -1,0 +1,14 @@
+{
+  "label": "Interview Patterns: Amazon",
+  "position": 29,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 29,
+    "pages": 5
+  }
+}

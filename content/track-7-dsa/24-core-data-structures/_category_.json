@@ -1,0 +1,14 @@
+{
+  "label": "Core Data Structures",
+  "position": 24,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 24,
+    "pages": 8
+  }
+}
