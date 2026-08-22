@@ -323,7 +323,7 @@ export const tracks: Track[] = [
         title: 'Complexity & Performance Analysis',
         blurb:
           'Big-O as a decision tool rather than a grading rubric — how to read a constraint and know what will fit.',
-        pages: 6,
+        pages: 5,
       },
       /*TMP*/{
         number: 24,

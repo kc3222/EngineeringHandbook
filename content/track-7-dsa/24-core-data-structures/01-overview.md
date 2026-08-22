@@ -8,10 +8,9 @@ readMinutes: 3
 ---
 
 :::info[Prerequisites]
-**Complexity & Performance Analysis** — specifically *Reading Time & Space Complexity*
-for counting operations, and *Amortized & Average Cost* for why an append and a hash
-lookup are both "O(1)" in two different senses. This chapter quotes those costs
-constantly and doesn't re-derive them.
+**Complexity & Performance Analysis** — specifically *Reading Time & Space Complexity*,
+both for counting operations and for the time-versus-space decision this chapter keeps
+making. Costs are quoted here rather than re-derived.
 :::
 
 ## Why this chapter exists

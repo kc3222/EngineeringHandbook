@@ -67,15 +67,28 @@ and a capacity: appends write into spare capacity, and when capacity runs out it
 allocates a larger block — typically some multiple of the current size — and copies
 everything across.
 
-The geometric growth is what makes appends O(1) amortized rather than O(n) each; the
-argument is on the *Amortized & Average Cost* page. Three practical consequences:
+Growing by a *multiple* is what makes appends O(1) **amortized**. Doubling from size 1 to
+size n costs 1 + 2 + 4 + … + n/2 total copies, which sums to less than n — so n appends
+cost O(n) altogether, and O(1) each on average. Growing by a fixed number of slots instead
+would cost 1 + 2 + 3 + …, which is O(n²) for n appends and a list that gets quietly slower
+the longer it gets.
+
+Amortized is a stronger claim than "average": it's a worst-case bound on a *sequence* of
+operations, so no input can make n appends cost more than O(n) in total. What it doesn't
+promise is that any individual append is cheap, and that has three consequences:
 
 **Pre-allocate when you know the size.** `[None] * n` or `ArrayList<>(n)` or
 `vector::reserve(n)` removes every resize. For large arrays built in a hot path this is
 a real and easily obtained win.
 
-**Removing elements doesn't return memory.** Capacity shrinks rarely or never. A list
-that briefly held ten million items keeps that footprint until it's discarded.
+**Removing elements doesn't return memory.** Capacity shrinks rarely or never — Python's
+`list` never hands capacity back on `pop`. A list that briefly held ten million items keeps
+that footprint until it's discarded, and geometric growth means it may be holding up to
+twice the memory its contents need.
+
+**A resize is a latency spike, not a smooth cost.** For a batch job the amortized number is
+the only one that matters; for a request with a p99 target, the occasional multi-millisecond
+copy lands in exactly the percentile you're measured on.
 
 **Deleting from the front in a loop is quadratic.** `list.pop(0)` is O(n); doing it n
 times is O(n²). This is the single most common accidental quadratic in Python, and the
@@ -109,7 +122,8 @@ grid = [[0] * cols for _ in range(rows)]
 
 - Contiguity buys O(1) indexing and costs O(n) insertion in the middle. Both follow from the same property.
 - Cache locality is the array's real advantage and is invisible in Big-O — prefer contiguous structures when complexity is a tie.
-- Geometric growth makes appends amortized O(1); pre-allocate when the size is known, and expect the capacity not to shrink.
+- Geometric growth makes appends amortized O(1) — a worst-case bound on a sequence, not a statistical average. Pre-allocate when the size is known, and expect capacity never to shrink.
+- Amortized still means individual resizes are slow, which shows up as tail latency rather than as throughput.
 - `pop(0)` in a loop is quadratic. Use a deque.
 - In row-major layout, iterate rows outermost — and never build a 2D list with `[[0] * c] * r`.
 

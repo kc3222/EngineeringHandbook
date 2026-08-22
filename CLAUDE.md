@@ -26,7 +26,7 @@ from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
 12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
 Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
-13 pages**, and **Track 7 (Data Structures & Algorithms) — 46 pages**. 161 pages
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 160 pages
 across 29 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
@@ -344,6 +344,14 @@ Explanation: 5 and 3 each appear twice; 7 is unpaired. Note the
 :::
 ```
 
+**The order of the three parts is load-bearing.** The CSS joins the description
+paragraphs and the example fence into one panel — so the question reads as a
+single marked unit rather than prose that happens to precede a snippet — and it
+selects them by position: every paragraph in the block gets the panel, and
+`:last-child` takes it back off for `**Constraints.**`. So description first,
+fence next, constraints last and last only. A stray trailing paragraph after the
+constraints line loses the reset and renders as a floating panel fragment.
+
 Rules for the fence, all of which have bitten already:
 
 - **Keep lines to ~62 characters.** Roughly 68 fit the article column at desktop
@@ -439,7 +447,7 @@ width. Change the width in the token only; don't reintroduce per-component
 - Aggregate figures on the about page come from `totalChapters()` /
   `totalPages()` in `src/data/handbook.ts`, and the track count from
   `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
-  and 161 pages, which disagrees with the "~99 pages" estimate still recorded in
+  and 160 pages, which disagrees with the "~99 pages" estimate still recorded in
   `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at

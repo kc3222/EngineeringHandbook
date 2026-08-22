@@ -124,7 +124,7 @@ Observability tooling, alerting, and what actually happens during on-call.
 
 **23 · Complexity & Performance Analysis**
 Big-O as a decision tool rather than a grading rubric — how to read a constraint and know what will fit.
-*6 pages*
+*5 pages*
 
 **24 · Core Data Structures**
 Arrays, hash maps, stacks, queues, heaps and union-find — what each one is actually good at and what it quietly costs you.
@@ -162,6 +162,6 @@ has them.
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
-- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 161 across seven tracks)
+- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 160 across seven tracks)
 - [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to 29 (which would argue for making it its own track)
 - [ ] Chapter 29 is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale

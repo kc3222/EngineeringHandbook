@@ -32,8 +32,22 @@ everything in the main array and probes for the next free slot on collision; CPy
 addressing has better cache behaviour because it stays inside one contiguous block.
 
 Either way, lookup is O(1) *on average* and O(n) in the worst case where everything
-collides. The *Amortized & Average Cost* page covers why that worst case is a security
-concern rather than a theoretical footnote.
+collides. That distinction is worth taking seriously: a dynamic array's amortized O(1) is
+a guarantee no input can break, while a hash map's average-case O(1) is a bet on the keys
+being well distributed.
+
+Lose the bet on purpose and it's an attack. If someone can choose the keys you insert and
+the hash is predictable, they can generate thousands that all land in one bucket, turning
+an O(n) parse of a JSON object into O(n²) — denial of service from a single request, with
+no unusual traffic volume. This was demonstrated across most major runtimes at 28C3 in
+2011. The fixes were **hash randomisation** (Python seeds `str` hashing per process, since
+3.3) and, in Java, converting an over-full bucket into a balanced tree so the degenerate
+case is O(log n) rather than O(n).
+
+One consequence worth carrying: because Python randomises string hashing per process,
+`hash(s)` is **not stable across runs**. Using it for sharding, cache keys or anything
+persisted silently produces different answers after a restart. Use `hashlib.sha256` or
+`zlib.crc32` when you need stability.
 
 ## Load factor and resizing
 
@@ -42,9 +56,9 @@ average bucket stops being a short list. Implementations therefore keep it under
 threshold — roughly 0.66 in CPython, 0.75 in Java — and when it's exceeded they allocate
 a larger table and **rehash every key into it**.
 
-That resize is O(n), amortized to O(1) per insert by the same geometric-growth argument
-as the dynamic array. The same two caveats apply: it's a latency spike, not a smooth
-cost, and the table carries meaningful memory overhead — you are deliberately keeping
+That resize is O(n), amortized to O(1) per insert by the same geometric-growth argument as
+the dynamic array, and it carries the same two caveats: it's a latency spike rather than a
+smooth cost, and the table carries meaningful memory overhead — you are deliberately keeping
 a third or more of the slots empty, plus per-entry bookkeeping. A hash map of a million
 small integers costs far more than an array of a million small integers.
 
@@ -109,6 +123,7 @@ clearer and faster than the nested loop it replaces.
 
 - A hash map trades ordering for O(1) access by arbitrary key. That's the whole deal.
 - Collisions are normal; load factor bounds them, and exceeding it triggers an O(n) rehash.
+- O(1) here is an *average* conditioned on well-distributed keys, not the unconditional bound an array append gets. Attacker-chosen keys can force the O(n) worst case, which is why runtimes randomise hashing — and why `hash()` isn't stable across processes.
 - Keys must be immutable and must keep `hash` consistent with `==` — breaking either produces objects that are present but unfindable.
 - Never depend on hash iteration order. Python's `dict` insertion order is a specific guarantee; `set` order is not, and differs between runs.
 - Reach for a set the moment you write a membership test against a list.
@@ -119,4 +134,6 @@ clearer and faster than the nested loop it replaces.
 - [Python — `object.__hash__` and the hashability contract](https://docs.python.org/3/reference/datamodel.html#object.__hash__)
 - [Python — `dict` ordering guarantee, 3.7 release notes](https://docs.python.org/3/whatsnew/3.7.html)
 - [CPython — `dictobject.c` design notes](https://github.com/python/cpython/blob/main/Objects/dictobject.c) — the open-addressing and compact-dict layout
-- [Java — `Object.hashCode` contract](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()) and [`HashMap`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html)
+- [Java — `Object.hashCode` contract](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()) and [`HashMap`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html) — load factor and bucket treeification
+- [Python — `PYTHONHASHSEED` and hash randomisation](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED)
+- [Klink & Wälde — *Efficient Denial of Service Attacks on Web Application Platforms*](https://fahrplan.events.ccc.de/congress/2011/Fahrplan/events/4680.en.html), 28C3, 2011 — the hash-flooding disclosure
