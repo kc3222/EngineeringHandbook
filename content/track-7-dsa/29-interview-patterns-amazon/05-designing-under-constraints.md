@@ -14,9 +14,31 @@ the part that distinguishes a considered design from a working one.
 
 ## Locker Assignment
 
-A pickup location has lockers in several sizes. When a package arrives, assign the smallest
-available locker that fits it and issue a retrieval code. When a customer presents a code,
-release the locker back into circulation.
+:::problem
+A pickup location has lockers in several sizes. `deposit(size)` assigns the
+smallest available locker that fits and returns `(locker_id, code)`, or
+`None` if nothing fits. `retrieve(code)` releases the locker and returns its
+id, or `None` for an unknown or already-used code.
+
+```text
+Input:  LockerBank([(1, 10), (2, 10), (3, 30)])
+        deposit(5)     ->  (1, 1)   smallest fitting size is 10
+        deposit(8)     ->  (2, 2)   the other size-10 locker
+        deposit(25)    ->  (3, 3)   only size 30 fits
+        deposit(1)     ->  None     nothing free at all
+        retrieve(2)    ->  2        locker 2 released
+        deposit(1)     ->  (2, 4)   reused, with a new code
+        retrieve(99)   ->  None     unknown code
+Explanation: deposit(25) takes the size-30 locker because no
+             smaller class fits. deposit(1) then fails even
+             though it would fit anywhere — "smallest that
+             fits" has already stranded the large locker,
+             which the follow-up returns to.
+```
+
+**Constraints.** Sizes are a small fixed set (three or four in practice).
+State any assumptions you make about concurrency and expiry.
+:::
 
 <details>
 <summary>Show solution</summary>

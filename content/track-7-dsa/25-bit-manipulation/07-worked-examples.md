@@ -17,7 +17,21 @@ rereading.
 
 ## The Element That Appears Once
 
-Every value in a list appears exactly twice except one. Find the one.
+:::problem
+Every value in a list appears exactly twice except one. Return that value.
+Solve it in O(1) extra space.
+
+```text
+Input:  nums = [5, 3, 7, 3, 5]
+Output: 7
+Explanation: 5 and 3 each appear twice; 7 is unpaired. Note
+             the pairs are not adjacent, so the solution
+             cannot rely on order.
+```
+
+**Constraints.** `1 <= len(nums)`; length is odd; every value but one
+appears exactly twice.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -56,7 +70,20 @@ XOR was never magic — it was mod-2 counting done 64 positions at a time.
 
 ## Counting Set Bits
 
-Count the number of 1 bits in an integer.
+:::problem
+Return the number of 1 bits in the binary representation of a
+non-negative integer.
+
+```text
+Input:  x = 13          Input:  x = 128         Input:  x = 255
+Output: 3               Output: 1               Output: 8
+Explanation: 13 is 0b1101, which has three 1 bits. 128 is
+             0b10000000, one bit set at the top. 255 is
+             0b11111111, all eight set.
+```
+
+**Constraints.** `0 <= x < 2**64`.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -96,7 +123,22 @@ returns to this shape.
 
 ## Checking for a Power of Two
 
-Determine whether a positive integer is a power of two.
+:::problem
+Return whether an integer is a power of two. Handle zero and negatives.
+
+```text
+Input:  x = 16          Input:  x = 12
+Output: True            Output: False
+Input:  x = 1           Input:  x = 0
+Output: True            Output: False
+Explanation: 16 is 0b10000 and 1 is 0b1 — each has exactly one
+             bit set. 12 is 0b1100, two bits. 0 has none, and
+             is not a power of two however tempting the
+             arithmetic makes it.
+```
+
+**Constraints.** `x` fits in a signed 64-bit integer and may be negative.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -127,7 +169,21 @@ first attempt.
 
 ## Enumerating Subsets
 
-Produce every subset of a collection.
+:::problem
+Produce every subset of a collection, including the empty one. Any order
+is acceptable.
+
+```text
+Input:  items = [1, 2, 3]
+Output: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+Explanation: 2**3 = 8 subsets. The order shown is what
+             counting 0..7 in binary produces, with bit i
+             meaning "item i included": mask 5 is 0b101, so
+             items 0 and 2, giving [1, 3].
+```
+
+**Constraints.** `0 <= len(items) <= 20`.
+:::
 
 <details>
 <summary>Show solution</summary>

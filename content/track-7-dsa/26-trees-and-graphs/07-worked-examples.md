@@ -14,8 +14,25 @@ that follows is the loop from this chapter's overview.
 
 ## Counting Regions in a Grid
 
-A rectangular grid of cells, each either filled or empty. Filled cells that touch
-horizontally or vertically form a single region. Count the regions.
+:::problem
+A rectangular grid of cells, each filled (`#`) or empty (`.`). Filled cells
+touching horizontally or vertically belong to the same region. Return the
+number of regions. Diagonal contact does **not** connect.
+
+```text
+Input:  grid = ["##..#",
+                "#...#",
+                "..##.",
+                "#...#"]
+Output: 5
+Explanation: The regions are {(0,0),(0,1),(1,0)},
+             {(0,4),(1,4)}, {(2,2),(2,3)}, {(3,0)} and
+             {(3,4)}. (2,3) and (3,4) touch only diagonally,
+             so they stay separate.
+```
+
+**Constraints.** `1 <= rows, cols <= 1000`.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -64,8 +81,23 @@ Chapter 24.
 
 ## Shortest Path in an Unweighted Graph
 
-Given a network of connections and two endpoints, return the fewest hops between them, or
-report that they're unconnected.
+:::problem
+Given an undirected graph as an adjacency map and two nodes, return the
+fewest hops between them, or `None` if no path exists.
+
+```text
+Input:  graph = {"A": ["B", "C"], "B": ["A", "D"],
+                 "C": ["A", "D"], "D": ["B", "C", "E"],
+                 "E": ["D"],      "F": []}
+        start = "A", goal = "E"
+Output: 3
+Explanation: A -> B -> D -> E, or equally A -> C -> D -> E.
+             With start = "A", goal = "F" the answer is None:
+             F has no edges and is unreachable.
+```
+
+**Constraints.** All edges cost the same. `1 <= nodes <= 10**5`.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -112,8 +144,29 @@ algorithm, which is the same loop with a different frontier.
 
 ## Detecting a Cycle in a Dependency Graph
 
-Modules declare which other modules they require. Report whether the declarations can be
-satisfied, and if not, name the modules involved in the circularity.
+:::problem
+Modules declare which other modules they require, as `(module, needs)`
+pairs. Return a build order in which nothing precedes what it needs. If no
+such order exists, raise an error **naming** the modules involved.
+
+```text
+Input:  modules  = ["auth", "config", "logging", "ui"]
+        requires = [("auth", "config"), ("ui", "auth"),
+                    ("config", "logging")]
+Output: ["logging", "config", "auth", "ui"]
+
+Input:  requires = [("auth", "config"), ("config", "logging"),
+                    ("logging", "auth"), ("ui", "auth")]
+Output: ValueError: circular dependency among: auth, config,
+        logging, ui
+Explanation: auth, config and logging form a cycle. ui is
+             named too because it depends on the cycle and can
+             never be built — see the follow-up on why that
+             set is broader than the cycle itself.
+```
+
+**Constraints.** Any valid order is acceptable when several exist.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -162,7 +215,25 @@ the successful output deterministic, which matters if it's written to a lockfile
 
 ## Lowest Common Ancestor
 
-In a rooted tree, find the deepest node that is an ancestor of both of two given nodes.
+:::problem
+In a rooted binary tree, return the deepest node that is an ancestor of both
+of two given nodes. A node counts as an ancestor of itself.
+
+```text
+Input:          1            p = 4, q = 5   ->  2
+              /   \          p = 4, q = 6   ->  1
+             2     3         p = 4, q = 2   ->  2
+            / \   /
+           4   5 6
+Explanation: 4 and 5 meet at 2, the deepest node with both in
+             its subtree. 4 and 6 are in different subtrees of
+             the root, so they meet at 1. For 4 and 2, node 2
+             is its own ancestor, so the answer is 2 rather
+             than 1.
+```
+
+**Constraints.** Both nodes are present in the tree. `1 <= nodes <= 10**5`.
+:::
 
 <details>
 <summary>Show solution</summary>

@@ -1,5 +1,6 @@
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import {themes as prismThemes} from 'prism-react-renderer';
 
 import {tracks, docsRouteBasePath} from './src/data/handbook';
 
@@ -79,6 +80,17 @@ const config: Config = {
           path: 'content',
           routeBasePath: docsRouteBasePath,
           sidebarPath: './sidebars.ts',
+          /*
+           * `:::problem` sets a worked-example problem statement apart from the
+           * prose around it. Registering the keyword here is only half of it —
+           * the type is rendered by the wrapper swizzle in
+           * `src/theme/Admonition/Types.tsx`. Without both, the block renders
+           * as a literal `:::problem` line.
+           */
+          admonitions: {
+            keywords: ['problem'],
+            extendDefaults: true,
+          },
           // Our own header renders the track/chapter line, so the stock
           // breadcrumbs would just repeat it.
           breadcrumbs: false,
@@ -105,6 +117,19 @@ const config: Config = {
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: true,
+    },
+    /*
+     * Syntax highlighting has to be set per colour mode. Without an explicit
+     * `theme`, Docusaurus uses palenight for BOTH modes — and palenight is a
+     * dark theme, so its light-grey token colours landed on the light code
+     * surface that "Reading surface" paints in `custom.css`, leaving every
+     * snippet on the site close to unreadable in light mode.
+     *
+     * `darkTheme` stays palenight, which is what dark mode was already getting.
+     */
+    prism: {
+      theme: prismThemes.github,
+      darkTheme: prismThemes.palenight,
     },
     // Diagrams follow the site's colour mode. `neutral`/`dark` are the two
     // mermaid built-ins that don't fight the reading surface; per-diagram

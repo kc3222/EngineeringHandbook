@@ -14,9 +14,30 @@ after every step?**
 
 ## Expanding Binary String
 
-Start with a binary string. On each pass, every `0` becomes `00` and every `1` becomes `10`.
-After k passes, report the character at index i. Both k and i may be large enough that
-building the string is impossible.
+:::problem
+Start with a binary string. On each pass, every `0` becomes `00` and every
+`1` becomes `10`. After `k` passes, return the character at index `i`.
+
+```text
+Input:  s = "101"
+        k = 0  ->  "101"
+        k = 1  ->  "100010"
+        k = 2  ->  "100000001000"
+
+        value_at(s, k=2, i=0)  ->  1
+        value_at(s, k=2, i=4)  ->  0
+        value_at(s, k=2, i=8)  ->  1
+        value_at(s, k=3, i=8)  ->  0
+Explanation: After 2 passes each original character owns a
+             block of 4. Index 8 falls at offset 0 of block 2,
+             whose original character is "1", so the answer is
+             1. Index 4 is offset 0 of block 1, original "0",
+             so 0.
+```
+
+**Constraints.** `k` and `i` may be large enough that `2**k` exceeds any
+plausible memory — the string cannot be built.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -65,9 +86,26 @@ passes and knowing it holds for all of them.
 
 ## Counting Off Around a Circle
 
-Entities are arranged in a circle. Repeatedly count off a fixed number of positions from the
-last removal and remove whoever you land on, continuing until one remains. Return the
-survivor.
+:::problem
+Entities are arranged in a circle. Counting starts at the first entity;
+repeatedly count off `step` positions and remove whoever you land on,
+resuming the count from the next surviving entity. Return the last one left.
+
+```text
+Input:  entities = [1, 2, 3, 4, 5], step = 2
+Output: 3
+Explanation: Removal order is 2, 4, 1, 5, leaving 3. After
+             removing 4 the count resumes at 5, wraps to 1,
+             and removes it.
+
+Input:  entities = [1, 2, 3, 4, 5], step = 3
+Output: 4
+Explanation: Removal order is 3, 1, 5, 2.
+```
+
+**Constraints.** `1 <= len(entities) <= 10**6`; `step >= 1` and may exceed
+the number of entities remaining, in which case the count wraps.
+:::
 
 <details>
 <summary>Show solution</summary>

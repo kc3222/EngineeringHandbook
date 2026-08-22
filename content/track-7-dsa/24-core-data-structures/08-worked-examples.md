@@ -13,7 +13,21 @@ needs and why neither alone is sufficient.
 
 ## Top-k Frequent Elements
 
-Given a long sequence of values, return the k that occur most often.
+:::problem
+Given a sequence of values, return the `k` that occur most often, most
+frequent first.
+
+```text
+Input:  values = ["a", "b", "a", "c", "b", "a"], k = 2
+Output: ["a", "b"]
+Explanation: Counts are a:3, b:2, c:1. The two most frequent
+             are a and b, returned in descending order of
+             count.
+```
+
+**Constraints.** `1 <= k <= number of distinct values`; values are hashable.
+Assume ties may be broken arbitrarily.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -51,8 +65,26 @@ Space-Saving — which trades exactness for bounded memory.
 
 ## LRU Cache
 
-Build a fixed-capacity cache where both reading a key and inserting one are O(1), and
-inserting past capacity evicts whichever key was used least recently.
+:::problem
+Build a fixed-capacity cache supporting `get(key)` and `put(key, value)`,
+both in O(1). Inserting past capacity evicts whichever key was used least
+recently. A `get` counts as a use; so does overwriting an existing key.
+`get` returns `None` for a key that isn't present.
+
+```text
+Input:  LRUCache(capacity = 2)
+        put(1, 10)        ->  None      cache: {1:10}
+        put(2, 20)        ->  None      cache: {1:10, 2:20}
+        get(1)            ->  10        cache: {2:20, 1:10}
+        put(3, 30)        ->  None      cache: {1:10, 3:30}
+        get(2)            ->  None      evicted by the put above
+        get(3)            ->  30
+Explanation: put(3, 30) exceeds capacity. Key 1 was just read,
+             so 2 is the least recently used and is evicted.
+```
+
+**Constraints.** `1 <= capacity <= 10**4`; keys are hashable.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -120,9 +152,27 @@ you need custom eviction.
 
 ## Connected Components Under Incremental Merges
 
-Accounts are added to a system one at a time, and pairs of them are occasionally
-discovered to belong to the same person. At any point, report how many distinct people the
-system currently believes exist, and whether two given accounts are the same person.
+:::problem
+Accounts are numbered `0` to `n - 1`. Pairs are occasionally discovered to
+belong to the same person. Support `link(a, b)`, returning whether it merged
+two previously separate people, and `same_person(a, b)`. Report how many
+distinct people the system believes exist at any point.
+
+```text
+Input:  Accounts(n = 5)
+        link(0, 1)        ->  True    components: 4
+        link(2, 3)        ->  True    components: 3
+        same_person(0, 3) ->  False
+        link(1, 3)        ->  True    components: 2
+        same_person(0, 3) ->  True
+        link(0, 2)        ->  False   already merged
+Explanation: link(1, 3) joins {0,1} and {2,3} into one person,
+             which is what makes 0 and 3 the same from then
+             on. link(0, 2) changes nothing and reports False.
+```
+
+**Constraints.** `1 <= n <= 10**6`; links are never removed.
+:::
 
 <details>
 <summary>Show solution</summary>

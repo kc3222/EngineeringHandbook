@@ -11,10 +11,23 @@ Solutions are collapsed. The value is in trying the analysis first — for this 
 that means saying the complexity out loud before you open the answer, because the whole
 skill is producing that estimate quickly rather than recognising it once told.
 
-## Two implementations, same output
+## Two Implementations, Same Output
 
-Here are two functions that return the same thing: the list of values in `items` that
-appear more than once, in order of first appearance. Which is faster, and by how much?
+:::problem
+Both functions below return the same list: the values in `items` that occur
+more than once, in order of first appearance. Say which is faster, and by
+how much.
+
+```text
+Input:  items = [4, 7, 4, 2, 9, 7, 4]
+Output: [4, 7]
+Explanation: 4 first repeats at index 2, 7 at index 5, so 4
+             comes first. 2 and 9 occur once and are excluded.
+             4 appears three times but is reported once.
+```
+
+**Constraints.** `0 <= len(items) <= 10**5`; values are hashable.
+:::
 
 ```python
 def duplicates_a(items):
@@ -62,14 +75,26 @@ properties.
 
 </details>
 
-## Sizing an approach before writing it
+## Sizing an Approach From a Constraint
 
-A service stores time-stamped events. A new endpoint must answer: *for each of the q
-requested time windows, how many events fall inside it?* There are n events and q
-windows, and the stated bounds are n up to 200,000 and q up to 200,000. The response
-budget is roughly one second.
+:::problem
+A service stores time-stamped events. An endpoint must answer, for each of
+`q` requested time windows, how many events fall inside it. Windows are
+inclusive of both endpoints and may overlap.
 
 Which complexities are viable, and which approach do the bounds point at?
+
+```text
+Input:  events  = [3, 9, 12, 12, 20]
+        windows = [(3, 12), (13, 19), (0, 100)]
+Output: [4, 0, 5]
+Explanation: (3, 12) contains 3, 9 and both 12s. Nothing lies
+             in (13, 19). (0, 100) contains all five events.
+```
+
+**Constraints.** `n <= 200_000` events and `q <= 200_000` windows; the
+response budget is roughly one second.
+:::
 
 <details>
 <summary>Show solution</summary>

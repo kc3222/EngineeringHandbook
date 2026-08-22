@@ -162,16 +162,22 @@ body — a `#` would put a second `<h1>` on the page.
   later phase per Open Items) — don't add them speculatively. **Worked-example
   pages are not exercises** and are a separate, established thing; see below.
 - **Worked examples** (Track 7 only, so far). Each chapter's last page is a
-  `Worked Examples` page holding two to five problems, each with a collapsible
-  solution. Use a plain `<details>` / `<summary>` pair — Docusaurus maps it onto
-  its own themed disclosure with no import and no client JS, so it survives SSG.
-  **Blank lines around the inner markdown are load-bearing**: a fenced code block
-  flush against `<summary>` or `</details>` will not parse, because `.md` is
-  compiled as MDX here. Solution block order is fixed: approach in prose → code →
-  complexity → one follow-up. The follow-up is the part most resources omit and
-  is where the learning is. Problem descriptions must be written fresh in the
-  handbook's own voice — never paste a problem statement from elsewhere. No
-  difficulty labels.
+  `Worked Examples` page holding two to five problems. Every problem is three
+  parts in this order, and the shape is fixed:
+
+  1. An `##` heading naming the problem — this is what the "on this page" rail shows.
+  2. A **`:::problem` block** (see "Problem blocks" below) holding the description,
+     a worked input/output example, and a `**Constraints.**` line.
+  3. A `<details>` / `<summary>Show solution</summary>` disclosure.
+
+  Use a plain `<details>` pair — Docusaurus maps it onto its own themed disclosure
+  with no import and no client JS, so it survives SSG. **Blank lines around the
+  inner markdown are load-bearing**: a fenced code block flush against
+  `<summary>` or `</details>` will not parse, because `.md` is compiled as MDX
+  here. Solution block order is fixed: approach in prose → code → complexity →
+  one follow-up. The follow-up is the part most resources omit and is where the
+  learning is. Problem descriptions must be written fresh in the handbook's own
+  voice — never paste a problem statement from elsewhere. No difficulty labels.
 - **Chapter-level failure modes**, where a chapter has them, live in a
   `## Failure modes` section at the end of that chapter's worked-examples page —
   framed around what breaks in production (memory growth, silent overflow,
@@ -305,6 +311,54 @@ scale factor:
 
 Anything below ~0.9 should be restructured.
 
+## Problem blocks
+
+`:::problem` is a **custom admonition type**, not one Docusaurus ships. It needs
+all three of these, and it fails differently depending on which is missing:
+
+- the `problem` keyword in `docs.admonitions` in `docusaurus.config.ts` — without
+  it, remark never builds the node and the page shows a literal `:::problem` line;
+- `src/theme/Admonition/Types.tsx`, a wrapper swizzle adding the type to the
+  theme's registry — without it, Docusaurus logs "no admonition component found"
+  and silently falls back to `info` styling;
+- the `.theme-admonition-problem` rules in "Reading surface" in
+  `src/css/custom.css` — without them it renders, just not distinctly.
+
+The content format is deliberately the one every competitive-programming site
+uses, because it's the one readers already know how to skim:
+
+```markdown
+:::problem
+One or two sentences stating the problem. Say what is returned, including
+what happens in the empty or not-found case.
+
+```text
+Input:  nums = [5, 3, 7, 3, 5]
+Output: 7
+Explanation: 5 and 3 each appear twice; 7 is unpaired. Note the
+             pairs are not adjacent, so the solution cannot rely
+             on order.
+```
+
+**Constraints.** `1 <= len(nums)`; length is odd.
+:::
+```
+
+Rules for the fence, all of which have bitten already:
+
+- **Keep lines to ~62 characters.** Roughly 68 fit the article column at desktop
+  width and fewer once the viewport narrows. The CSS sets `white-space: pre-wrap`
+  so nothing is ever clipped, but a wrapped line breaks the hanging indent under
+  `Explanation:` and looks scruffy.
+- Use ```` ```text ````, not a language — this is a spec, not code.
+- **Every example must be computed, not written from memory.** Run the page's own
+  solution against the stated input and paste what it returns. Two of the examples
+  in this track were wrong on the first pass and only the run caught them.
+- Prefer an example that shows *why* the obvious answer is wrong (a tie, an
+  off-by-one, a case the greedy approach misses) over one that merely type-checks.
+- For design problems, the example is a sequence of operations with their return
+  values and the resulting state, not a single input.
+
 ## Layout width
 
 One token governs it: `--eh-content-max` (75rem / 1200px) in
@@ -328,8 +382,9 @@ width. Change the width in the token only; don't reintroduce per-component
 
 ## Site shell notes
 
-- Six **swizzled ejects** of Docusaurus theme components; all of them may need
-  reconciling on a Docusaurus major upgrade:
+- Seven **swizzled** theme components; all of them may need reconciling on a
+  Docusaurus major upgrade. `Admonition/Types` is a *wrapper* swizzle (it
+  re-exports `@theme-original`'s map with one entry added); the rest are ejects:
   - `src/theme/Root` — wraps the app in `<SearchProvider>`. Root survives
     navigation, so it's where the palette and its ⌘K listener are mounted once.
   - `src/theme/Navbar/Content` — three-slot navbar (wordmark / centred tracks /
@@ -343,10 +398,18 @@ width. Change the width in the token only; don't reintroduce per-component
     breadcrumbs, version banner/badge and `DocItemFooter`.
   - `src/theme/DocItem/Content` — drops the theme's synthetic `<h1>`, which
     `DocHeader` renders instead.
+  - `src/theme/Admonition/Types` — adds the `problem` type. See "Problem blocks".
   - `src/theme/DocRoot/Layout/Sidebar/ExpandButton` — the collapsed rail. A
     floating pill (expand + search) in place of the theme's full-height hit
     target. `--doc-sidebar-hidden-width` in `custom.css` widens the rail to fit
     it — the sidebar container clips overflow, so the pill can't spill out.
+- **Syntax highlighting is configured per colour mode** in `themeConfig.prism`
+  (`github` light / `palenight` dark). Docusaurus's default is palenight for
+  *both*, which is a dark theme — and because "Reading surface" repaints the code
+  block with a light background in light mode, that default left every snippet on
+  the site at roughly 2.6:1 contrast. Three github token colours (comment, number,
+  boolean) are darkened in `custom.css` for the same reason. Prism paints token
+  colours as inline styles, so those overrides need `!important`.
 - Doc-page theming that Infima only exposes through global classes (sidebar
   menu, TOC, markdown, admonitions, pagination) lives in the "Reading surface"
   section of `src/css/custom.css`. Component-level styling stays in the CSS

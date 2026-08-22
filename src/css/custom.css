@@ -332,6 +332,27 @@ body {
   background-color: var(--eh-surface) !important;
 }
 
+/*
+ * Prism's github theme is tuned for a white background; on the light code
+ * surface above, three of its token colours fall under WCAG AA — comments at
+ * 2.7:1, numbers and booleans at 2.6:1. Comments carry real content in this
+ * handbook's snippets (complexity notes, "this line is the trick"), so they are
+ * the ones that matter most. Darkened here rather than by swapping themes,
+ * which would change every other token too.
+ *
+ * Light mode only: dark mode uses palenight, which is already well clear.
+ * `!important` because Prism paints token colours as inline styles from the
+ * theme object — the same reason the code-block background above needs it.
+ */
+html[data-theme='light'] .prism-code .token.comment {
+  color: #5d6a66 !important;
+}
+
+html[data-theme='light'] .prism-code .token.number,
+html[data-theme='light'] .prism-code .token.boolean {
+  color: #0a6e6c !important;
+}
+
 .markdown blockquote {
   border-left-width: 2px;
 }
@@ -365,6 +386,54 @@ body {
 
 .theme-admonition [class*='admonitionContent'] > :last-child {
   margin-bottom: 0;
+}
+
+/*
+ * `:::problem` — the worked-example problem statement. Every other admonition
+ * on the reading surface is a flat neutral callout, which is right for an aside
+ * and wrong here: the problem is the thing the rest of the page is about, and
+ * as prose it was being read straight past. So this one is deliberately louder
+ * than its siblings — a solid foreground rule down the left, a surface a step
+ * darker than the callout default, and a full-strength heading.
+ *
+ * Louder within the monochrome palette, not outside it: there is no accent
+ * colour token in this design, and introducing one for a single block would be
+ * the wrong kind of emphasis.
+ *
+ * Requires the `problem` keyword in `docusaurus.config.ts` and the wrapper
+ * swizzle in `src/theme/Admonition/Types.tsx`.
+ */
+.theme-admonition-problem {
+  border-color: var(--eh-line-strong);
+  border-left: 3px solid var(--eh-fg);
+  background-color: var(--eh-hover);
+}
+
+.theme-admonition-problem [class*='admonitionHeading'] {
+  color: var(--eh-fg);
+  font-weight: 700;
+}
+
+.theme-admonition-problem [class*='admonitionIcon'] svg {
+  fill: var(--eh-fg);
+}
+
+/* The Input/Output block. Tighter than a normal snippet — it's a spec, not code
+   to read line by line — and flush to the callout's own surface. */
+.theme-admonition-problem div[class*='codeBlockContainer'] {
+  margin-bottom: 0.75rem;
+}
+
+.theme-admonition-problem pre code {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  /* Wrap rather than scroll. An Input/Output/Explanation block is a spec to be
+     read, not code to be copied, and a horizontal scrollbar hides the end of
+     the explanation. Roughly 68 monospace characters fit the article column at
+     desktop width, and fewer once the viewport narrows — author these blocks to
+     ~64 and let this rule cover the rest. */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 /* Prev / next */

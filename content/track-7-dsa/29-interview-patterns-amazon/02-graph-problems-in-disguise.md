@@ -13,9 +13,28 @@ relates them* — after which the algorithm is straight from **Trees & Graph Tra
 
 ## Currency Conversion
 
-Given a set of exchange relationships between currencies — one unit of C is worth 10 of B,
-one unit of B is worth 110 of Z, and so on — find the rate between any two currencies, or
-report that no chain connects them.
+:::problem
+Given exchange relationships between currencies as `(a, b, r)` triples
+meaning one unit of `a` is worth `r` of `b`, return the rate between any two
+currencies, or `None` if no chain connects them.
+
+```text
+Input:  rates = [("USD", "EUR", 0.9),
+                 ("EUR", "JPY", 160.0),
+                 ("GBP", "USD", 1.25)]
+        convert("USD", "JPY")  ->  144.0
+        convert("GBP", "JPY")  ->  180.0
+        convert("JPY", "USD")  ->  0.006944...
+        convert("USD", "CHF")  ->  None
+Explanation: USD to JPY chains 0.9 * 160.0. GBP to JPY chains
+             1.25 * 0.9 * 160.0. Reverse edges are
+             reciprocals, so JPY to USD is 1 / 144. CHF
+             appears in no rate, so no chain reaches it.
+```
+
+**Constraints.** The table is self-consistent — every route between two
+currencies gives the same rate. `1 <= rates <= 10**4`.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -71,8 +90,29 @@ is the wrong trade for a live FX feed and the right one for a static table.
 
 ## Package Build Order
 
-Given a set of packages and the dependencies between them, produce an order in which they
-can be built such that nothing is built before what it needs.
+:::problem
+Given packages and their dependencies as `(pkg, depends_on)` pairs, produce
+an order in which nothing is built before what it needs. Raise if no such
+order exists.
+
+```text
+Input:  packages     = ["app", "http", "json", "utf8"]
+        dependencies = [("app", "http"), ("app", "json"),
+                        ("http", "utf8"), ("json", "utf8")]
+Output: ["utf8", "http", "json", "app"]
+Explanation: utf8 needs nothing, so it goes first. http and
+             json both need utf8 and are mutually independent,
+             so either order is valid. app needs both and goes
+             last.
+
+Input:  packages = ["a", "b", "c"]
+        dependencies = [("a", "b"), ("b", "c"), ("c", "a")]
+Output: ValueError: circular dependency
+```
+
+**Constraints.** Any valid order is acceptable. A package may be required by
+several others — this is a DAG, not a tree.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -121,9 +161,26 @@ parallel build schedule, since everything in a batch is mutually independent.
 
 ## Two Knights Converging
 
-Two knights sit on an unbounded chessboard. Both move with standard knight moves. Find the
-smallest total number of moves — counting both knights — after which they occupy the same
-square.
+:::problem
+Two knights sit on an **unbounded** chessboard and move with standard knight
+moves. Return the smallest total number of moves, counting both knights,
+after which they occupy the same square.
+
+```text
+Input:  a = (0, 0), b = (1, 2)   ->  1
+Input:  a = (0, 0), b = (0, 1)   ->  3
+Input:  a = (0, 0), b = (4, 4)   ->  4
+Input:  a = (0, 0), b = (0, 0)   ->  0
+Explanation: (1, 2) is one knight move from the origin, so one
+             knight moves and the other stays. (0, 1) is
+             famously awkward: no meeting square is one move
+             from both, and the cheapest split costs three
+             moves in total.
+```
+
+**Constraints.** Coordinates are unbounded integers, so distances cannot be
+precomputed. Either knight may make any number of moves, including none.
+:::
 
 <details>
 <summary>Show solution</summary>

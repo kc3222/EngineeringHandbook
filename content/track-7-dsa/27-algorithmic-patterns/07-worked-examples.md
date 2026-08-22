@@ -13,8 +13,24 @@ Solutions are collapsed.
 
 ## Longest Run Without a Repeat
 
+:::problem
 Given a sequence of events, find the length of the longest contiguous stretch in which no
 event type occurs twice.
+
+```text
+Input:  events = ["login", "view", "view", "cart", "login"]
+Output: 3
+Explanation: ["view", "cart", "login"] spans index 2 to 4 with
+             no repeat. Any stretch holding both "view"s or
+             both "login"s is invalid, so 3 is the maximum.
+
+Input:  events = ["a", "b", "c", "a", "b", "c", "d"]
+Output: 4
+Explanation: ["a", "b", "c", "d"] at index 3 to 6.
+```
+
+**Constraints.** `0 <= len(events) <= 10**5`; event types are hashable.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -51,9 +67,24 @@ jump-ahead here is an optimisation of it rather than a different pattern.
 
 ## The Widest Useful Span
 
-A row of vertical posts of varying heights stands on flat ground. Choosing two posts, the
-water they could hold between them is limited by the shorter of the two, multiplied by the
-distance between them. Find the maximum.
+:::problem
+A row of vertical posts of varying heights stands on flat ground. For any two
+posts, the water held between them is the distance between them multiplied by
+the height of the *shorter* one. Return the maximum over all pairs.
+
+```text
+Input:  heights = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+Output: 49
+Explanation: Posts at index 1 and 8, heights 8 and 7. Distance
+             is 8 - 1 = 7, limiting height is min(8, 7) = 7,
+             so 7 * 7. The two tallest posts (index 1 and 6,
+             both 8) give only 5 * 8 = 40 — width matters as
+             much as height.
+```
+
+**Constraints.** `2 <= len(heights) <= 10**5`; heights are non-negative.
+The posts themselves take up no width.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -90,9 +121,27 @@ one.
 
 ## Minimum Capacity to Finish on Time
 
-A sequence of shipments must be dispatched in their given order over at most D days. Each day
-takes some prefix of what remains, up to the vehicle's capacity. Find the smallest capacity
-that finishes within D days.
+:::problem
+Shipments must be dispatched **in their given order** over at most `days`
+days. Each day takes some prefix of what remains, up to the vehicle's
+capacity. Return the smallest capacity that finishes in time.
+
+```text
+Input:  loads = [3, 2, 2, 4, 1, 4], days = 3
+Output: 6
+Explanation: Capacity 6 splits as [3,2] [2,4] [1,4] — three
+             days. Capacity 5 would need [3,2] [2] [4,1] [4],
+             four days.
+
+Input:  loads = [3, 2, 2, 4, 1, 4], days = 5   ->  4
+Input:  loads = [3, 2, 2, 4, 1, 4], days = 1   ->  16
+Explanation: With one day everything ships at once, so the
+             answer is the total. No capacity below max(loads)
+             can ever work.
+```
+
+**Constraints.** `1 <= days <= len(loads) <= 10**5`; loads are positive.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -140,8 +189,23 @@ statement than it appeared to.
 
 ## Days Until a Higher Reading
 
-For each day in a sequence of temperature readings, report how many days you must wait for a
-warmer one, or zero if no warmer day follows.
+:::problem
+For each day in a sequence of temperature readings, report how many days you
+must wait for a strictly warmer one. Report `0` where no warmer day follows.
+
+```text
+Input:  temps = [30, 38, 36, 35, 37, 42, 40]
+Output: [1, 4, 2, 1, 1, 0, 0]
+Explanation: Day 0 (30) waits 1 day for 38. Day 1 (38) waits
+             until day 5 (42), so 4. Day 2 (36) skips 35 and
+             reaches 37 on day 4, so 2. Day 5 (42) is the
+             maximum and day 6 (40) has nothing after it, so
+             both report 0.
+```
+
+**Constraints.** `1 <= len(temps) <= 10**5`. Equal temperatures do not count
+as warmer.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -177,8 +241,26 @@ than patched into place.
 
 ## Range Sum Queries Over Static Data
 
-A fixed table of daily figures is queried repeatedly for the total over arbitrary date
-ranges. Both the number of days and the number of queries are large.
+:::problem
+A fixed table of daily figures is queried repeatedly for the total over
+arbitrary ranges. Build a structure supporting `total(lo, hi)` — `lo`
+inclusive, `hi` exclusive — in O(1) per query. Figures never change.
+
+```text
+Input:  DailyTotals(figures = [5, -2, 7, 1, 4])
+        total(0, 3)   ->  10
+        total(1, 5)   ->  10
+        total(2, 2)   ->  0
+Explanation: total(0, 3) sums 5 + (-2) + 7. total(1, 5) sums
+             (-2) + 7 + 1 + 4 — the same answer by
+             coincidence. total(2, 2) is an empty range, which
+             the half-open convention makes 0 with no special
+             case.
+```
+
+**Constraints.** `1 <= len(figures) <= 2 * 10**5` and up to `2 * 10**5`
+queries. Figures may be negative.
+:::
 
 <details>
 <summary>Show solution</summary>

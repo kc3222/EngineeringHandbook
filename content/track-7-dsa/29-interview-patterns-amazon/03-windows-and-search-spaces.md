@@ -14,9 +14,28 @@ can't track?
 
 ## Adjacent Machines Within a Power Budget
 
-Each machine in a rack has a base draw and a boosted draw. Running a block of k adjacent
-machines costs the sum of their base draws plus the sum of their boosted draws multiplied by
-k. Given a ceiling on total draw, find the largest block that can run.
+:::problem
+Each machine in a rack has a base draw and a boosted draw. Running a block of
+`k` **adjacent** machines costs the sum of their base draws plus the sum of
+their boosted draws multiplied by `k`. Given a ceiling, return the largest
+block that can run, or `0` if none can.
+
+```text
+Input:  power = [3, 6, 1, 3, 4], boosted = [2, 1, 1, 1, 2],
+        power_max = 25
+Output: 3
+Explanation: The block at index 1..3 costs (6+1+3) + (1+1+1)*3
+             = 19, within budget. No block of 4 fits: the
+             cheapest is index 1..4 at (6+1+3+4) + (1+1+1+2)*4
+             = 34.
+
+Input:  power_max = 15  ->  2    index 2..3 costs 4 + 2*2 = 8
+Input:  power_max = 3   ->  1    index 2 costs 1 + 1*1 = 2
+```
+
+**Constraints.** `1 <= len(power) <= 10**5`; all draws are **non-negative** —
+the precondition the solution turns on.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -75,9 +94,26 @@ search come almost entirely from half-remembering two templates at once.
 
 ## Longest Holiday Streak
 
-An employee's calendar is a sequence of work days and holidays, and they have a budget of
-days they may convert from work to holiday. Find the longest unbroken run of holidays they
-can arrange.
+:::problem
+A calendar is a string of work days (`w`) and holidays (`h`). Given a budget
+of days that may be converted from work to holiday, return the longest
+unbroken run of holidays that can be arranged.
+
+```text
+Input:  days = "hwwhhwh", budget = 1
+Output: 4
+Explanation: Convert the w at index 5, giving "hwwhhhh" — a
+             run of 4 from index 3 to 6.
+
+Input:  days = "hwwhhwh", budget = 2   ->  5
+Explanation: Convert both w's at index 1 and 2, giving a run
+             of 5 from index 0 to 4.
+
+Input:  days = "hwwhhwh", budget = 0   ->  2  (index 3..4)
+```
+
+**Constraints.** `0 <= budget <= len(days) <= 10**5`.
+:::
 
 <details>
 <summary>Show solution</summary>

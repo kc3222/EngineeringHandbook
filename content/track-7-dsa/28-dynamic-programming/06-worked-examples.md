@@ -15,8 +15,24 @@ can't.
 
 ## Counting the Ways Up
 
-A staircase has n steps. Each move climbs either one step or two. How many distinct
-sequences of moves reach the top?
+:::problem
+A staircase has `n` steps. Each move climbs either one step or two. Return
+how many distinct sequences of moves reach the top.
+
+```text
+Input:  n = 4
+Output: 5
+Explanation: The five sequences are 1+1+1+1, 1+1+2, 1+2+1,
+             2+1+1 and 2+2. Order matters: 1+2+1 and 2+1+1 are
+             distinct.
+
+Input:  n = 1  ->  1        Input:  n = 3  ->  3
+Input:  n = 2  ->  2        Input:  n = 5  ->  8
+```
+
+**Constraints.** `1 <= n <= 10**5`. There is exactly one way to climb zero
+steps — do nothing — which is the base case that makes the recurrence work.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -49,8 +65,26 @@ nothing else would change.
 
 ## Choosing Non-Adjacent Values
 
-A row of houses each holds some amount. You may take from any subset of houses, but never
-from two adjacent ones. Maximise the total taken.
+:::problem
+A row of houses each holds some amount. You may take from any subset of
+houses, but never from two adjacent ones. Return the maximum total.
+
+```text
+Input:  values = [2, 7, 9, 3, 1]
+Output: 12
+Explanation: Take index 0, 2 and 4: 2 + 9 + 1 = 12. Taking the
+             two largest (7 and 9) is illegal — they are
+             adjacent — and 7 + 3 = 10 is worse than 12
+             anyway.
+
+Input:  values = [5, 1, 1, 5]
+Output: 10
+Explanation: Index 0 and 3, which are not adjacent in a
+             straight row.
+```
+
+**Constraints.** `1 <= len(values) <= 10**5`; amounts are non-negative.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -84,8 +118,26 @@ introduces a bug where the second uses the already-updated first.
 
 ## The Same Problem, Made Circular
 
-Now the houses are arranged in a ring, so the first and last are adjacent and cannot both be
-taken. Everything else is unchanged.
+:::problem
+Now the houses form a ring: the first and last are adjacent and cannot both
+be taken. Everything else is unchanged.
+
+```text
+Input:  values = [5, 1, 1, 5]
+Output: 6
+Explanation: The straight-row answer took index 0 and 3, which
+             are now neighbours. The best legal choice is one
+             5 plus a non-adjacent 1 — for instance index 0
+             and 2.
+
+Input:  values = [2, 3, 2]     ->  3    straight row gives 4
+Input:  values = [1, 2, 3, 1]  ->  4    index 0 and 2, unchanged
+Input:  values = [7]           ->  7    a lone house is not its
+                                        own neighbour
+```
+
+**Constraints.** `1 <= len(values) <= 10**5`; amounts are non-negative.
+:::
 
 <details>
 <summary>Show solution</summary>
@@ -123,8 +175,24 @@ problems well beyond this one.
 
 ## Edit Distance
 
-Given two strings, find the minimum number of single-character insertions, deletions and
-substitutions that turn the first into the second.
+:::problem
+Return the minimum number of single-character insertions, deletions and
+substitutions that turn string `a` into string `b`.
+
+```text
+Input:  a = "kitten", b = "sitting"
+Output: 3
+Explanation: kitten -> sitten (substitute k with s), sitten ->
+             sittin (substitute e with i), sittin -> sitting
+             (insert g). No sequence of two edits suffices.
+
+Input:  a = "flaw",  b = "lawn"  ->  2   (delete f, insert n)
+Input:  a = "abc",   b = "abc"   ->  0
+Input:  a = "",      b = "xyz"   ->  3   (three insertions)
+```
+
+**Constraints.** `0 <= len(a), len(b) <= 5000`. All three operations cost 1.
+:::
 
 <details>
 <summary>Show solution</summary>
