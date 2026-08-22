@@ -120,9 +120,48 @@ Observability tooling, alerting, and what actually happens during on-call.
 
 ---
 
+## Track VII — Data Structures & Algorithms
+
+**23 · Complexity & Performance Analysis**
+Big-O as a decision tool rather than a grading rubric — how to read a constraint and know what will fit.
+*6 pages*
+
+**24 · Core Data Structures**
+Arrays, hash maps, stacks, queues, heaps and union-find — what each one is actually good at and what it quietly costs you.
+*8 pages*
+
+**25 · Bit Manipulation**
+What an integer actually is in memory, the handful of operators that act on it directly, and the cases where that view is the simplest one available.
+*7 pages*
+
+**26 · Trees & Graph Traversal**
+BFS, DFS, and the recursive shapes that show up once you stop seeing trees and graphs as different things.
+*7 pages*
+
+**27 · Algorithmic Patterns**
+Two pointers, sliding windows, binary search on the answer, monotonic stacks and prefix sums — the handful of moves that cover most problems.
+*7 pages*
+
+**28 · Dynamic Programming**
+Recognizing overlapping subproblems, and the mechanical path from a recursive definition to a tabulated solution.
+*6 pages*
+
+**29 · Interview Patterns: Amazon**
+Reported interview problems reframed as instances of patterns taught earlier in the track — the mapping, not the list.
+*5 pages*
+
+Every chapter except 29 closes with a **worked-examples page**: two to four problems in
+original prose, each with a collapsible `<details>` solution (approach → code → complexity →
+one follow-up). Chapter-level failure modes live at the end of that page where the chapter
+has them.
+
+---
+
 ## Open Items
 
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
-- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 115)
+- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 161 across seven tracks)
+- [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to 29 (which would argue for making it its own track)
+- [ ] Chapter 29 is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale

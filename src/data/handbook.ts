@@ -3,7 +3,7 @@
  * page counts in the UI. Mirrors `handbook-structure.md` at the repo root.
  *
  * "Track" is the only name for the top level, here and in that file
- * ("Track I–VI"). Keep the two in sync: if a chapter is added, renamed or
+ * ("Track I–VII"). Keep the two in sync: if a chapter is added, renamed or
  * re-counted there, update it here too.
  *
  * Chapter `slug` values are also the chapter folder names under `content/`
@@ -11,7 +11,7 @@
  */
 
 export type Chapter = {
-  /** Chapter number, unique across the whole handbook (01–22). */
+  /** Chapter number, unique across the whole handbook (01–29). */
   number: number;
   slug: string;
   title: string;
@@ -34,7 +34,7 @@ export type PageFrontMatter = {
 };
 
 export type Track = {
-  /** Track number, 1–6. Matches the `track` field in page frontmatter. */
+  /** Track number, 1–7. Matches the `track` field in page frontmatter. */
   number: number;
   slug: string;
   /** Short label used in the navbar. */
@@ -303,6 +303,75 @@ export const tracks: Track[] = [
         blurb:
           'Observability tooling, alerting, and what actually happens during on-call.',
         pages: 4,
+      },
+    ],
+  },
+  {
+    number: 7,
+    slug: 'dsa',
+    navLabel: 'DSA',
+    title: 'Data Structures & Algorithms',
+    eyebrow: 'Where the costs are decided',
+    summary:
+      'Complexity, the structures worth knowing, and the handful of patterns that cover most problems.',
+    permalink: '/dsa',
+    status: 'Draft',
+    chapters: [
+      {
+        number: 23,
+        slug: 'complexity-analysis',
+        title: 'Complexity & Performance Analysis',
+        blurb:
+          'Big-O as a decision tool rather than a grading rubric — how to read a constraint and know what will fit.',
+        pages: 6,
+      },
+      /*TMP*/{
+        number: 24,
+        slug: 'core-data-structures',
+        title: 'Core Data Structures',
+        blurb:
+          'Arrays, hash maps, stacks, queues, heaps and union-find — what each one is actually good at and what it quietly costs you.',
+        pages: 8,
+      },
+      {
+        number: 25,
+        slug: 'bit-manipulation',
+        title: 'Bit Manipulation',
+        blurb:
+          'What an integer actually is in memory, the handful of operators that act on it directly, and the cases where that view is the simplest one available.',
+        pages: 7,
+      },
+      {
+        number: 26,
+        slug: 'trees-and-graphs',
+        title: 'Trees & Graph Traversal',
+        blurb:
+          'BFS, DFS, and the recursive shapes that show up once you stop seeing trees and graphs as different things.',
+        pages: 7,
+      },
+      {
+        number: 27,
+        slug: 'algorithmic-patterns',
+        title: 'Algorithmic Patterns',
+        blurb:
+          'Two pointers, sliding windows, binary search on the answer, monotonic stacks and prefix sums — the handful of moves that cover most problems.',
+        pages: 7,
+      },
+      {
+        number: 28,
+        slug: 'dynamic-programming',
+        title: 'Dynamic Programming',
+        blurb:
+          'Recognizing overlapping subproblems, and the mechanical path from a recursive definition to a tabulated solution.',
+        pages: 6,
+      },
+      {
+        number: 29,
+        slug: 'interview-patterns-amazon',
+        title: 'Interview Patterns: Amazon',
+        blurb:
+          'Reported interview problems reframed as instances of patterns taught earlier in the track — the mapping, not the list.',
+        pages: 5,
       },
     ],
   },

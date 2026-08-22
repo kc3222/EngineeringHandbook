@@ -1,0 +1,14 @@
+{
+  "label": "Algorithmic Patterns",
+  "position": 27,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 27,
+    "pages": 7
+  }
+}

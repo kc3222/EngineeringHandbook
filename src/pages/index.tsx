@@ -102,7 +102,8 @@ export default function About(): React.ReactNode {
         <section className={styles.section} id="tracks">
           <h2 className={styles.sectionHeading}>Tracks</h2>
           <p className={styles.sectionIntro}>
-            Six tracks, each split into chapters, each chapter into pages.
+            {tracks.length} tracks, each split into chapters, each chapter into
+            pages.
           </p>
 
           <ul className={styles.trackGrid}>

@@ -5,8 +5,8 @@ Guidance for Claude Code when working in this repository.
 ## Project
 
 An engineering handbook: short reference pages (1–5 min read each) covering
-frontend, backend, data/storage, AI engineering, ML/applied research, and
-cloud/DevOps. Public reference material — **not** a personal blog or case
+frontend, backend, data/storage, AI engineering, ML/applied research,
+cloud/DevOps, and data structures & algorithms. Public reference material — **not** a personal blog or case
 study collection. The full outline lives in `handbook-structure.md` at the
 repo root; treat it as the source of truth for scope, track/chapter naming,
 and page counts. If a request conflicts with that outline, flag the
@@ -21,12 +21,13 @@ palette over the outline, light/dark theming, and the page reading layout —
 per-track sidebar, page header with copy/open actions, and an "on this page"
 rail.
 
-**Content is written out.** All six tracks are drafted to their full page count
+**Content is written out.** All seven tracks are drafted to their full page count
 from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
 12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
-Applied Research) — 21 pages**, and **Track 6 (Cloud, DevOps & Observability) —
-13 pages**. 115 pages across 22 chapters, matching `totalPages()`.
+Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 46 pages**. 161 pages
+across 29 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
 citation upkeep rather than first drafts; the outstanding *code* work is
@@ -76,12 +77,12 @@ content/
 ```
 
 **Track** is the only word for this level — in `handbook-structure.md`
-("Track I–VI"), in code, in frontmatter, and in UI copy. Don't introduce a
+("Track I–VII"), in code, in frontmatter, and in UI copy. Don't introduce a
 synonym ("area", "part", "section"); if one appears, it's a leftover and
 should be renamed rather than reconciled.
 
 Directory numbering matches `handbook-structure.md`. Chapters are numbered
-01–22 within their tracks. Keep chapter folder names slug-matched to the
+01–29 within their tracks. Keep chapter folder names slug-matched to the
 chapter titles in that file.
 
 Two conventions the code depends on — breaking either breaks links silently:
@@ -133,7 +134,12 @@ body — a `#` would put a second `<h1>` on the page.
 ## Writing conventions
 
 - Audience is general/public reference — no personal anecdotes, no
-  "in my experience at X" framing, no company-specific examples.
+  "in my experience at X" framing, no company-specific examples. **One
+  deliberate exception:** chapter 29 (`Interview Patterns: Amazon`) is
+  company-specific by design, names the company, and carries a dated
+  "reported as of" admonition on its overview page so staleness is visible.
+  Don't generalise that exception to other chapters, and don't quietly
+  de-brand chapter 29 either — it's a decision, not a leftover.
 - Each page should be readable in 1–5 minutes. If a page is running long,
   that's a signal to split it, not to shorten by cutting substance.
 - Code snippets are encouraged where they clarify a concept.
@@ -153,7 +159,26 @@ body — a `#` would put a second `<h1>` on the page.
   say which to read first. A publication date is not by itself a reason to
   replace a citation — some specs are simply stable.
 - Exercises/quizzes are explicitly **out of scope for now** (planned for a
-  later phase per Open Items) — don't add them speculatively.
+  later phase per Open Items) — don't add them speculatively. **Worked-example
+  pages are not exercises** and are a separate, established thing; see below.
+- **Worked examples** (Track 7 only, so far). Each chapter's last page is a
+  `Worked Examples` page holding two to five problems, each with a collapsible
+  solution. Use a plain `<details>` / `<summary>` pair — Docusaurus maps it onto
+  its own themed disclosure with no import and no client JS, so it survives SSG.
+  **Blank lines around the inner markdown are load-bearing**: a fenced code block
+  flush against `<summary>` or `</details>` will not parse, because `.md` is
+  compiled as MDX here. Solution block order is fixed: approach in prose → code →
+  complexity → one follow-up. The follow-up is the part most resources omit and
+  is where the learning is. Problem descriptions must be written fresh in the
+  handbook's own voice — never paste a problem statement from elsewhere. No
+  difficulty labels.
+- **Chapter-level failure modes**, where a chapter has them, live in a
+  `## Failure modes` section at the end of that chapter's worked-examples page —
+  framed around what breaks in production (memory growth, silent overflow,
+  quadratic behaviour under load), not around wrong answers.
+- **Verify code snippets before publishing.** Every Python snippet in Track 7 was
+  run against a brute-force reference; several bugs only surfaced that way. Keep
+  doing this rather than trusting that a short function is obviously right.
 - Prefer explaining tradeoffs over prescribing one "correct" approach,
   especially in the framework-comparison chapters (e.g. Next.js rendering
   strategies, REST vs RPC-ish patterns).
@@ -349,9 +374,10 @@ width. Change the width in the token only; don't reintroduce per-component
   `/data`, `/ai`, `/ml`, `/cloud`), so no nav item is active on `/`. A track's
   nav item stays active while reading that track's pages under `/read/…`.
 - Aggregate figures on the about page come from `totalChapters()` /
-  `totalPages()` in `src/data/handbook.ts`. Don't hardcode them — they're
-  currently 22 and 115, which already disagrees with the "~99 pages" estimate
-  in `handbook-structure.md`.
+  `totalPages()` in `src/data/handbook.ts`, and the track count from
+  `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
+  and 161 pages, which disagrees with the "~99 pages" estimate still recorded in
+  `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at
   real page bodies is outstanding; the palette UI itself can stay.
