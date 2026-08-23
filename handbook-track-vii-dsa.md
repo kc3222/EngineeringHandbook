@@ -1,7 +1,7 @@
 # Track VII — Data Structures & Algorithms
 
 **Status:** Draft outline (not yet written)
-**Slots into:** `handbook-structure.md` after Part VI, chapters 23–27
+**Slots into:** `handbook-structure.md` after Part VI, chapters 01–05
 **Depth:** Each page = 1–5 min read; diagrams and code snippets encouraged
 **Audience:** General public / general reference (no personal case studies)
 **Exercises/quizzes:** Not included yet — planned for a later phase
@@ -27,32 +27,32 @@ the structure.
 
 ## Chapter Outline
 
-**23 · Complexity & Performance Analysis**
+**01 · Complexity & Performance Analysis**
 Big-O as a decision tool rather than a grading rubric — how to read a
 constraint and know what will fit.
 *4 pages*
 
-**24 · Core Data Structures**
+**02 · Core Data Structures**
 Arrays, hash maps, stacks, queues, heaps, and union-find — what each one is
 actually good at and what it quietly costs you.
 *6 pages*
 
-**25 · Bit Manipulation**
+**03 · Bit Manipulation**
 What an integer actually is in memory, the handful of operators that act on
 it directly, and the cases where that view is the simplest one available.
 *5 pages*
 
-**26 · Trees & Graph Traversal**
+**04 · Trees & Graph Traversal**
 BFS, DFS, and the recursive shapes that show up once you stop seeing trees
 and graphs as different things.
 *5 pages*
 
-**27 · Algorithmic Patterns**
+**05 · Algorithmic Patterns**
 Two pointers, sliding windows, binary search on the answer, monotonic stacks,
 and prefix sums — the handful of moves that cover most problems.
 *6 pages*
 
-**28 · Dynamic Programming**
+**06 · Dynamic Programming**
 Recognizing overlapping subproblems, and the mechanical path from a recursive
 definition to a tabulated solution.
 *4 pages*
@@ -63,7 +63,7 @@ definition to a tabulated solution.
 
 ## Page-Level Breakdown
 
-### 23 · Complexity & Performance Analysis
+### 01 · Complexity & Performance Analysis
 
 | # | Page | Scope |
 |---|------|-------|
@@ -77,7 +77,7 @@ calls. No prior CS coursework assumed.
 
 ---
 
-### 24 · Core Data Structures
+### 02 · Core Data Structures
 
 | # | Page | Scope |
 |---|------|-------|
@@ -93,17 +93,17 @@ memory leak; mutable keys; relying on dict ordering across language versions.
 
 ---
 
-### 25 · Bit Manipulation
+### 03 · Bit Manipulation
 
 | # | Page | Scope |
 |---|------|-------|
 | 1 | How Integers Are Stored | Binary representation, fixed width, two's complement. Why negative numbers look the way they do, and why the highest bit is special. Analogy before mechanism: an odometer that wraps. |
 | 2 | The Six Operators | AND, OR, XOR, NOT, and the two shifts — introduced by what each is *for* rather than by truth table. AND masks, OR sets, XOR toggles and cancels, shifts scale by powers of two. |
 | 3 | The Idioms Worth Memorizing | Test, set, clear, and toggle bit *i*. Isolating the lowest set bit with `x & -x`; clearing it with `x & (x - 1)`. Power-of-two checks, population count. *Key insight callout: `x & (x - 1)` works because subtracting one flips the trailing zeros — everything else follows from that one observation.* |
-| 4 | Bitmasks as Sets | An integer as a subset of up to 64 elements. Membership, union, intersection, difference. Enumerating all subsets, and iterating the submasks of a mask. This page is the prerequisite for state compression in Chapter 28. |
+| 4 | Bitmasks as Sets | An integer as a subset of up to 64 elements. Membership, union, intersection, difference. Enumerating all subsets, and iterating the submasks of a mask. This page is the prerequisite for state compression in Chapter 6. |
 | 5 | Where Bits Show Up in Real Systems | Permission and feature flags, compact storage of dense boolean data, Bloom filter internals, hash mixing. Also where they *don't* belong — readability usually beats a cycle. |
 
-**Prerequisites:** Chapter 23 page 2 (reading complexity). No prior exposure to
+**Prerequisites:** Chapter 1 page 2 (reading complexity). No prior exposure to
 binary assumed.
 
 **Failure-mode section for this chapter:** signed right shift versus unsigned
@@ -121,7 +121,7 @@ sentences, the idiom doesn't belong on it.
 
 ---
 
-### 26 · Trees & Graph Traversal
+### 04 · Trees & Graph Traversal
 
 | # | Page | Scope |
 |---|------|-------|
@@ -131,11 +131,11 @@ sentences, the idiom doesn't belong on it.
 | 4 | Graph Representation | Adjacency list vs matrix vs edge list, and how representation choice changes complexity. Building a graph from non-graph-looking input. |
 | 5 | Ordering & Cycles | Topological sort, cycle detection, and the dependency-resolution problems these model (build systems, task schedulers, migrations). |
 
-**Prerequisites:** Chapter 24, pages 2–4 (hash maps, stacks, queues).
+**Prerequisites:** Chapter 2, pages 2–4 (hash maps, stacks, queues).
 
 ---
 
-### 27 · Algorithmic Patterns
+### 05 · Algorithmic Patterns
 
 | # | Page | Scope |
 |---|------|-------|
@@ -151,7 +151,7 @@ prefix sums; assuming monotonicity that isn't there.
 
 ---
 
-### 28 · Dynamic Programming
+### 06 · Dynamic Programming
 
 | # | Page | Scope |
 |---|------|-------|
@@ -160,8 +160,8 @@ prefix sums; assuming monotonicity that isn't there.
 | 3 | Tabulation | Bottom-up, state definition, transition, base case. The mechanical translation from a recurrence. |
 | 4 | State Compression | Reducing 2D to 1D when transitions only look one row back. Where DP stops being worth it. |
 
-**Prerequisites:** Chapter 23 (complexity), Chapter 26 page 2 (recursion via
-DFS). Page 4 additionally assumes Chapter 25 page 4 (bitmasks as sets).
+**Prerequisites:** Chapter 1 (complexity), Chapter 4 page 2 (recursion via
+DFS). Page 4 additionally assumes Chapter 3 page 4 (bitmasks as sets).
 
 ---
 
@@ -173,14 +173,14 @@ Matches the existing handbook schema exactly — one file per page.
 ---
 title: "Binary Search Beyond Sorted Arrays"
 part: "VII"
-chapter: 26
+chapter: 5
 page: 4
 readMinutes: 4
 ---
 ```
 
 Filename convention follows the rest of the handbook:
-`track-vii/26-algorithmic-patterns/04-binary-search-beyond-sorted-arrays.md`
+`track-vii/05-algorithmic-patterns/04-binary-search-beyond-sorted-arrays.md`
 
 ---
 
@@ -214,7 +214,7 @@ Consistent with the chapter structure used elsewhere in the handbook:
       hand-implemented, well covered elsewhere)
 - [ ] Decide whether to add a chapter on concurrency-adjacent structures
       (thread-safe queues, lock-free basics) or leave to Track VI
-- [ ] Update `handbook-structure.md` with chapters 23–27 and revised total
+- [ ] Update `handbook-structure.md` with chapters 01–05 and revised total
       page count (~99 → ~124)
 - [ ] Update `CLAUDE.md` if the track introduces any new frontmatter or
       directory conventions

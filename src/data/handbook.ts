@@ -11,7 +11,7 @@
  */
 
 export type Chapter = {
-  /** Chapter number, unique across the whole handbook (01–29). */
+  /** Chapter number, 1-based within its track. */
   number: number;
   slug: string;
   title: string;
@@ -47,7 +47,6 @@ export type Track = {
   summary: string;
   /** Where this track lives in the site. */
   permalink: string;
-  status: 'Draft' | 'In progress' | 'Published';
   chapters: Chapter[];
 };
 
@@ -61,7 +60,6 @@ export const tracks: Track[] = [
     summary:
       'Components, rendering strategy, styling systems, and the tests that keep them honest.',
     permalink: '/frontend',
-    status: 'Draft',
     chapters: [
       {
         number: 1,
@@ -106,10 +104,9 @@ export const tracks: Track[] = [
     summary:
       'API design, JVM and Python services, and the auth flows that decide who gets through.',
     permalink: '/backend',
-    status: 'Draft',
     chapters: [
       {
-        number: 5,
+        number: 1,
         slug: 'rest-api-design',
         title: 'REST API Design',
         blurb:
@@ -117,7 +114,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       {
-        number: 6,
+        number: 2,
         slug: 'spring-boot-kotlin',
         title: 'Spring Boot & Kotlin',
         blurb:
@@ -125,7 +122,7 @@ export const tracks: Track[] = [
         pages: 6,
       },
       {
-        number: 7,
+        number: 3,
         slug: 'fastapi-python-services',
         title: 'FastAPI & Python Services',
         blurb:
@@ -133,7 +130,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       {
-        number: 8,
+        number: 4,
         slug: 'authentication-authorization',
         title: 'Authentication & Authorization',
         blurb:
@@ -151,10 +148,9 @@ export const tracks: Track[] = [
     summary:
       'Schema design, access control at the database layer, and storage that outlives the service in front of it.',
     permalink: '/data',
-    status: 'Draft',
     chapters: [
       {
-        number: 9,
+        number: 1,
         slug: 'relational-schema-design',
         title: 'Relational Schema Design',
         blurb:
@@ -162,7 +158,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       {
-        number: 10,
+        number: 2,
         slug: 'row-level-security',
         title: 'Row-Level Security & Access Control',
         blurb:
@@ -170,7 +166,7 @@ export const tracks: Track[] = [
         pages: 3,
       },
       {
-        number: 11,
+        number: 3,
         slug: 'object-storage-microservices',
         title: 'Object Storage & Microservices',
         blurb:
@@ -188,10 +184,9 @@ export const tracks: Track[] = [
     summary:
       'Models, embeddings, retrieval pipelines, and coding agents — treated as engineering rather than novelty.',
     permalink: '/ai',
-    status: 'Draft',
     chapters: [
       {
-        number: 12,
+        number: 1,
         slug: 'llm-fundamentals',
         title: 'LLM Fundamentals',
         blurb:
@@ -199,7 +194,7 @@ export const tracks: Track[] = [
         pages: 8,
       },
       {
-        number: 13,
+        number: 2,
         slug: 'embeddings-vector-search',
         title: 'Embeddings & Vector Search',
         blurb:
@@ -207,7 +202,7 @@ export const tracks: Track[] = [
         pages: 6,
       },
       {
-        number: 14,
+        number: 3,
         slug: 'rag-pipelines',
         title: 'RAG Pipelines',
         blurb:
@@ -215,7 +210,7 @@ export const tracks: Track[] = [
         pages: 9,
       },
       {
-        number: 15,
+        number: 4,
         slug: 'prompting-ai-coding-agents',
         title: 'Prompting & AI Coding Agents',
         blurb:
@@ -233,10 +228,9 @@ export const tracks: Track[] = [
     summary:
       'Tensors, training loops, vision, and pretraining — the fundamentals under applied research.',
     permalink: '/ml',
-    status: 'Draft',
     chapters: [
       {
-        number: 16,
+        number: 1,
         slug: 'pytorch-training-basics',
         title: 'PyTorch & Model Training Basics',
         blurb:
@@ -244,7 +238,7 @@ export const tracks: Track[] = [
         pages: 6,
       },
       {
-        number: 17,
+        number: 2,
         slug: 'computer-vision-fundamentals',
         title: 'Computer Vision Fundamentals',
         blurb:
@@ -252,7 +246,7 @@ export const tracks: Track[] = [
         pages: 6,
       },
       {
-        number: 18,
+        number: 3,
         slug: 'self-supervised-learning',
         title: 'Self-Supervised Learning',
         blurb:
@@ -260,7 +254,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       {
-        number: 19,
+        number: 4,
         slug: 'competitive-ml',
         title: 'Competitive ML (Kaggle Playbook)',
         blurb:
@@ -278,10 +272,9 @@ export const tracks: Track[] = [
     summary:
       'Containers, event-driven workflows, and the observability you wish you had before the page fired.',
     permalink: '/cloud',
-    status: 'Draft',
     chapters: [
       {
-        number: 20,
+        number: 1,
         slug: 'containers-deployment',
         title: 'Containers & Deployment',
         blurb:
@@ -289,7 +282,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       {
-        number: 21,
+        number: 2,
         slug: 'event-driven-systems',
         title: 'Event-Driven Systems (Kafka)',
         blurb:
@@ -297,7 +290,7 @@ export const tracks: Track[] = [
         pages: 4,
       },
       {
-        number: 22,
+        number: 3,
         slug: 'monitoring-incident-response',
         title: 'Monitoring & Incident Response',
         blurb:
@@ -315,10 +308,9 @@ export const tracks: Track[] = [
     summary:
       'Complexity, the structures worth knowing, and the handful of patterns that cover most problems.',
     permalink: '/dsa',
-    status: 'Draft',
     chapters: [
       {
-        number: 23,
+        number: 1,
         slug: 'complexity-analysis',
         title: 'Complexity & Performance Analysis',
         blurb:
@@ -326,7 +318,7 @@ export const tracks: Track[] = [
         pages: 5,
       },
       /*TMP*/{
-        number: 24,
+        number: 2,
         slug: 'core-data-structures',
         title: 'Core Data Structures',
         blurb:
@@ -334,7 +326,7 @@ export const tracks: Track[] = [
         pages: 8,
       },
       {
-        number: 25,
+        number: 3,
         slug: 'bit-manipulation',
         title: 'Bit Manipulation',
         blurb:
@@ -342,7 +334,7 @@ export const tracks: Track[] = [
         pages: 7,
       },
       {
-        number: 26,
+        number: 4,
         slug: 'trees-and-graphs',
         title: 'Trees & Graph Traversal',
         blurb:
@@ -350,7 +342,7 @@ export const tracks: Track[] = [
         pages: 7,
       },
       {
-        number: 27,
+        number: 5,
         slug: 'algorithmic-patterns',
         title: 'Algorithmic Patterns',
         blurb:
@@ -358,7 +350,7 @@ export const tracks: Track[] = [
         pages: 7,
       },
       {
-        number: 28,
+        number: 6,
         slug: 'dynamic-programming',
         title: 'Dynamic Programming',
         blurb:
@@ -366,7 +358,7 @@ export const tracks: Track[] = [
         pages: 6,
       },
       {
-        number: 29,
+        number: 7,
         slug: 'interview-patterns-amazon',
         title: 'Interview Patterns: Amazon',
         blurb:
@@ -396,7 +388,7 @@ export function trackDir(track: Track): string {
   return `track-${track.number}-${track.slug}`;
 }
 
-/** The chapter sub-directory, e.g. `12-llm-fundamentals`. */
+/** The chapter sub-directory, e.g. `01-llm-fundamentals`. */
 export function chapterDir(chapter: Chapter): string {
   return `${String(chapter.number).padStart(2, '0')}-${chapter.slug}`;
 }
@@ -412,6 +404,21 @@ export function chapterHref(track: Track, chapter: Chapter): string {
 /** Where "start reading this track" goes: its first chapter. */
 export function trackStartHref(track: Track): string {
   return chapterHref(track, track.chapters[0]!);
+}
+
+/**
+ * A uniformly random chapter's entry point, weighted evenly across chapters
+ * rather than across tracks — a 7-chapter track is 7 draws, not one.
+ *
+ * Must only be called from an event handler or effect: calling it during
+ * render would make the server and client disagree and trip hydration.
+ */
+export function randomChapterHref(): string {
+  const pairs = tracks.flatMap((track) =>
+    track.chapters.map((chapter) => ({track, chapter})),
+  );
+  const {track, chapter} = pairs[Math.floor(Math.random() * pairs.length)]!;
+  return chapterHref(track, chapter);
 }
 
 export function getTrack(slug: string): Track {
@@ -430,7 +437,7 @@ export function trackForPath(pathname: string): Track | undefined {
 }
 
 /**
- * Resolves a doc's `sourceDirName` (`track-4-ai/12-llm-fundamentals`) back to
+ * Resolves a doc's `sourceDirName` (`track-4-ai/01-llm-fundamentals`) back to
  * the outline, so a page can label itself with its track and chapter without
  * repeating either in frontmatter.
  */

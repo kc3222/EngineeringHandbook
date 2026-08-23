@@ -81,9 +81,10 @@ content/
 synonym ("area", "part", "section"); if one appears, it's a leftover and
 should be renamed rather than reconciled.
 
-Directory numbering matches `handbook-structure.md`. Chapters are numbered
-01–29 within their tracks. Keep chapter folder names slug-matched to the
-chapter titles in that file.
+Directory numbering matches `handbook-structure.md`. Chapter numbering
+**restarts at 01 in every track**, so a chapter is identified by the pair
+(track, chapter) — `01-` appears once per track, not once in the handbook.
+Keep chapter folder names slug-matched to the chapter titles in that file.
 
 Two conventions the code depends on — breaking either breaks links silently:
 
@@ -98,7 +99,7 @@ Two conventions the code depends on — breaking either breaks links silently:
 Docs mount at `/read/…` (`docsRouteBasePath` in `src/data/handbook.ts`), not at
 `/` — the about page owns `/`, and a docs plugin at `/` would collide with it.
 Docusaurus strips the `NN-` prefixes when building routes, so
-`content/track-4-ai/12-llm-fundamentals/03-tokens-and-context-windows.md`
+`content/track-4-ai/01-llm-fundamentals/03-tokens-and-context-windows.md`
 serves at `/read/track-4-ai/llm-fundamentals/tokens-and-context-windows`.
 
 `content/` is also listed in `staticDirectories`, which serves the raw `.md`
@@ -135,11 +136,11 @@ body — a `#` would put a second `<h1>` on the page.
 
 - Audience is general/public reference — no personal anecdotes, no
   "in my experience at X" framing, no company-specific examples. **One
-  deliberate exception:** chapter 29 (`Interview Patterns: Amazon`) is
+  deliberate exception:** Track 7's chapter 7 (`Interview Patterns: Amazon`) is
   company-specific by design, names the company, and carries a dated
   "reported as of" admonition on its overview page so staleness is visible.
   Don't generalise that exception to other chapters, and don't quietly
-  de-brand chapter 29 either — it's a decision, not a leftover.
+  de-brand that chapter either — it's a decision, not a leftover.
 - Each page should be readable in 1–5 minutes. If a page is running long,
   that's a signal to split it, not to shorten by cutting substance.
 - Code snippets are encouraged where they clarify a concept.

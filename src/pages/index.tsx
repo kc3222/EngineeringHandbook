@@ -1,11 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
+import {useHistory} from '@docusaurus/router';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import {
   tracks,
   pageCount,
+  randomChapterHref,
   totalChapters,
   totalPages,
 } from '@site/src/data/handbook';
@@ -49,6 +52,14 @@ function Stat({
 export default function About(): React.ReactNode {
   const chapters = totalChapters();
   const pages = totalPages();
+  const history = useHistory();
+  const baseUrl = useBaseUrl('/');
+
+  // Picked on click, not during render: a random href chosen while rendering
+  // would differ between the prerendered HTML and hydration.
+  const goToRandomChapter = () => {
+    history.push(`${baseUrl}${randomChapterHref().replace(/^\//, '')}`);
+  };
 
   return (
     <Layout
@@ -75,6 +86,12 @@ export default function About(): React.ReactNode {
             <Link className={styles.secondaryAction} to="/frontend">
               Start with Frontend
             </Link>
+            <button
+              type="button"
+              className={styles.secondaryAction}
+              onClick={goToRandomChapter}>
+              Random chapter <span aria-hidden="true">↗</span>
+            </button>
           </div>
 
           <hr className={styles.rule} />
@@ -82,8 +99,7 @@ export default function About(): React.ReactNode {
           <div className={styles.stats}>
             <Stat value={String(tracks.length)} label="tracks" />
             <Stat value={String(chapters)} label="chapters" />
-            <Stat value={String(pages)} label="pages planned" />
-            <Stat value="Draft" label="status" />
+            <Stat value={String(pages)} label="pages" />
           </div>
         </section>
 
@@ -127,10 +143,10 @@ export default function About(): React.ReactNode {
         <section className={styles.section}>
           <h2 className={styles.sectionHeading}>Status</h2>
           <p className={styles.statusBody}>
-            The outline is settled; the pages are still being written. Track and
-            chapter listings show what is planned, so the counts above describe
-            the finished shape of the handbook rather than what is readable
-            today.
+            Every page is written — all {pages} of them, across {chapters}{' '}
+            chapters. The counts above describe what is readable today, not a
+            plan. Ongoing work is revision: tightening pages that run long and
+            keeping citations pointed at the current edition of each spec.
           </p>
         </section>
       </main>

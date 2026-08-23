@@ -1,10 +1,10 @@
-# Track VII — Worked Examples & Chapter 29
+# Track VII — Worked Examples & Chapter 7
 
 Companion to `handbook-track-vii-dsa.md`. Covers two additions:
 
 1. A worked-example format with collapsible solutions, and where examples sit
-   within chapters 23–27
-2. **Chapter 29 — Interview Patterns: Amazon**, written out in full
+   within chapters 01–05
+2. **Chapter 7 — Interview Patterns: Amazon**, written out in full
 
 ---
 
@@ -73,25 +73,25 @@ argues against it at this scale.
 - **Under 25 lines of Python.** If it doesn't fit, the example is too big
   for the format.
 - **No difficulty labels.** No "easy/medium/hard," no company tags on pages
-  outside Chapter 29.
+  outside Chapter 7.
 
-### Example allocation for chapters 23–27
+### Example allocation for chapters 01–05
 
 These are canonical problems that Claude Code can draft from the title alone.
 Descriptions must be written fresh, not sourced.
 
 | Chapter | Examples |
 |---|---|
-| 23 · Complexity | Comparing two implementations of the same function; estimating feasible complexity from a constraint |
-| 24 · Core Data Structures | Top-k frequent elements (heap + map); LRU cache (hash map + doubly linked list); connected components under incremental merges (union-find) |
-| 25 · Bit Manipulation | See below — written out in full, since the teaching value is in the derivations rather than the code |
-| 26 · Trees & Graphs | Counting regions in a grid; shortest path in an unweighted graph; detecting a cycle in a dependency graph; lowest common ancestor |
-| 27 · Patterns | Longest substring without repeats (window); container with most water (two pointers); minimum capacity to finish in D days (binary search on answer); next greater element (monotonic stack); range sum queries (prefix sums) |
-| 28 · Dynamic Programming | Climbing stairs → house robber → house robber with a circular constraint, as one escalating sequence; edit distance |
+| 01 · Complexity | Comparing two implementations of the same function; estimating feasible complexity from a constraint |
+| 02 · Core Data Structures | Top-k frequent elements (heap + map); LRU cache (hash map + doubly linked list); connected components under incremental merges (union-find) |
+| 03 · Bit Manipulation | See below — written out in full, since the teaching value is in the derivations rather than the code |
+| 04 · Trees & Graphs | Counting regions in a grid; shortest path in an unweighted graph; detecting a cycle in a dependency graph; lowest common ancestor |
+| 05 · Patterns | Longest substring without repeats (window); container with most water (two pointers); minimum capacity to finish in D days (binary search on answer); next greater element (monotonic stack); range sum queries (prefix sums) |
+| 06 · Dynamic Programming | Climbing stairs → house robber → house robber with a circular constraint, as one escalating sequence; edit distance |
 
 ---
 
-## Part 1b — Chapter 25 Worked Examples
+## Part 1b — Chapter 3 Worked Examples
 
 Written out rather than allocated by title, because in this chapter the code
 is trivial and the derivation is the content. Any of these can be produced by
@@ -214,7 +214,7 @@ def subsets(items):
 
 Time O(n · 2ⁿ), space O(n) per subset.
 
-**Why this page is a prerequisite for Chapter 28.** Once a subset is an
+**Why this page is a prerequisite for Chapter 6.** Once a subset is an
 integer, it can be a dictionary key or an array index — which is the entire
 premise of bitmask dynamic programming. The bridge is worth stating
 explicitly here rather than assuming the reader makes it later.
@@ -227,9 +227,9 @@ explicitly here rather than assuming the reader makes it later.
 
 ---
 
-## Part 2 — Chapter 29
+## Part 2 — Chapter 7
 
-**29 · Interview Patterns: Amazon**
+**07 · Interview Patterns: Amazon**
 Problems reported by candidates, reframed as pattern illustrations — what
 each one is really testing underneath the story.
 *5 pages*
@@ -251,7 +251,7 @@ protects the page from becoming a maintenance burden.
 
 Framing page. Interview problems arrive wrapped in a business scenario;
 the skill is stripping the wrapper. Walk through one example end to end,
-showing the translation from prose to structure. Back-reference Chapter 27
+showing the translation from prose to structure. Back-reference Chapter 5
 page 1.
 
 ---
@@ -450,7 +450,7 @@ Time O(n log n), space O(1).
 here that requires non-negative draws. A machine that fed power back into the
 rack would break the assumption — worth saying out loud, since stating the
 precondition is a large part of what the question tests. Back-reference
-Chapter 27 page 4.
+Chapter 5 page 4.
 
 </details>
 
@@ -485,7 +485,7 @@ Time O(n), space O(1).
 **Why the window never shrinks past the answer.** The loop only contracts
 enough to restore validity, so the widest valid window is always seen. This
 invariant is the whole pattern — state it explicitly. Back-reference
-Chapter 27 page 3.
+Chapter 5 page 3.
 
 </details>
 
@@ -630,13 +630,13 @@ when it strands large lockers. Naming the omissions unprompted is the signal.
 
 | Chapter | Pages |
 |---|---|
-| 23 · Complexity & Performance Analysis | 5 (+1 examples) |
-| 24 · Core Data Structures | 7 (+1 examples) |
-| 25 · Bit Manipulation | 5 (+1 examples) |
-| 26 · Trees & Graph Traversal | 6 (+1 examples) |
-| 27 · Algorithmic Patterns | 7 (+1 examples) |
-| 28 · Dynamic Programming | 5 (+1 examples) |
-| 29 · Interview Patterns: Amazon | 5 |
+| 01 · Complexity & Performance Analysis | 5 (+1 examples) |
+| 02 · Core Data Structures | 7 (+1 examples) |
+| 03 · Bit Manipulation | 5 (+1 examples) |
+| 04 · Trees & Graph Traversal | 6 (+1 examples) |
+| 05 · Algorithmic Patterns | 7 (+1 examples) |
+| 06 · Dynamic Programming | 5 (+1 examples) |
+| 07 · Interview Patterns: Amazon | 5 |
 
 *Track VII total: 41 pages. Handbook total: ~140 pages.*
 
@@ -647,12 +647,12 @@ when it strands large lockers. Naming the omissions unprompted is the signal.
 - [ ] Confirm `.md` vs `.mdx` for pages containing `<details>`, and whether
       the frontmatter schema needs a `hasExamples` boolean for the future
       database migration
-- [ ] Decide whether Chapter 29 is public or lives in a private branch —
+- [ ] Decide whether Chapter 7 is public or lives in a private branch —
       a company-specific chapter changes how the handbook reads as a whole,
       and reported questions decay within a year or two
 - [ ] If public: decide on a review cadence, or add a dated "reported as of"
       line to the chapter intro so staleness is visible rather than implied
-- [ ] Decide whether other companies get parallel chapters, or whether 28
+- [ ] Decide whether other companies get parallel chapters, or whether 07
       stays a one-off (affects whether it should be a chapter or its own Track)
 - [ ] Verify every solution against your own test cases before publishing —
       these are written from reported problem descriptions, and reported

@@ -1,0 +1,14 @@
+{
+  "label": "Spring Boot & Kotlin",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 2,
+    "pages": 6
+  }
+}

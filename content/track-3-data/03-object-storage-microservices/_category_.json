@@ -1,0 +1,14 @@
+{
+  "label": "Object Storage & Microservices",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 3,
+    "pages": 4
+  }
+}
