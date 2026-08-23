@@ -82,7 +82,7 @@ function buildIndex(): Entry[] {
 
     track.chapters.forEach((chapter) => {
       entries.push({
-        id: `chapter-${chapter.number}`,
+        id: `chapter-${track.slug}-${chapter.slug}`,
         kind: 'Chapter',
         title: chapter.title,
         description: chapter.blurb,

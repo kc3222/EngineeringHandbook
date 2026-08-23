@@ -1,0 +1,14 @@
+{
+  "label": "LLM Fundamentals",
+  "position": 1,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 1,
+    "pages": 8
+  }
+}

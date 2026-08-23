@@ -1,0 +1,14 @@
+{
+  "label": "Competitive ML (Kaggle Playbook)",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "doc",
+    "id": "overview"
+  },
+  "customProps": {
+    "chapter": 4,
+    "pages": 4
+  }
+}

@@ -7,7 +7,7 @@ import {chapterHref, locate, type PageFrontMatter} from '@site/src/data/handbook
 
 import styles from './styles.module.css';
 
-/** `@site/content/track-4-ai/12-llm-fundamentals/01-overview.md` → the tail. */
+/** `@site/content/track-4-ai/01-llm-fundamentals/01-overview.md` → the tail. */
 function rawSourcePath(source: string): string {
   return source.replace(/^@site\/content\//, '');
 }

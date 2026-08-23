@@ -1,6 +1,6 @@
 # Engineering Handbook — Structure Reference
 
-**Status:** Draft outline (not yet written)
+**Status:** Written out — 160 pages across 29 chapters and seven tracks
 **Format:** TBD — will eventually back a website via a database of content files
 **Depth:** Each page = 1–5 min read; diagrams and code snippets encouraged
 **Audience:** General public / general reference (no personal case studies)
@@ -30,19 +30,19 @@ Unit and integration tests for UI — what's actually worth testing versus what'
 
 ## Track II — Backend Engineering
 
-**05 · REST API Design**
+**01 · REST API Design**
 Resources, versioning, error contracts — the decisions that outlive the framework you build them in.
 *5 pages*
 
-**06 · Spring Boot & Kotlin**
+**02 · Spring Boot & Kotlin**
 JVM backend patterns — dependency injection, layered architecture, and where Spring's magic helps or hurts.
 *6 pages*
 
-**07 · FastAPI & Python Services**
+**03 · FastAPI & Python Services**
 Fast, typed, async — building inference and CRUD endpoints in Python without the ceremony.
 *5 pages*
 
-**08 · Authentication & Authorization**
+**04 · Authentication & Authorization**
 OAuth 2.0 flows and role-based access — who's allowed to do what, and how you prove it.
 *5 pages*
 
@@ -50,15 +50,15 @@ OAuth 2.0 flows and role-based access — who's allowed to do what, and how you 
 
 ## Track III — Data & Storage
 
-**09 · Relational Schema Design**
+**01 · Relational Schema Design**
 PostgreSQL modeling, normalization, and the migrations that come back to bite you later.
 *5 pages*
 
-**10 · Row-Level Security & Access Control**
+**02 · Row-Level Security & Access Control**
 Enforcing "who sees what" at the database layer instead of hoping the app layer remembers to.
 *3 pages*
 
-**11 · Object Storage & Microservices**
+**03 · Object Storage & Microservices**
 Cloud storage integration patterns — object storage, upload pipelines, and decoupling storage from your core service.
 *4 pages*
 
@@ -66,19 +66,19 @@ Cloud storage integration patterns — object storage, upload pipelines, and dec
 
 ## Track IV — AI Engineering
 
-**12 · LLM Fundamentals**
+**01 · LLM Fundamentals**
 What the model actually is, what it costs, and what it can't do.
 *8 pages*
 
-**13 · Embeddings & Vector Search**
+**02 · Embeddings & Vector Search**
 Turning meaning into geometry, then searching that geometry fast enough to matter.
 *6 pages*
 
-**14 · RAG Pipelines**
+**03 · RAG Pipelines**
 Retrieval-augmented generation end to end — the system most people build and most people undersell.
 *9 pages*
 
-**15 · Prompting & AI Coding Agents**
+**04 · Prompting & AI Coding Agents**
 Working with AI coding agents as engineering tools, not novelties.
 *5 pages*
 
@@ -86,19 +86,19 @@ Working with AI coding agents as engineering tools, not novelties.
 
 ## Track V — ML / DL & Applied Research
 
-**16 · PyTorch & Model Training Basics**
+**01 · PyTorch & Model Training Basics**
 Tensors, autograd, training loops — the fundamentals under every deep learning project.
 *6 pages*
 
-**17 · Computer Vision Fundamentals**
+**02 · Computer Vision Fundamentals**
 Classification and detection basics — architectures, transfer learning, and where CV models tend to fail.
 *6 pages*
 
-**18 · Self-Supervised Learning**
+**03 · Self-Supervised Learning**
 Pretraining without labels — foundation model concepts and why they matter.
 *5 pages*
 
-**19 · Competitive ML (Kaggle Playbook)**
+**04 · Competitive ML (Kaggle Playbook)**
 What actually moves you into the top ranks: validation discipline, ensembling, and avoiding leaderboard traps.
 *4 pages*
 
@@ -106,15 +106,15 @@ What actually moves you into the top ranks: validation discipline, ensembling, a
 
 ## Track VI — Cloud, DevOps & Observability
 
-**20 · Containers & Deployment**
+**01 · Containers & Deployment**
 Docker, cloud compute, and getting from "works on my machine" to a repeatable environment.
 *5 pages*
 
-**21 · Event-Driven Systems (Kafka)**
+**02 · Event-Driven Systems (Kafka)**
 Producers, consumers, and triggering async workflows like notifications and background jobs.
 *4 pages*
 
-**22 · Monitoring & Incident Response**
+**03 · Monitoring & Incident Response**
 Observability tooling, alerting, and what actually happens during on-call.
 *4 pages*
 
@@ -122,35 +122,35 @@ Observability tooling, alerting, and what actually happens during on-call.
 
 ## Track VII — Data Structures & Algorithms
 
-**23 · Complexity & Performance Analysis**
+**01 · Complexity & Performance Analysis**
 Big-O as a decision tool rather than a grading rubric — how to read a constraint and know what will fit.
 *5 pages*
 
-**24 · Core Data Structures**
+**02 · Core Data Structures**
 Arrays, hash maps, stacks, queues, heaps and union-find — what each one is actually good at and what it quietly costs you.
 *8 pages*
 
-**25 · Bit Manipulation**
+**03 · Bit Manipulation**
 What an integer actually is in memory, the handful of operators that act on it directly, and the cases where that view is the simplest one available.
 *7 pages*
 
-**26 · Trees & Graph Traversal**
+**04 · Trees & Graph Traversal**
 BFS, DFS, and the recursive shapes that show up once you stop seeing trees and graphs as different things.
 *7 pages*
 
-**27 · Algorithmic Patterns**
+**05 · Algorithmic Patterns**
 Two pointers, sliding windows, binary search on the answer, monotonic stacks and prefix sums — the handful of moves that cover most problems.
 *7 pages*
 
-**28 · Dynamic Programming**
+**06 · Dynamic Programming**
 Recognizing overlapping subproblems, and the mechanical path from a recursive definition to a tabulated solution.
 *6 pages*
 
-**29 · Interview Patterns: Amazon**
+**07 · Interview Patterns: Amazon**
 Reported interview problems reframed as instances of patterns taught earlier in the track — the mapping, not the list.
 *5 pages*
 
-Every chapter except 29 closes with a **worked-examples page**: two to four problems in
+Every Track VII chapter except 07 closes with a **worked-examples page**: two to four problems in
 original prose, each with a collapsible `<details>` solution (approach → code → complexity →
 one follow-up). Chapter-level failure modes live at the end of that page where the chapter
 has them.
@@ -163,5 +163,5 @@ has them.
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
 - [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 160 across seven tracks)
-- [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to 29 (which would argue for making it its own track)
-- [ ] Chapter 29 is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale
+- [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to VII·07 (which would argue for making it its own track)
+- [ ] Track VII chapter 07 (Interview Patterns: Amazon) is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale

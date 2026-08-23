@@ -70,7 +70,6 @@ export default function TrackLanding({track}: {track: Track}): React.ReactNode {
             <Stat value={String(chapters)} label="chapters" />
             <Stat value={String(pages)} label="pages" />
             <Stat value={readMinutesRange(track)} label="min read, est." mono />
-            <Stat value={track.status} label="status" />
           </div>
         </section>
 
