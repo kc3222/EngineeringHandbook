@@ -331,7 +331,7 @@ export const tracks: Track[] = [
         title: 'Bit Manipulation',
         blurb:
           'What an integer actually is in memory, the handful of operators that act on it directly, and the cases where that view is the simplest one available.',
-        pages: 7,
+        pages: 6,
       },
       {
         number: 4,
