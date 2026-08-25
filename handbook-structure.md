@@ -1,6 +1,6 @@
 # Engineering Handbook — Structure Reference
 
-**Status:** Written out — 160 pages across 29 chapters and seven tracks
+**Status:** Written out — 159 pages across 29 chapters and seven tracks
 **Format:** TBD — will eventually back a website via a database of content files
 **Depth:** Each page = 1–5 min read; diagrams and code snippets encouraged
 **Audience:** General public / general reference (no personal case studies)
@@ -132,7 +132,7 @@ Arrays, hash maps, stacks, queues, heaps and union-find — what each one is act
 
 **03 · Bit Manipulation**
 What an integer actually is in memory, the handful of operators that act on it directly, and the cases where that view is the simplest one available.
-*7 pages*
+*6 pages*
 
 **04 · Trees & Graph Traversal**
 BFS, DFS, and the recursive shapes that show up once you stop seeing trees and graphs as different things.
@@ -150,10 +150,12 @@ Recognizing overlapping subproblems, and the mechanical path from a recursive de
 Reported interview problems reframed as instances of patterns taught earlier in the track — the mapping, not the list.
 *5 pages*
 
-Every Track VII chapter except 07 closes with a **worked-examples page**: two to four problems in
+Every Track VII chapter except 07 closes with a **worked-examples page**: two to five problems in
 original prose, each with a collapsible `<details>` solution (approach → code → complexity →
-one follow-up). Chapter-level failure modes live at the end of that page where the chapter
-has them.
+one follow-up). Chapter 03 closes with two such pages — a standard set and an advanced set whose
+problems are stated in application terms and carry one or two collapsible hints before the
+solution. Chapter-level failure modes
+live at the end of the chapter's last examples page where the chapter has them.
 
 ---
 
@@ -162,6 +164,6 @@ has them.
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
-- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 160 across seven tracks)
+- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 159 across seven tracks)
 - [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to VII·07 (which would argue for making it its own track)
 - [ ] Track VII chapter 07 (Interview Patterns: Amazon) is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale

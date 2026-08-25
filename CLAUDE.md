@@ -26,7 +26,7 @@ from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
 12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
 Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
-13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 160 pages
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 44 pages**. 159 pages
 across 29 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
@@ -152,7 +152,12 @@ body — a `#` would put a second `<h1>` on the page.
   and harder to read; Track 2 went from 25 diagrams to 5 for exactly this reason.
   See "Diagrams" below for the mechanics.
 - Cite official sources — specs/RFCs, vendor docs — inline where a claim needs
-  backing, plus a short `## References` section at the end of the page. Prefer
+  backing, plus a short `## References` section at the end of the page. **Not every
+  page needs one.** Worked-example and advanced-example pages don't carry a References
+  section at all — a citation that matters there goes inline, next to the claim. And
+  don't repeat the same source on every page of a chapter; the chapter-level reading
+  (a book, a spec) belongs on the overview, and a page's own list should be the sources
+  backing claims made on that page. Prefer
   primary sources over tutorials, and **cite the current edition**: check for a
   newer revision before citing anything (RFC 9110 not 7231, SP 800-63B-4 not
   800-63B, live vendor docs over a dated engineering-blog post). Where a base
@@ -163,7 +168,10 @@ body — a `#` would put a second `<h1>` on the page.
   later phase per Open Items) — don't add them speculatively. **Worked-example
   pages are not exercises** and are a separate, established thing; see below.
 - **Worked examples** (Track 7 only, so far). Each chapter's last page is a
-  `Worked Examples` page holding two to five problems. Every problem is three
+  `Worked Examples` page holding two to five problems. Chapter 3 has two such pages
+  — `Worked Examples` (standard) and `Advanced Examples`, where each problem carries one
+  or two `<details>` hints before the solution `<details>`, in the same shape, and is
+  stated in application terms rather than as "here is a list of integers". Every problem is three
   parts in this order, and the shape is fixed:
 
   1. An `##` heading naming the problem — this is what the "on this page" rail shows.
@@ -448,7 +456,7 @@ width. Change the width in the token only; don't reintroduce per-component
 - Aggregate figures on the about page come from `totalChapters()` /
   `totalPages()` in `src/data/handbook.ts`, and the track count from
   `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
-  and 160 pages, which disagrees with the "~99 pages" estimate still recorded in
+  and 159 pages, which disagrees with the "~99 pages" estimate still recorded in
   `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at
