@@ -194,6 +194,24 @@ Searching outward from both knights at once and looking for the cheapest square 
 both is far better than a single search, because BFS explores area quadratic in the radius:
 two searches of radius r/2 examine a fraction of what one search of radius r does.
 
+**Why the knights can't wander off to infinity.** The board is infinite, so the worry is that
+some far-off square might be the cheapest place to meet, and the search would have to expand
+forever to rule that out. It can't. Meeting at square `s` costs `d(a, s) + d(s, b)` moves,
+where `d` is knight distance, and knight distance obeys the triangle inequality — a route
+from `a` to `s` followed by one from `s` to `b` *is* a route from `a` to `b`. So no meeting
+square beats `d(a, b)`, and that bound is always reached, by having one knight stand still
+while the other walks the whole way. **The answer is exactly the one-knight distance
+`d(a, b)`**, and the only optimal meeting squares are the ones sitting on a shortest `a`-to-`b`
+path.
+
+Wandering off is therefore never free: one knight move covers at most √5 of straight-line
+distance, so a square 100 units from both knights costs at least 2 × 100 / √5 ≈ 90 moves.
+That cost grows without bound as `s` recedes, so only finitely many squares can beat a
+candidate already in hand. BFS enumerates squares in increasing distance order, which means
+it sweeps that finite region first and halts before the far ones are ever generated:
+splitting a shortest path down the middle — ⌈d/2⌉ moves for one knight, ⌊d/2⌋ for the other —
+surfaces after `d` layers in total, and that is what ends the loop.
+
 ```python
 from collections import deque
 
@@ -234,7 +252,8 @@ This is the single most common error in bidirectional search, and it's worth bei
 say out loud rather than just coding around: *first meeting is not cheapest meeting.*
 
 **Follow-up.** Knight distance on an unbounded board actually has a closed form — a small
-number of cases based on the coordinate difference — so the search isn't strictly necessary.
+number of cases based on the coordinate difference — and since the total here *is* that
+distance, the formula answers the problem outright, with no search at all.
 That's worth knowing as an illustration of the next page's theme rather than as the expected
 answer: recognising that a search can be replaced by arithmetic is a different skill from
 writing the search, and here the search is what's being asked for.
