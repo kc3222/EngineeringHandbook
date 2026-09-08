@@ -65,38 +65,67 @@ ID, makes assignment deterministic and cheap.
 Neither structure can do the other's job, and the composition is the answer. It's the same
 shape as the LRU cache from Chapter 2: two structures covering each other's blind spot.
 
+**Three dictionaries, each answering one question.** The names are worth reading before the
+code, because the third one exists purely to connect the other two:
+
+| Field | Maps | Answers |
+| --- | --- | --- |
+| `free` | size → min-heap of the free locker ids in that size | "which locker do I hand out for a package this big?" |
+| `assigned` | pickup code → locker id | "which locker does this code open?" |
+| `size_of` | locker id → that locker's size | "which heap does this locker go back into?" |
+
+`free` is the inventory, filed by **size** — one heap per size class, so `free[10]` is the
+free size-10 lockers and `heappop` takes the lowest-numbered of them. `assigned` is the
+outstanding-codes book. Note what each one is keyed by: the inventory by size, the book by
+code. That mismatch is the whole reason for `size_of`.
+
 ```python
 import heapq
 from itertools import count
 
 class LockerBank:
     def __init__(self, lockers):          # lockers: (locker_id, size)
-        self.free = {}                    # size -> min-heap of locker ids
-        self.size_of = {}
+        self.free = {}                    # size -> min-heap of free locker ids
+        self.size_of = {}                 # locker id -> its size
         self.assigned = {}                # pickup code -> locker id
         self._codes = count(1001)
         for lid, size in lockers:
             self.free.setdefault(size, [])
-            heapq.heappush(self.free[size], lid)
-            self.size_of[lid] = size
-        self.sizes = sorted(self.free)
+            heapq.heappush(self.free[size], lid)   # starts out free
+            self.size_of[lid] = size               # remember where it lives
+        self.sizes = sorted(self.free)    # size classes, smallest first
 
     def deposit(self, package_size):
-        for size in self.sizes:
-            if size >= package_size and self.free[size]:
-                lid = heapq.heappop(self.free[size])
+        for size in self.sizes:           # smallest class that fits...
+            if size >= package_size and self.free[size]:   # ...and has stock
+                lid = heapq.heappop(self.free[size])       # lowest free id
                 code = next(self._codes)
-                self.assigned[code] = lid
+                self.assigned[code] = lid                  # code now opens it
                 return lid, code
-        return None                       # nothing available
+        return None                       # nothing free fits
 
     def retrieve(self, code):
-        lid = self.assigned.pop(code, None)
+        lid = self.assigned.pop(code, None)   # spend the code
         if lid is None:
-            return None                   # unknown or already collected
-        heapq.heappush(self.free[self.size_of[lid]], lid)
+            return None                       # unknown or already redeemed
+        size = self.size_of[lid]              # which class was it from?
+        heapq.heappush(self.free[size], lid)  # back into that class's heap
         return lid
 ```
+
+**Why `self.free[self.size_of[lid]]`.** Deposit never needs it: it *chose* the size class it
+popped from, so the size is right there in the loop variable. Retrieve is the direction that
+loses that information. A code gives you a locker id and nothing else — but the free lists are
+filed by size, so an id alone doesn't say which heap the locker belongs in. `size_of[lid]`
+recovers the size, and `free[size]` is then the heap to push it back onto. It's one lookup
+feeding another, and the version above splits it across two lines for exactly that reason.
+
+Without it — while keeping the per-size heaps — you'd have to search every heap for the
+locker's home class on each retrieval, the sort of O(n) scan that a second dictionary buys you
+out of. This is the recurring move in these problems: when one operation runs in the opposite
+direction from how the data is filed, add a map that reverses it. It is also worth noticing
+that the map is a consequence of the partitioning, not of the problem; the alternative below
+avoids both.
 
 Deposit is O(S + log n) for S distinct sizes; retrieval is O(log n).
 
@@ -105,6 +134,36 @@ class that both fits and has stock. S is the number of distinct locker sizes —
 in any real installation — so treating it as a constant is defensible, and saying so is
 better than pretending it's O(log n). If S were genuinely large, a sorted structure over
 non-empty classes would replace the scan.
+
+**A simpler structure that also works.** Keep the free lockers in one sorted list of
+`(size, locker_id)` pairs instead of a heap per size class. Deposit binary-searches for the
+first pair whose size fits and pops it; `assigned[code]` stores the whole pair; retrieve puts
+that pair back in sorted position. Notice what happens to `size_of`: it disappears. It only
+existed because splitting the free lockers into per-size heaps discards each locker's size —
+store the pair and the size travels with the locker.
+
+The trade runs in both directions, which is what makes it worth raising rather than
+dismissing:
+
+| | deposit | retrieve |
+| --- | --- | --- |
+| Heap per size class | O(S) scan for a class that fits, then O(log n) pop | O(log n) push |
+| One sorted list | O(log n) binary search, then O(n) to close the gap | O(log n) search, then O(n) to open one |
+
+The sorted list *removes* the scan that the previous paragraph had to excuse, and pays for it
+by shifting elements on every insertion and removal. Asymptotically that's a loss — O(n)
+against O(log n) — but n here is the number of lockers at one pickup location, and shifting a
+few hundred contiguous machine words is not the operation that will decide anything. Neither
+version is meaningfully cheaper at the size this problem actually runs at, so the honest
+answer is that the two are interchangeable on speed and the choice should be made on
+something else.
+
+That something else is the concurrency follow-up below. Per-size heaps partition the free
+lockers, which gives a natural lock per size class: deposits for different sizes don't
+contend. One flat list is a single structure that every deposit and every retrieval has to
+serialise on. And if n did grow, the way out is neither of these — a balanced BST or an
+order-statistic structure over `(size, locker_id)` is O(log n) in both directions with no scan
+and no `size_of`.
 
 **Follow-up.** Discussing what the code omits is most of the value here, and volunteering
 the omissions unprompted is the actual signal:
@@ -162,6 +221,7 @@ reported yet, which is the only version of this that's worth carrying.
 
 - A design question is two or more access patterns; pick a structure per pattern and state its cost.
 - Composing a heap with a hash map covers "cheapest available" and "find by key" — the same shape as the LRU cache.
+- Partitioning data buys cheap operations and costs you a reverse map: splitting free lockers by size is what makes `size_of` necessary. One flat sorted structure needs no reverse map but shifts elements on every write.
 - Be honest about the constant factors you're treating as constants, and say why.
 - Volunteer the omissions: expiry, concurrency, security, growth. Sixty seconds, and it's the most informative part of the answer.
 - Questioning the specification — is smallest-fit even the right policy — is worth more than any implementation detail.
