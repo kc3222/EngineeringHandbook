@@ -391,11 +391,14 @@ cap in `src/theme/DocItem/Layout/styles.module.css` — the "on this page" rail
 appears at ≥1200px viewport width.
 
 Deliberately a constant, not a fluid width: this is a prose site, and past
-~1200px any extra width has to be handed back as a measure cap anyway. Running
-text carries its own narrower caps (`46rem` lead, `38rem` body) — keep those
-when adding sections, and let the *container* be the thing that fills the
-width. Change the width in the token only; don't reintroduce per-component
-`max-width` values on sections.
+~1200px any extra width has to be handed back as a measure cap anyway. On doc
+pages the article's `46rem` is that cap and it is the **only** one: paragraphs,
+list items, headings, code blocks, tables and admonitions all share a single
+right edge. Body text used to carry a second, narrower cap of its own, which
+only made every line of prose wrap 64px short of the boxes and headings around
+it — don't reintroduce one. Let the *container* be the thing that fills the
+width, and change the width in the token only; no per-component `max-width`
+values on sections.
 
 ## Site shell notes
 

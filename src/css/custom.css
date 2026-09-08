@@ -13,8 +13,12 @@
    * `.page` in the page/component modules). Change it here only.
    *
    * Constant rather than fluid because this is a prose site: past ~1200px,
-   * extra width has to be given back as a measure cap anyway. Running text
-   * carries its own narrower caps (46rem lead, 38rem body).
+   * extra width has to be given back as a measure cap anyway. On doc pages
+   * that cap is the article's 46rem (`src/theme/DocItem/Layout`), and it is
+   * the ONLY measure: paragraphs, lists, headings, code, tables and
+   * admonitions all share that one right edge. Body text used to carry a
+   * second, narrower cap of its own, which just made every line of prose
+   * wrap 64px short of the boxes and headings around it.
    */
   --eh-content-max: 75rem; /* 1200px */
   --eh-gutter: clamp(1.5rem, 7vw, 7rem);
@@ -259,11 +263,6 @@ body {
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: -0.015em;
-}
-
-.markdown > p,
-.markdown li {
-  max-width: 42rem;
 }
 
 .markdown a {
