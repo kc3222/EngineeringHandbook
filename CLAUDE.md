@@ -26,7 +26,7 @@ from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
 12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
 Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
-13 pages**, and **Track 7 (Data Structures & Algorithms) — 44 pages**. 159 pages
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 160 pages
 across 29 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
@@ -391,11 +391,14 @@ cap in `src/theme/DocItem/Layout/styles.module.css` — the "on this page" rail
 appears at ≥1200px viewport width.
 
 Deliberately a constant, not a fluid width: this is a prose site, and past
-~1200px any extra width has to be handed back as a measure cap anyway. Running
-text carries its own narrower caps (`46rem` lead, `38rem` body) — keep those
-when adding sections, and let the *container* be the thing that fills the
-width. Change the width in the token only; don't reintroduce per-component
-`max-width` values on sections.
+~1200px any extra width has to be handed back as a measure cap anyway. On doc
+pages the article's `46rem` is that cap and it is the **only** one: paragraphs,
+list items, headings, code blocks, tables and admonitions all share a single
+right edge. Body text used to carry a second, narrower cap of its own, which
+only made every line of prose wrap 64px short of the boxes and headings around
+it — don't reintroduce one. Let the *container* be the thing that fills the
+width, and change the width in the token only; no per-component `max-width`
+values on sections.
 
 ## Site shell notes
 
@@ -456,7 +459,7 @@ width. Change the width in the token only; don't reintroduce per-component
 - Aggregate figures on the about page come from `totalChapters()` /
   `totalPages()` in `src/data/handbook.ts`, and the track count from
   `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
-  and 159 pages, which disagrees with the "~99 pages" estimate still recorded in
+  and 160 pages, which disagrees with the "~99 pages" estimate still recorded in
   `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at

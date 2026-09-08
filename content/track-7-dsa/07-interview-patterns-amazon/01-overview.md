@@ -52,7 +52,8 @@ and edges frequently arrive disguised as rates, dependencies, adjacency, or conv
 design?** Each points at a different section of this track. "The largest block such that…"
 is a window or a binary search. "Can these be ordered so that…" is a topological sort. "How
 many ways" is dynamic programming. "Support these operations efficiently" is a data
-structure composition.
+structure composition — and the last two pages of this chapter are design questions of two
+different kinds, one about composing structures and one about choosing a representation.
 
 **3. What are the input bounds?** They constrain the answer's complexity before you've
 thought about the approach, per Chapter 1's *Constraints as a Signal*. An unbounded board
@@ -107,6 +108,7 @@ optimised, and what stays invariant. Read for those four and the story stops mat
 | Windows and Search Spaces | Power budgets, calendar planning | Binary search on the answer, sliding window |
 | Finding the Invariant | String expansion, elimination around a circle | Closed forms and recurrences replacing simulation |
 | Designing Under Constraints | A bank of parcel lockers | Composing a heap and a hash map |
+| Scheduling Shared Capacity | Dock doors at a fulfilment centre | Difference arrays and prefix sums over sparse boundaries |
 
 Each problem is presented with a collapsed solution, a complexity statement, and a
 follow-up — because the follow-up is the part most resources omit and it's where most of

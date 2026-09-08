@@ -363,7 +363,7 @@ export const tracks: Track[] = [
         title: 'Interview Patterns: Amazon',
         blurb:
           'Reported interview problems reframed as instances of patterns taught earlier in the track — the mapping, not the list.',
-        pages: 5,
+        pages: 6,
       },
     ],
   },
