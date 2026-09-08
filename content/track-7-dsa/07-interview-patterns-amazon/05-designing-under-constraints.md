@@ -15,29 +15,39 @@ the part that distinguishes a considered design from a working one.
 ## Locker Assignment
 
 :::problem
-A pickup location has lockers in several sizes. `deposit(size)` assigns the
-smallest available locker that fits and returns `(locker_id, code)`, or
-`None` if nothing fits. `retrieve(code)` releases the locker and returns its
-id, or `None` for an unknown or already-used code.
+A pickup location has lockers in a few different sizes. The bank is built
+from a list of `(locker_id, locker_size)` pairs.
+
+`deposit(package_size)` puts a package in the smallest free locker whose
+size is at least `package_size`, and returns that locker's id together
+with a pickup code the recipient presents later. It returns `None` if no
+free locker fits.
+
+`retrieve(code)` frees the locker that code was issued for and returns
+that locker's id. A code is single-use: an unknown code, or one that has
+already been redeemed, returns `None`.
 
 ```text
-Input:  LockerBank([(1, 10), (2, 10), (3, 30)])
-        deposit(5)     ->  (1, 1)   smallest fitting size is 10
-        deposit(8)     ->  (2, 2)   the other size-10 locker
-        deposit(25)    ->  (3, 3)   only size 30 fits
-        deposit(1)     ->  None     nothing free at all
-        retrieve(2)    ->  2        locker 2 released
-        deposit(1)     ->  (2, 4)   reused, with a new code
-        retrieve(99)   ->  None     unknown code
-Explanation: deposit(25) takes the size-30 locker because no
-             smaller class fits. deposit(1) then fails even
-             though it would fit anywhere — "smallest that
-             fits" has already stranded the large locker,
-             which the follow-up returns to.
+LockerBank([(1, 10), (2, 10), (3, 30)])
+
+deposit(5)      -> (1, 1001)   both size-10 lockers fit
+deposit(8)      -> (2, 1002)   the other size-10 locker
+deposit(3)      -> (3, 1003)   only the size-30 one is free
+deposit(25)     -> None        nothing free that fits
+retrieve(1002)  -> 2           locker 2 is released
+retrieve(1002)  -> None        that code is already spent
+deposit(9)      -> (2, 1004)   locker 2 reused, new code
+
+Explanation: the third deposit is the interesting one. A
+             3-unit package takes the size-30 locker because
+             the small class is exhausted, so the 25-unit
+             package behind it is turned away — the only
+             locker that could have held it went to a
+             package a tenth its size. "Smallest that fits"
+             chooses only among what is free right now.
 ```
 
-**Constraints.** Sizes are a small fixed set (three or four in practice).
-State any assumptions you make about concurrency and expiry.
+**Constraints.** Sizes are a small fixed set (three or four in practice) and locker ids are unique. If several free lockers share the smallest fitting size, any of them is a valid answer; the trace above takes the lowest id. State any assumptions you make about concurrency and expiry.
 :::
 
 <details>
@@ -63,8 +73,8 @@ class LockerBank:
     def __init__(self, lockers):          # lockers: (locker_id, size)
         self.free = {}                    # size -> min-heap of locker ids
         self.size_of = {}
-        self.assigned = {}                # code -> locker id
-        self._codes = count(1)
+        self.assigned = {}                # pickup code -> locker id
+        self._codes = count(1001)
         for lid, size in lockers:
             self.free.setdefault(size, [])
             heapq.heappush(self.free[size], lid)
@@ -102,7 +112,7 @@ the omissions unprompted is the actual signal:
 - **Expiry and reclamation.** Packages get abandoned. Without a policy, the bank fills permanently. That needs a deposit timestamp and a sweep, which changes the free-list from a pure heap into something that must support removal of a specific locker.
 - **Concurrency.** Two deposits racing for the last locker in a size class both see it free. The `heappop` and the map insert must be atomic together, or the design needs a lock per size class.
 - **Code generation.** A monotonic counter is guessable, and guessing a code retrieves someone else's package. Real codes need to be unpredictable and to expire — which makes this an authorisation problem, not a data-structures one.
-- **Whether the policy is even right.** "Smallest that fits" strands large lockers: a run of small packages during a busy period fills the small classes, and the next small package takes a large locker that a large package then can't use. Whether that matters depends on the size distribution, and it's an empirical question rather than an algorithmic one.
+- **Whether the policy is even right.** "Smallest that fits" strands large lockers, which is exactly what the third deposit in the example does: once the small class is exhausted, a small package takes a large locker, and the large package behind it is turned away. Whether that matters depends on the size distribution, and it's an empirical question rather than an algorithmic one.
 
 The last of those is the most valuable to raise, because it questions the specification
 rather than the implementation, and specifications are where the expensive mistakes live.
