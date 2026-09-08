@@ -8,9 +8,10 @@ readMinutes: 5
 ---
 
 The problems on the previous three pages each had one right answer. This one doesn't, and
-that's the point of putting it last. A design question asks you to choose structures, state
-what they cost, and be explicit about what you've left out — and the last of those three is
-the part that distinguishes a considered design from a working one.
+that's the point of putting it here: the chapter closes with two design questions rather
+than one more puzzle. A design question asks you to choose structures, state what they cost,
+and be explicit about what you've left out — and the last of those three is the part that
+distinguishes a considered design from a working one.
 
 ## Locker Assignment
 
@@ -205,17 +206,9 @@ whether that matters depends on the package size distribution." Naming the omiss
 hedging — it's the demonstration that you know where a design's real risk sits.
 :::
 
-## Where this chapter ends
-
-That's the whole chapter: four pages of problems, none of which needed a technique that
-isn't taught earlier in this track. The currency table is a weighted graph. The power budget
-is a binary search with a window inside it. The expanding string is an invariant. The locker
-bank is a heap and a map.
-
-If the problems here have gone stale by the time you read them — and they will — the four
-stripping questions from the first page have not. What relates the objects; what is being
-asked for; what do the bounds allow; what stays true. Those work on a problem nobody has
-reported yet, which is the only version of this that's worth carrying.
+Those four steps assume the hard part is step 2 — picking the structures. The next page is a
+design question where it isn't: one operation, an obvious structure, and the whole difficulty
+sitting in a decision that comes before either of them.
 
 ## What to take away
 
