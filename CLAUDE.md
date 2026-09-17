@@ -24,10 +24,10 @@ rail.
 **Content is written out.** All seven tracks are drafted to their full page count
 from `handbook-structure.md`: **Track 1 (Frontend Engineering) — 20 pages**,
 **Track 2 (Backend Engineering) — 21 pages**, **Track 3 (Data & Storage) —
-12 pages**, **Track 4 (AI Engineering) — 28 pages**, **Track 5 (ML / DL &
+12 pages**, **Track 4 (AI Engineering) — 33 pages**, **Track 5 (ML / DL &
 Applied Research) — 21 pages**, **Track 6 (Cloud, DevOps & Observability) —
-13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 160 pages
-across 29 chapters, matching `totalPages()`.
+13 pages**, and **Track 7 (Data Structures & Algorithms) — 45 pages**. 165 pages
+across 30 chapters, matching `totalPages()`.
 
 No placeholder overviews remain. Outstanding content work is revision and
 citation upkeep rather than first drafts; the outstanding *code* work is
@@ -452,14 +452,14 @@ values on sections.
   `useSearch().open()`. Don't give a new trigger its own state or its own
   hotkey listener, or ⌘K starts opening several palettes at once.
 - `/` is the "about this site" page (`src/pages/index.tsx`) — what the
-  handbook is, how it's organised, and a directory of the six tracks. It is
+  handbook is, how it's organised, and a directory of the seven tracks. It is
   **not** a track page; every track has its own route (`/frontend`, `/backend`,
-  `/data`, `/ai`, `/ml`, `/cloud`), so no nav item is active on `/`. A track's
+  `/data`, `/ai`, `/ml`, `/cloud`, `/dsa`), so no nav item is active on `/`. A track's
   nav item stays active while reading that track's pages under `/read/…`.
 - Aggregate figures on the about page come from `totalChapters()` /
   `totalPages()` in `src/data/handbook.ts`, and the track count from
-  `tracks.length`. Don't hardcode any of them — they're currently 29 chapters
-  and 160 pages, which disagrees with the "~99 pages" estimate still recorded in
+  `tracks.length`. Don't hardcode any of them — they're currently 30 chapters
+  and 165 pages, which disagrees with the "~99 pages" estimate still recorded in
   `handbook-structure.md`.
 - The search palette still indexes the outline only — track and chapter names,
   no page text. Chapter hits open that chapter's overview page. Pointing it at

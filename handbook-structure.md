@@ -1,6 +1,6 @@
 # Engineering Handbook — Structure Reference
 
-**Status:** Written out — 160 pages across 29 chapters and seven tracks
+**Status:** Written out — 165 pages across 30 chapters and seven tracks
 **Format:** TBD — will eventually back a website via a database of content files
 **Depth:** Each page = 1–5 min read; diagrams and code snippets encouraged
 **Audience:** General public / general reference (no personal case studies)
@@ -80,6 +80,10 @@ Retrieval-augmented generation end to end — the system most people build and m
 
 **04 · Prompting & AI Coding Agents**
 Working with AI coding agents as engineering tools, not novelties.
+*5 pages*
+
+**05 · Model Context Protocol (MCP)**
+The open standard for connecting models to tools and data — and what you're trusting when you expose a server to one.
 *5 pages*
 
 ---
@@ -164,6 +168,6 @@ live at the end of the chapter's last examples page where the chapter has them.
 - [ ] Decide on content file format/schema for the future database (markdown? structured JSON? MDX?)
 - [ ] Decide whether a synthesis/system-design track gets added back later with generic (non-personal) examples
 - [ ] Design exercise/quiz format once ready to add
-- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 160 across seven tracks)
+- [ ] Confirm final page counts once drafting begins (the outline's original ~99-page estimate; drafting landed at 160 across seven tracks, now 165 with IV·05)
 - [ ] Track VII decisions still open: whether sorting algorithms get a page (leaning no), whether concurrency-adjacent structures belong here or in Track VI, and whether other companies get chapters parallel to VII·07 (which would argue for making it its own track)
 - [ ] Track VII chapter 07 (Interview Patterns: Amazon) is company-specific and dated "reported as of August 2026" on its intro page. Set a review cadence, or fold it into a generic pattern-recognition chapter once the reports go stale
