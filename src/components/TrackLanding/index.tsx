@@ -33,7 +33,7 @@ function Stat({
 }
 
 /**
- * Hero + chapter index for one of the six handbook tracks. Every number on the
+ * Hero + chapter index for one of the handbook's tracks. Every number on the
  * page is derived from `src/data/handbook.ts` rather than hardcoded, so the
  * counts can't drift from the outline.
  */
@@ -102,8 +102,8 @@ export default function TrackLanding({track}: {track: Track}): React.ReactNode {
           </ol>
 
           <p className={styles.note}>
-            Each chapter opens on its overview page. Most pages are still
-            placeholders while the handbook is being drafted.
+            Each chapter opens on its overview page. Pages run one to five
+            minutes, and each one stands on its own.
           </p>
         </section>
       </main>

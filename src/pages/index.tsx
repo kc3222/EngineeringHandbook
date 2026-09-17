@@ -64,7 +64,7 @@ export default function About(): React.ReactNode {
   return (
     <Layout
       title="About"
-      description="Short reference pages across frontend, backend, data, AI engineering, applied ML, and cloud infrastructure.">
+      description="Short reference pages across frontend, backend, data, AI engineering, applied ML, cloud infrastructure, and data structures & algorithms.">
       <main className={styles.page}>
         <section className={styles.hero}>
           <p className={styles.eyebrow}>
@@ -75,8 +75,9 @@ export default function About(): React.ReactNode {
           <h1 className={styles.title}>Engineering Handbook</h1>
           <p className={styles.summary}>
             Short reference pages across frontend, backend, data, AI
-            engineering, applied ML, and the infrastructure underneath. Read one
-            in a few minutes, or work through a track end to end.
+            engineering, applied ML, the infrastructure underneath, and the data
+            structures and algorithms under all of it. Read one in a few
+            minutes, or work through a track end to end.
           </p>
 
           <div className={styles.actions}>

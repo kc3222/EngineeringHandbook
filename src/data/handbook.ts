@@ -182,7 +182,7 @@ export const tracks: Track[] = [
     title: 'AI Engineering',
     eyebrow: 'Where language becomes infrastructure',
     summary:
-      'Models, embeddings, retrieval pipelines, and coding agents — treated as engineering rather than novelty.',
+      'Models, embeddings, retrieval pipelines, coding agents, and the protocol that connects them to tools — treated as engineering rather than novelty.',
     permalink: '/ai',
     chapters: [
       {
@@ -215,6 +215,14 @@ export const tracks: Track[] = [
         title: 'Prompting & AI Coding Agents',
         blurb:
           'Working with AI coding agents as engineering tools, not novelties.',
+        pages: 5,
+      },
+      {
+        number: 5,
+        slug: 'model-context-protocol',
+        title: 'Model Context Protocol (MCP)',
+        blurb:
+          "The open standard for connecting models to tools and data — and what you're trusting when you expose a server to one.",
         pages: 5,
       },
     ],

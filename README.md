@@ -1,7 +1,7 @@
 # Engineering Handbook
 
 Short reference pages (1–5 min read each) across frontend, backend, data,
-AI engineering, ML/DL, and cloud/DevOps.
+AI engineering, ML/DL, cloud/DevOps, and data structures & algorithms.
 
 Live at <https://kc3222.github.io/EngineeringHandbook/>.
 
@@ -61,10 +61,9 @@ npm run typecheck
   `.docusaurus` cache, so run `npm run clear` if you switch between them and
   hit stale paths.
 
-Most pages under `content/` are placeholders — every chapter has an overview
-page so the reading UI works end to end, and one chapter (AI → LLM Fundamentals)
-is written out in full. See `CLAUDE.md` for the content structure and page
-frontmatter schema.
+Every page under `content/` is written out — seven tracks, drafted to the page
+counts in `handbook-structure.md`. Each chapter opens on an `01-overview.md`
+page. See `CLAUDE.md` for the content structure and page frontmatter schema.
 
 ## Deploying
 

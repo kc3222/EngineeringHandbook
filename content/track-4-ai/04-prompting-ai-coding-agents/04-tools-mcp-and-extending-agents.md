@@ -87,6 +87,10 @@ operations rather than a mechanical wrapper around every API endpoint; a server 
 eighty tools makes selection worse for every task. And version the server, because clients
 will pin to it.
 
+The next chapter, **Model Context Protocol (MCP)**, covers the protocol in depth: the
+host/client/server split, all three primitives, both transports, and authorization for
+remote servers.
+
 ## Adding capability without adding tools
 
 Tools are not the only extension point, and reaching for one reflexively is a common

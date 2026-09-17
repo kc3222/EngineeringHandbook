@@ -80,6 +80,10 @@ Backwards, **LLM Fundamentals** explains why an agent hallucinates a plausible A
 doesn't exist. **RAG Pipelines** is the same retrieval problem this chapter solves
 differently — a fixed pipeline versus a model deciding when to search.
 
+Forwards, **Model Context Protocol (MCP)** takes the protocol introduced in *Tools, MCP &
+Extending Agents* and covers it in full: architecture, primitives, transports, and
+security.
+
 Across the handbook, Track 1's **Frontend Testing** and the testing material throughout
 Track 2 matter more here than they look: automated verification is what makes agent output
 safe to accept at speed. Track 6's **Containers & Deployment** covers the sandboxing an

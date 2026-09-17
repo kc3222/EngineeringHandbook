@@ -13,7 +13,7 @@ const stripTrailingSlash = (path: string): string =>
 
 /**
  * The centred track switcher in the navbar. Every track has its own path, so the
- * root ("about this site") page correctly leaves all six links inactive. Content
+ * root ("about this site") page correctly leaves every track link inactive. Content
  * pages count as part of their track too, so the link stays lit while reading.
  */
 export default function TrackNav({
